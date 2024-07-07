@@ -1,4 +1,4 @@
-import CityCard from './city-card';
+import PlaceCard from './place-card';
 
 type AppProps = {
   offersCount: number;
@@ -118,7 +118,7 @@ function App({ offersCount }: AppProps): JSX.Element {
               <div className="cities__places-list places__list tabs__content">
                 {Array.from({ length: offersCount }, () => (
                   // eslint-disable-next-line react/jsx-key
-                  <CityCard />
+                  <PlaceCard />
                 ))}
               </div>
             </section>
