@@ -1,4 +1,4 @@
-function FavoriteCard(): JSX.Element {
+function Favorite(): JSX.Element {
   return (
     <article className="favorites__card place-card">
       <div className="place-card__mark">
@@ -45,4 +45,4 @@ function FavoriteCard(): JSX.Element {
     </article>
   );
 }
-export default FavoriteCard;
+export default Favorite;
