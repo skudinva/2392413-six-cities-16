@@ -4,7 +4,10 @@ export type AppProps = {
   offersCount: number;
 };
 
-export type PrivateRouteProps = {
+export type MainProps = {
   authorizationStatus: AuthorizationStatus;
+};
+
+export type PrivateRouteProps = MainProps & {
   children: JSX.Element;
 };
