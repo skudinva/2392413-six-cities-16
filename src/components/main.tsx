@@ -2,6 +2,9 @@ import { AppProps } from '../types';
 import PlaceCardList from './place-card-list';
 
 function Main({ offersCount, offers }: AppProps): JSX.Element {
+  const cityOffers = offers
+    .filter((offer) => offer.city.name === 'Amsterdam')
+    .slice(0, offersCount);
   return (
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
@@ -72,11 +75,7 @@ function Main({ offersCount, offers }: AppProps): JSX.Element {
                 </li>
               </ul>
             </form>
-            <PlaceCardList
-              offers={offers
-                .filter((offer) => offer.city.name === 'Amsterdam')
-                .slice(0, offersCount)}
-            />
+            <PlaceCardList offers={cityOffers} />
           </section>
           <div className="cities__right-section">
             <section className="cities__map map"></section>
