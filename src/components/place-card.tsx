@@ -1,8 +1,9 @@
 import { PlaceCardProps } from '../types';
+import { getRatingPercent } from '../utils';
 
 function PlaceCard(props: PlaceCardProps): JSX.Element {
   const { offer, onActiveCardChange } = props;
-  const ratingPercent: number = Math.round(offer.rating * 20);
+  const ratingPercent = getRatingPercent(offer.rating);
   return (
     <article
       className="cities__card place-card"

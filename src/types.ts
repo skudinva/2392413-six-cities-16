@@ -23,6 +23,15 @@ export type PlaceCardListProps = {
   offers: Offer[];
 };
 
+export type FavoriteListProps = {
+  offers: Offer[];
+};
+
+export type FavoriteProps = {
+  offer: Offer;
+  key: string;
+};
+
 export type Offer = {
   id: string;
   title: string;
