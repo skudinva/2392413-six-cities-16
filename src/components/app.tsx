@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus, Setting } from '../const';
-import Favorite from './favorite';
+import { AppRoute, AuthorizationStatus } from '../const';
+import { AppProps } from '../types';
+import FavoriteList from './favorite-list';
 import Login from './login';
 import Main from './main';
 import MainLayout from './main-layout';
@@ -8,7 +9,7 @@ import Offer from './offer';
 import Page404 from './page404';
 import PrivateRoute from './private-route';
 
-function App(): JSX.Element {
+function App({ offersCount, offers }: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -18,13 +19,16 @@ function App(): JSX.Element {
             <MainLayout authorizationStatus={AuthorizationStatus.NoAuth} />
           }
         >
-          <Route index element={<Main offersCount={Setting.OffersCount} />} />
+          <Route
+            index
+            element={<Main offersCount={offersCount} offers={offers} />}
+          />
           <Route path={AppRoute.Login} element={<Login />} />
           <Route
             path={AppRoute.Favorites}
             element={
               <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-                <Favorite />
+                <FavoriteList offers={offers} />
               </PrivateRoute>
             }
           />

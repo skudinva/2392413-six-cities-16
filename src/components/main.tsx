@@ -1,7 +1,10 @@
 import { AppProps } from '../types';
-import PlaceCard from './place-card';
+import PlaceCardList from './place-card-list';
 
-function Main({ offersCount }: AppProps): JSX.Element {
+function Main({ offersCount, offers }: AppProps): JSX.Element {
+  const cityOffers = offers
+    .filter((offer) => offer.city.name === 'Amsterdam')
+    .slice(0, offersCount);
   return (
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
@@ -54,7 +57,7 @@ function Main({ offersCount }: AppProps): JSX.Element {
                   <use xlinkHref="#icon-arrow-select"></use>
                 </svg>
               </span>
-              <ul className="places__options places__options--custom places__options--opened">
+              <ul className="places__options places__options--custom">
                 <li
                   className="places__option places__option--active"
                   tabIndex={0}
@@ -72,12 +75,7 @@ function Main({ offersCount }: AppProps): JSX.Element {
                 </li>
               </ul>
             </form>
-            <div className="cities__places-list places__list tabs__content">
-              {Array.from({ length: offersCount }, () => (
-                // eslint-disable-next-line react/jsx-key
-                <PlaceCard />
-              ))}
-            </div>
+            <PlaceCardList offers={cityOffers} />
           </section>
           <div className="cities__right-section">
             <section className="cities__map map"></section>
