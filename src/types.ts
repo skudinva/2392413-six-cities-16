@@ -15,6 +15,11 @@ export type PrivateRouteProps = MainProps & {
 
 export type PlaceCardProps = {
   offer: Offer;
+  key: string;
+};
+
+export type PlaceCardListProps = {
+  offers: Offer[];
 };
 
 export type Offer = {

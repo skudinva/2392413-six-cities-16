@@ -1,5 +1,5 @@
-import { AppProps, Offer } from '../types';
-import PlaceCard from './place-card';
+import { AppProps } from '../types';
+import PlaceCardList from './place-card-list';
 
 function Main({ offersCount, offers }: AppProps): JSX.Element {
   return (
@@ -72,11 +72,7 @@ function Main({ offersCount, offers }: AppProps): JSX.Element {
                 </li>
               </ul>
             </form>
-            <div className="cities__places-list places__list tabs__content">
-              {offers.slice(0, offersCount).map((offer: Offer) => (
-                <PlaceCard offer={offer} />
-              ))}
-            </div>
+            <PlaceCardList offers={offers.slice(0, offersCount)} />
           </section>
           <div className="cities__right-section">
             <section className="cities__map map"></section>
