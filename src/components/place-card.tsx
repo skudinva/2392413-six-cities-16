@@ -1,10 +1,13 @@
 import { PlaceCardProps } from '../types';
 
 function PlaceCard(props: PlaceCardProps): JSX.Element {
-  const { offer } = props;
+  const { offer, onActiveCardChange } = props;
   const ratingPercent: number = Math.round(offer.rating * 20);
   return (
-    <article className="cities__card place-card">
+    <article
+      className="cities__card place-card"
+      onMouseEnter={() => onActiveCardChange({ ...offer })}
+    >
       {offer.isPremium ? (
         <div className="place-card__mark">
           <span>Premium</span>

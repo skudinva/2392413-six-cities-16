@@ -72,7 +72,11 @@ function Main({ offersCount, offers }: AppProps): JSX.Element {
                 </li>
               </ul>
             </form>
-            <PlaceCardList offers={offers.slice(0, offersCount)} />
+            <PlaceCardList
+              offers={offers
+                .filter((offer) => offer.city.name === 'Amsterdam')
+                .slice(0, offersCount)}
+            />
           </section>
           <div className="cities__right-section">
             <section className="cities__map map"></section>

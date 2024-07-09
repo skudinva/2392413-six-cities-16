@@ -16,6 +16,7 @@ export type PrivateRouteProps = MainProps & {
 export type PlaceCardProps = {
   offer: Offer;
   key: string;
+  onActiveCardChange: React.Dispatch<React.SetStateAction<Offer>>;
 };
 
 export type PlaceCardListProps = {
