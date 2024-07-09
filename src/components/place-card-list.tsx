@@ -6,6 +6,8 @@ function PlaceCardList(props: PlaceCardListProps): JSX.Element {
   const { offers } = props;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [activePlaceCard, setActivePlaceCard] = useState({} as Offer);
+  // eslint-disable-next-line no-console
+  console.log(activePlaceCard);
 
   return (
     <div className="cities__places-list places__list tabs__content">
