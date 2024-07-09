@@ -1,8 +1,11 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
+import { AppRoute } from '../const';
 import { MainProps } from '../types';
 import SignUser from './sign-user';
 
 function MainLayout({ authorizationStatus }: MainProps): JSX.Element {
+  const { pathname } = useLocation();
+  const isLoginForm = pathname === (AppRoute.Login as string);
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -19,7 +22,9 @@ function MainLayout({ authorizationStatus }: MainProps): JSX.Element {
                 />
               </a>
             </div>
-            <SignUser authorizationStatus={authorizationStatus} />
+            {!isLoginForm ? (
+              <SignUser authorizationStatus={authorizationStatus} />
+            ) : null}
           </div>
         </div>
       </header>
