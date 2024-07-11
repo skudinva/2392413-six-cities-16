@@ -32,6 +32,13 @@ export type FavoriteProps = {
   key: string;
 };
 
+export type OfferProps = {
+  offer: Offer;
+};
+export type OfferByGroup = {
+  [city: string]: Offer[];
+};
+
 export type Offer = {
   id: string;
   title: string;

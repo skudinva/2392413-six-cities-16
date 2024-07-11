@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../const';
 import { PlaceCardProps } from '../types';
 import { getRatingPercent } from '../utils';
 
@@ -9,12 +11,10 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
       className="cities__card place-card"
       onMouseEnter={() => onActiveCardChange({ ...offer })}
     >
-      {offer.isPremium ? (
+      {offer.isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
-      ) : (
-        ''
       )}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="#">
@@ -54,7 +54,9 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{offer.title}</a>
+          <Link to={AppRoute.Offer.replace(':id', offer.id)}>
+            {offer.title}
+          </Link>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>

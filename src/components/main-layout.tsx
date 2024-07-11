@@ -22,9 +22,9 @@ function MainLayout({ authorizationStatus }: MainProps): JSX.Element {
                 />
               </a>
             </div>
-            {!isLoginForm ? (
+            {!isLoginForm && (
               <SignUser authorizationStatus={authorizationStatus} />
-            ) : null}
+            )}
           </div>
         </div>
       </header>
