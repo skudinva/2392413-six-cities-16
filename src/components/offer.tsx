@@ -1,6 +1,10 @@
-import { OfferProps } from '../types';
+import { OfferEntity } from '../types';
 import { getRatingPercent } from '../utils';
 import OfferReviewForm from './offer-review-form';
+
+type OfferProps = {
+  offer: OfferEntity;
+};
 
 function Offer(props: OfferProps): JSX.Element {
   const { offer } = props;

@@ -17,7 +17,7 @@ declare global {
 
 export type AppProps = {
   offersCount: number;
-  offers: Offer[];
+  offers: OfferEntity[];
 };
 
 export type MainProps = {
@@ -28,38 +28,7 @@ export type PrivateRouteProps = MainProps & {
   children: JSX.Element;
 };
 
-export type PlaceCardProps = {
-  offer: Offer;
-  key: string;
-  onActiveCardChange: React.Dispatch<React.SetStateAction<Offer>>;
-};
-
-export type PlaceCardListProps = {
-  offers: Offer[];
-};
-
-export type FavoriteListProps = {
-  offers: Offer[];
-};
-
-export type FavoriteProps = {
-  offer: Offer;
-  key: string;
-};
-
-export type OfferProps = {
-  offer: Offer;
-};
-export type OfferByGroup = {
-  [city: string]: Offer[];
-};
-
-export type OfferReviewFormState = {
-  rating: number;
-  review: string;
-};
-
-export type Offer = {
+export type OfferEntity = {
   id: string;
   title: string;
   type: string;

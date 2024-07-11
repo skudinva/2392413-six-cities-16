@@ -1,5 +1,9 @@
 import { FormEvent, useState } from 'react';
-import { OfferReviewFormState } from '../types';
+
+type OfferReviewFormState = {
+  rating: number;
+  review: string;
+};
 
 function OfferReviewForm(): JSX.Element {
   const [offerReviewForm, setOfferReviewForm] = useState({
