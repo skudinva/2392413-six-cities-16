@@ -1,6 +1,6 @@
-import { Offer } from '../types';
+import { OfferEntity } from '../types';
 
-export const offers: Offer[] = [
+export const offers: OfferEntity[] = [
   {
     id: 'f641a4cd-06b9-4a1d-8957-3e19fcad7948',
     title: 'Nice, cozy, warm big bed apartment',
