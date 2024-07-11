@@ -5,7 +5,6 @@ import { getRatingPercent } from '../utils';
 
 type PlaceCardProps = {
   offer: OfferEntity;
-  //key: string;
   onActiveCardChange: React.Dispatch<React.SetStateAction<OfferEntity>>;
 };
 function PlaceCard(props: PlaceCardProps): JSX.Element {

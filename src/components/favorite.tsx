@@ -3,7 +3,6 @@ import { getRatingPercent } from '../utils';
 
 type FavoriteProps = {
   offer: OfferEntity;
-  // key: string;
 };
 
 function Favorite(props: FavoriteProps): JSX.Element {
