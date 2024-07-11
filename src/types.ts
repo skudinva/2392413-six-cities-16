@@ -54,6 +54,11 @@ export type OfferByGroup = {
   [city: string]: Offer[];
 };
 
+export type OfferReviewFormState = {
+  rating: number;
+  review: string;
+};
+
 export type Offer = {
   id: string;
   title: string;
