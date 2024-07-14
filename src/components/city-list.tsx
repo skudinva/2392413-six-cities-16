@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom';
-import { cities } from '../const';
+import { CityEntity } from '../types';
 type CityListProps = {
-  currentCity: string;
-  onCityClick: (cityName: string) => void;
+  cities: CityEntity[];
+  currentCity: CityEntity;
+  onCityClick: (cityName: CityEntity) => void;
 };
 
 function CityList(props: CityListProps): JSX.Element {
-  const { currentCity, onCityClick } = props;
+  const { cities, currentCity, onCityClick } = props;
   return (
     <ul
       className="locations__list tabs__list"
@@ -14,21 +15,27 @@ function CityList(props: CityListProps): JSX.Element {
         evt.preventDefault();
         const targetElement = evt.target as HTMLFormElement;
         if (targetElement.children.length === 0) {
-          onCityClick(targetElement.innerText);
+          const newCity = cities.find(
+            (city) => city.name === targetElement.innerText
+          );
+          if (newCity === undefined) {
+            return;
+          }
+          onCityClick(newCity);
         }
       }}
     >
-      {cities.map((city, index) => {
-        const keyValue = `${city}-${index}`;
+      {cities.map((city) => {
         const classes = [
           'locations__item-link',
           'tabs__item',
           city === currentCity ? 'tabs__item--active' : '',
         ].join(' ');
+
         return (
-          <li className="locations__item" key={keyValue}>
+          <li className="locations__item" key={city.name}>
             <Link className={classes} to="#">
-              <span>{city}</span>
+              <span>{city.name}</span>
             </Link>
           </li>
         );

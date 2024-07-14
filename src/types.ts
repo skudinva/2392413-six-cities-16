@@ -28,24 +28,24 @@ export type PrivateRouteProps = MainProps & {
   children: JSX.Element;
 };
 
+export type LocationEntity = {
+  latitude: number;
+  longitude: number;
+  zoom: number;
+};
+
+export type CityEntity = {
+  name: string;
+  location: LocationEntity;
+};
+
 export type OfferEntity = {
   id: string;
   title: string;
   type: string;
   price: number;
-  city: {
-    name: string;
-    location: {
-      latitude: number;
-      longitude: number;
-      zoom: number;
-    };
-  };
-  location: {
-    latitude: number;
-    longitude: number;
-    zoom: number;
-  };
+  city: CityEntity;
+  location: LocationEntity;
   isFavorite: boolean;
   isPremium: boolean;
   rating: number;
