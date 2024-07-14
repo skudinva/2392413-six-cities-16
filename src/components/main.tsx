@@ -1,47 +1,25 @@
+import { useState } from 'react';
 import { AppProps } from '../types';
+import CityList from './city-list';
 import PlaceCardList from './place-card-list';
 
 function Main({ offersCount, offers }: AppProps): JSX.Element {
   const cityOffers = offers
     .filter((offer) => offer.city.name === 'Amsterdam')
     .slice(0, offersCount);
+
+  const [currentCity, setCurrentCity] = useState('');
+
+  const handleCityClick = (cityName: string): void => {
+    setCurrentCity(cityName);
+  };
+
   return (
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
       <div className="tabs">
         <section className="locations container">
-          <ul className="locations__list tabs__list">
-            <li className="locations__item">
-              <a className="locations__item-link tabs__item" href="#">
-                <span>Paris</span>
-              </a>
-            </li>
-            <li className="locations__item">
-              <a className="locations__item-link tabs__item" href="#">
-                <span>Cologne</span>
-              </a>
-            </li>
-            <li className="locations__item">
-              <a className="locations__item-link tabs__item" href="#">
-                <span>Brussels</span>
-              </a>
-            </li>
-            <li className="locations__item">
-              <a className="locations__item-link tabs__item tabs__item--active">
-                <span>Amsterdam</span>
-              </a>
-            </li>
-            <li className="locations__item">
-              <a className="locations__item-link tabs__item" href="#">
-                <span>Hamburg</span>
-              </a>
-            </li>
-            <li className="locations__item">
-              <a className="locations__item-link tabs__item" href="#">
-                <span>Dusseldorf</span>
-              </a>
-            </li>
-          </ul>
+          <CityList currentCity={currentCity} onCityClick={handleCityClick} />
         </section>
       </div>
       <div className="cities">
