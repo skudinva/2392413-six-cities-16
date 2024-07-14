@@ -4,15 +4,15 @@ import CityList from './city-list';
 import PlaceCardList from './place-card-list';
 
 function Main({ offersCount, offers }: AppProps): JSX.Element {
-  const cityOffers = offers
-    .filter((offer) => offer.city.name === 'Amsterdam')
-    .slice(0, offersCount);
-
   const [currentCity, setCurrentCity] = useState('');
 
   const handleCityClick = (cityName: string): void => {
     setCurrentCity(cityName);
   };
+
+  const cityOffers = offers
+    .filter((offer) => offer.city.name === currentCity)
+    .slice(0, offersCount);
 
   return (
     <main className="page__main page__main--index">
@@ -26,7 +26,9 @@ function Main({ offersCount, offers }: AppProps): JSX.Element {
         <div className="cities__places-container container">
           <section className="cities__places places">
             <h2 className="visually-hidden">Places</h2>
-            <b className="places__found">312 places to stay in Amsterdam</b>
+            <b className="places__found">
+              {cityOffers.length} places to stay in {currentCity}
+            </b>
             <form className="places__sorting" action="#" method="get">
               <span className="places__sorting-caption">Sort by</span>
               <span className="places__sorting-type" tabIndex={0}>
