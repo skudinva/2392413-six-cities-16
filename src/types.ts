@@ -51,3 +51,17 @@ export type OfferEntity = {
   rating: number;
   previewImage: string;
 };
+
+export type UserEntity = {
+  name: string;
+  avatarUrl: string;
+  isPro: boolean;
+};
+
+export type ReviewEntity = {
+  id: string;
+  date: string;
+  user: UserEntity;
+  comment: string;
+  rating: number;
+};
