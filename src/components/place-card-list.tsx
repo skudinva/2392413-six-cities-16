@@ -19,6 +19,7 @@ function PlaceCardList(props: PlaceCardListProps): JSX.Element {
           offer={offer}
           key={offer.id}
           onActiveOfferChange={setActiveOffer}
+          baseClass="cities"
         />
       ))}
     </div>

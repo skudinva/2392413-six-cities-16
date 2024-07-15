@@ -6,13 +6,14 @@ import { getRatingPercent } from '../utils';
 type PlaceCardProps = {
   offer: OfferEntity;
   onActiveOfferChange: React.Dispatch<React.SetStateAction<OfferEntity | null>>;
+  baseClass: string;
 };
 function PlaceCard(props: PlaceCardProps): JSX.Element {
-  const { offer, onActiveOfferChange } = props;
+  const { offer, onActiveOfferChange, baseClass } = props;
   const ratingPercent = getRatingPercent(offer.rating);
   return (
     <article
-      className="cities__card place-card"
+      className={`${baseClass}__card place-card`}
       onMouseEnter={() => onActiveOfferChange({ ...offer })}
       onMouseLeave={() => onActiveOfferChange(null)}
     >
@@ -21,7 +22,7 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
           <span>Premium</span>
         </div>
       )}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`${baseClass}__image-wrapper place-card__image-wrapper`}>
         <a href="#">
           <img
             className="place-card__image"
