@@ -20,6 +20,9 @@ function OfferReviewForm(): JSX.Element {
     });
   };
 
+  const isSubmitButtonDisabled =
+    !offerReviewForm.rating || offerReviewForm.review.length < 50;
+
   return (
     <form
       className="reviews__form form"
@@ -131,7 +134,7 @@ function OfferReviewForm(): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled
+          disabled={isSubmitButtonDisabled}
         >
           Submit
         </button>
