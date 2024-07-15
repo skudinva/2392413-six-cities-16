@@ -1,5 +1,9 @@
-import { FavoriteProps } from '../types';
+import { OfferEntity } from '../types';
 import { getRatingPercent } from '../utils';
+
+type FavoriteProps = {
+  offer: OfferEntity;
+};
 
 function Favorite(props: FavoriteProps): JSX.Element {
   const { offer } = props;

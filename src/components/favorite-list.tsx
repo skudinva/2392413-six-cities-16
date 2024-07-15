@@ -1,12 +1,20 @@
-import { FavoriteListProps, Offer, OfferByGroup } from '../types';
+import { OfferEntity } from '../types';
 import Favorite from './favorite';
+
+type FavoriteListProps = {
+  offers: OfferEntity[];
+};
+
+type OfferByGroup = {
+  [city: string]: OfferEntity[];
+};
 
 function FavoriteList(props: FavoriteListProps): JSX.Element {
   const favoriteOffers = props.offers.filter((offer) => offer.isFavorite);
 
   const favoriteOffersByGroup = Object.groupBy(
     favoriteOffers,
-    (offer: Offer) => offer.city.name
+    (offer: OfferEntity) => offer.city.name
   ) as OfferByGroup;
 
   return (

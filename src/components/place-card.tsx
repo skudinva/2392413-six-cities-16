@@ -1,8 +1,12 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../const';
-import { PlaceCardProps } from '../types';
+import { OfferEntity } from '../types';
 import { getRatingPercent } from '../utils';
 
+type PlaceCardProps = {
+  offer: OfferEntity;
+  onActiveCardChange: React.Dispatch<React.SetStateAction<OfferEntity>>;
+};
 function PlaceCard(props: PlaceCardProps): JSX.Element {
   const { offer, onActiveCardChange } = props;
   const ratingPercent = getRatingPercent(offer.rating);
