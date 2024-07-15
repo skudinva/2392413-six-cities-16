@@ -1,6 +1,8 @@
+import { offers } from '../mocks/offers';
 import { reviews } from '../mocks/reviews';
 import { OfferEntity } from '../types';
 import { getRatingPercent } from '../utils';
+import Map from './map';
 import OfferReviewForm from './offer-review-form';
 import OfferReviewList from './offer-review-list';
 
@@ -11,6 +13,14 @@ type OfferProps = {
 function Offer(props: OfferProps): JSX.Element {
   const { offer } = props;
   const ratingPercent = getRatingPercent(offer.rating);
+
+  const nearbyOffers = offers
+    .filter(
+      (nearbyOffer) =>
+        nearbyOffer.city.name === offer.city.name && nearbyOffer.id !== offer.id
+    )
+    .slice(1, 4);
+
   return (
     <section className="offer">
       <div className="offer__gallery-container container">
@@ -159,7 +169,12 @@ function Offer(props: OfferProps): JSX.Element {
           </section>
         </div>
       </div>
-      <section className="offer__map map"></section>
+      <Map
+        offers={nearbyOffers}
+        city={offer.city}
+        currentOffer={null}
+        mapClass="offer__map"
+      />
     </section>
   );
 }
