@@ -4,14 +4,13 @@ import PlaceCard from './place-card';
 
 type PlaceCardListProps = {
   offers: OfferEntity[];
+  onActiveOfferChange: React.Dispatch<React.SetStateAction<OfferEntity | null>>;
 };
 
 function PlaceCardList(props: PlaceCardListProps): JSX.Element {
-  const { offers } = props;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [activePlaceCard, setActivePlaceCard] = useState({} as OfferEntity);
-  // eslint-disable-next-line no-console
-  console.log(activePlaceCard);
+  const { offers, onActiveOfferChange } = props;
+  const [activeOffer, setActiveOffer] = useState<OfferEntity | null>(null);
+  onActiveOfferChange(activeOffer);
 
   return (
     <div className="cities__places-list places__list tabs__content">
@@ -19,7 +18,7 @@ function PlaceCardList(props: PlaceCardListProps): JSX.Element {
         <PlaceCard
           offer={offer}
           key={offer.id}
-          onActiveCardChange={setActivePlaceCard}
+          onActiveOfferChange={setActiveOffer}
         />
       ))}
     </div>

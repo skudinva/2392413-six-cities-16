@@ -1,19 +1,24 @@
 import { useState } from 'react';
-import { cities } from '../const';
-import { AppProps, CityEntity } from '../types';
+import { Cities, CityName } from '../const';
+import { AppProps, CityEntity, OfferEntity } from '../types';
 import CityList from './city-list';
 import Map from './map';
 import PlaceCardList from './place-card-list';
 
 function Main({ offersCount, offers }: AppProps): JSX.Element {
-  const [currentCity, setCurrentCity] = useState(cities[0]);
+  const [currentCity, setCurrentCity] = useState<CityEntity | null>(null);
+  const [currentOffer, setCurrentOffer] = useState<OfferEntity | null>(null);
 
-  const handleCityClick = (city: CityEntity): void => {
-    setCurrentCity(city);
+  const handleCityClick = (cityName: string): void => {
+    Cities.some((city) => {
+      if (city.name === cityName) {
+        setCurrentCity(city);
+      }
+    });
   };
 
   const cityOffers = offers
-    .filter((offer) => offer.city.name === currentCity.name)
+    .filter((offer) => currentCity && offer.city.name === currentCity.name)
     .slice(0, offersCount);
 
   return (
@@ -22,7 +27,7 @@ function Main({ offersCount, offers }: AppProps): JSX.Element {
       <div className="tabs">
         <section className="locations container">
           <CityList
-            cities={cities}
+            cities={CityName}
             currentCity={currentCity}
             onCityClick={handleCityClick}
           />
@@ -33,7 +38,9 @@ function Main({ offersCount, offers }: AppProps): JSX.Element {
           <section className="cities__places places">
             <h2 className="visually-hidden">Places</h2>
             <b className="places__found">
-              {cityOffers.length} places to stay in {currentCity.name}
+              {currentCity
+                ? `${cityOffers.length} places to stay in ${currentCity.name}`
+                : ''}
             </b>
             <form className="places__sorting" action="#" method="get">
               <span className="places__sorting-caption">Sort by</span>
@@ -61,15 +68,17 @@ function Main({ offersCount, offers }: AppProps): JSX.Element {
                 </li>
               </ul>
             </form>
-            <PlaceCardList offers={cityOffers} />
+            <PlaceCardList
+              offers={cityOffers}
+              onActiveOfferChange={setCurrentOffer}
+            />
           </section>
           <div className="cities__right-section">
             <Map
               offers={cityOffers}
               city={currentCity}
-              selectedOffer={undefined}
+              currentOffer={currentOffer}
             />
-            {/* <section className="cities__map map"></section>  */}
           </div>
         </div>
       </div>

@@ -6,9 +6,9 @@ import useMap from '../hooks/use-map';
 import { CityEntity, OfferEntity } from '../types';
 
 type MapProps = {
-  city: CityEntity;
+  city: CityEntity | null;
   offers: OfferEntity[];
-  selectedOffer: OfferEntity | undefined;
+  currentOffer: OfferEntity | null;
 };
 
 const defaultCustomIcon = new Icon({
@@ -24,9 +24,18 @@ const currentCustomIcon = new Icon({
 });
 
 function Map(props: MapProps): JSX.Element {
-  const { city, offers, selectedOffer } = props;
+  const { city, offers, currentOffer } = props;
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
+
+  useEffect(() => {
+    if (map && city) {
+      map.setView(
+        [city.location.latitude, city.location.longitude],
+        city.location.zoom
+      );
+    }
+  }, [map, city]);
 
   useEffect(() => {
     if (map) {
@@ -39,7 +48,7 @@ function Map(props: MapProps): JSX.Element {
 
         marker
           .setIcon(
-            selectedOffer !== undefined && offer.title === selectedOffer.title
+            currentOffer !== undefined && offer.title === currentOffer?.title
               ? currentCustomIcon
               : defaultCustomIcon
           )
@@ -50,8 +59,8 @@ function Map(props: MapProps): JSX.Element {
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, offers, selectedOffer]);
+  }, [map, offers, currentOffer]);
 
-  return <div style={{ height: '500px' }} ref={mapRef}></div>;
+  return <section className="cities__map map" ref={mapRef}></section>;
 }
 export default Map;

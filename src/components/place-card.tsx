@@ -5,15 +5,16 @@ import { getRatingPercent } from '../utils';
 
 type PlaceCardProps = {
   offer: OfferEntity;
-  onActiveCardChange: React.Dispatch<React.SetStateAction<OfferEntity>>;
+  onActiveOfferChange: React.Dispatch<React.SetStateAction<OfferEntity | null>>;
 };
 function PlaceCard(props: PlaceCardProps): JSX.Element {
-  const { offer, onActiveCardChange } = props;
+  const { offer, onActiveOfferChange } = props;
   const ratingPercent = getRatingPercent(offer.rating);
   return (
     <article
       className="cities__card place-card"
-      onMouseEnter={() => onActiveCardChange({ ...offer })}
+      onMouseEnter={() => onActiveOfferChange({ ...offer })}
+      onMouseLeave={() => onActiveOfferChange(null)}
     >
       {offer.isPremium && (
         <div className="place-card__mark">
