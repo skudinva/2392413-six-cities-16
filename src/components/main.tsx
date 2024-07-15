@@ -78,7 +78,7 @@ function Main({ offersCount, offers }: AppProps): JSX.Element {
               offers={cityOffers}
               city={currentCity}
               currentOffer={currentOffer}
-              mapClass="cities__map"
+              baseClass="cities"
             />
           </div>
         </div>
