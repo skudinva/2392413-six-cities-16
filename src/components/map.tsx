@@ -8,7 +8,7 @@ import { CityEntity, OfferEntity } from '../types';
 type MapProps = {
   city: CityEntity | null;
   offers: OfferEntity[];
-  selectedOffer: OfferEntity | null;
+  currentOffer: OfferEntity | null;
 };
 
 const defaultCustomIcon = new Icon({
@@ -24,7 +24,7 @@ const currentCustomIcon = new Icon({
 });
 
 function Map(props: MapProps): JSX.Element {
-  const { city, offers, selectedOffer } = props;
+  const { city, offers, currentOffer } = props;
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
@@ -48,7 +48,7 @@ function Map(props: MapProps): JSX.Element {
 
         marker
           .setIcon(
-            selectedOffer !== undefined && offer.title === selectedOffer?.title
+            currentOffer !== undefined && offer.title === currentOffer?.title
               ? currentCustomIcon
               : defaultCustomIcon
           )
@@ -59,7 +59,7 @@ function Map(props: MapProps): JSX.Element {
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, offers, selectedOffer]);
+  }, [map, offers, currentOffer]);
 
   return <section className="cities__map map" ref={mapRef}></section>;
 }

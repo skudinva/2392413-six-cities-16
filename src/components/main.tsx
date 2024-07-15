@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { Cities, CityName } from '../const';
-import { AppProps, CityEntity } from '../types';
+import { AppProps, CityEntity, OfferEntity } from '../types';
 import CityList from './city-list';
 import Map from './map';
 import PlaceCardList from './place-card-list';
 
 function Main({ offersCount, offers }: AppProps): JSX.Element {
   const [currentCity, setCurrentCity] = useState<CityEntity | null>(null);
+  const [currentOffer, setCurrentOffer] = useState<OfferEntity | null>(null);
 
   const handleCityClick = (cityName: string): void => {
     Cities.some((city) => {
@@ -67,10 +68,17 @@ function Main({ offersCount, offers }: AppProps): JSX.Element {
                 </li>
               </ul>
             </form>
-            <PlaceCardList offers={cityOffers} />
+            <PlaceCardList
+              offers={cityOffers}
+              onActiveOfferChange={setCurrentOffer}
+            />
           </section>
           <div className="cities__right-section">
-            <Map offers={cityOffers} city={currentCity} selectedOffer={null} />
+            <Map
+              offers={cityOffers}
+              city={currentCity}
+              currentOffer={currentOffer}
+            />
           </div>
         </div>
       </div>
