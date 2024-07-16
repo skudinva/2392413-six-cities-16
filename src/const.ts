@@ -26,6 +26,40 @@ export enum CityName {
   Dusseldorf = 'Dusseldorf',
 }
 
+export type RatingGrade = {
+  title: string;
+  mark: number;
+};
+
+export const RatingTitle: [
+  RatingGrade,
+  RatingGrade,
+  RatingGrade,
+  RatingGrade,
+  RatingGrade
+] = [
+  {
+    title: 'perfect',
+    mark: 5,
+  },
+  {
+    title: 'good',
+    mark: 4,
+  },
+  {
+    title: 'not bad',
+    mark: 3,
+  },
+  {
+    title: 'badly',
+    mark: 2,
+  },
+  {
+    title: 'terribly',
+    mark: 1,
+  },
+];
+
 export const Cities: [
   CityEntity,
   CityEntity,
