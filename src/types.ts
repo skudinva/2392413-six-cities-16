@@ -52,6 +52,24 @@ export type OfferEntity = {
   previewImage: string;
 };
 
+export type OfferDetailEntity = {
+  id: string;
+  title: string;
+  type: string;
+  price: number;
+  city: CityEntity;
+  location: LocationEntity;
+  isFavorite: boolean;
+  isPremium: boolean;
+  rating: number;
+  description: string;
+  bedrooms: number;
+  goods: [string];
+  host: UserEntity;
+  images: [string];
+  maxAdults: number;
+};
+
 export type UserEntity = {
   name: string;
   avatarUrl: string;
