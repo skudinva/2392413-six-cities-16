@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../const';
+import { offerDetail } from '../mocks/offer-detail';
 import { AppProps } from '../types';
 import FavoriteList from './favorite-list';
 import Login from './login';
@@ -32,7 +33,10 @@ function App({ offersCount, offers }: AppProps): JSX.Element {
               </PrivateRoute>
             }
           />
-          <Route path={AppRoute.Offer} element={<Offer offer={offers[0]} />} />
+          <Route
+            path={AppRoute.Offer}
+            element={<Offer offer={offerDetail} />}
+          />
         </Route>
         <Route path="*" element={<Page404 />} />
       </Routes>
