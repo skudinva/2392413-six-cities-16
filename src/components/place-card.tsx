@@ -1,27 +1,30 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../const';
 import { OfferEntity } from '../types';
-import { getRatingPercent } from '../utils';
+import RatingStars from './rating-stars';
 
 type PlaceCardProps = {
   offer: OfferEntity;
-  onActiveOfferChange: React.Dispatch<React.SetStateAction<OfferEntity | null>>;
+  onActiveOfferChange?: React.Dispatch<
+    React.SetStateAction<OfferEntity | null>
+  >;
+  baseClass: string;
 };
 function PlaceCard(props: PlaceCardProps): JSX.Element {
-  const { offer, onActiveOfferChange } = props;
-  const ratingPercent = getRatingPercent(offer.rating);
+  const { offer, onActiveOfferChange, baseClass } = props;
+
   return (
     <article
-      className="cities__card place-card"
-      onMouseEnter={() => onActiveOfferChange({ ...offer })}
-      onMouseLeave={() => onActiveOfferChange(null)}
+      className={`${baseClass}__card place-card`}
+      onMouseEnter={() => onActiveOfferChange && onActiveOfferChange(offer)}
+      onMouseLeave={() => onActiveOfferChange && onActiveOfferChange(null)}
     >
       {offer.isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
       )}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`${baseClass}__image-wrapper place-card__image-wrapper`}>
         <a href="#">
           <img
             className="place-card__image"
@@ -52,12 +55,7 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
             </span>
           </button>
         </div>
-        <div className="place-card__rating rating">
-          <div className="place-card__stars rating__stars">
-            <span style={{ width: `${ratingPercent}%` }}></span>
-            <span className="visually-hidden">Rating</span>
-          </div>
-        </div>
+        <RatingStars baseClass="place-card" rating={offer.rating} />
         <h2 className="place-card__name">
           <Link to={AppRoute.Offer.replace(':id', offer.id)}>
             {offer.title}

@@ -1,60 +1,38 @@
-import { OfferEntity } from '../types';
-import { getRatingPercent } from '../utils';
+import { offers } from '../mocks/offers';
+import { reviews } from '../mocks/reviews';
+import { OfferDetailEntity } from '../types';
+import Map from './map';
+import NearbyOffers from './nearby-offers';
 import OfferReviewForm from './offer-review-form';
+import OfferReviewList from './offer-review-list';
+import RatingStars from './rating-stars';
 
 type OfferProps = {
-  offer: OfferEntity;
+  offer: OfferDetailEntity;
 };
 
 function Offer(props: OfferProps): JSX.Element {
   const { offer } = props;
-  const ratingPercent = getRatingPercent(offer.rating);
+
+  const nearbyOffers = offers
+    .filter(
+      (nearbyOffer) =>
+        nearbyOffer.city.name === offer.city.name && nearbyOffer.id !== offer.id
+    )
+    .slice(1, 4);
+
   return (
     <section className="offer">
       <div className="offer__gallery-container container">
         <div className="offer__gallery">
-          <div className="offer__image-wrapper">
-            <img
-              className="offer__image"
-              src="img/room.jpg"
-              alt="Photo studio"
-            />
-          </div>
-          <div className="offer__image-wrapper">
-            <img
-              className="offer__image"
-              src="img/apartment-01.jpg"
-              alt="Photo studio"
-            />
-          </div>
-          <div className="offer__image-wrapper">
-            <img
-              className="offer__image"
-              src="img/apartment-02.jpg"
-              alt="Photo studio"
-            />
-          </div>
-          <div className="offer__image-wrapper">
-            <img
-              className="offer__image"
-              src="img/apartment-03.jpg"
-              alt="Photo studio"
-            />
-          </div>
-          <div className="offer__image-wrapper">
-            <img
-              className="offer__image"
-              src="img/studio-01.jpg"
-              alt="Photo studio"
-            />
-          </div>
-          <div className="offer__image-wrapper">
-            <img
-              className="offer__image"
-              src="img/apartment-01.jpg"
-              alt="Photo studio"
-            />
-          </div>
+          {offer.images.map((image, index) => {
+            const keyValue = `${index}-image`;
+            return (
+              <div className="offer__image-wrapper" key={keyValue}>
+                <img className="offer__image" src={image} alt="Photo studio" />
+              </div>
+            );
+          })}
         </div>
       </div>
       <div className="offer__container container">
@@ -81,23 +59,21 @@ function Offer(props: OfferProps): JSX.Element {
             </button>
           </div>
           <div className="offer__rating rating">
-            <div className="offer__stars rating__stars">
-              <span style={{ width: `${ratingPercent}%` }}></span>
-              <span className="visually-hidden">Rating</span>
-            </div>
-            <span className="offer__rating-value rating__value">
-              {offer.rating}
-            </span>
+            <RatingStars baseClass="offer" rating={offer.rating}>
+              <span className="offer__rating-value rating__value">
+                {offer.rating}
+              </span>
+            </RatingStars>
           </div>
           <ul className="offer__features">
             <li className="offer__feature offer__feature--entire">
               {offer.type}
             </li>
             <li className="offer__feature offer__feature--bedrooms">
-              3 Bedrooms
+              {offer.bedrooms} Bedrooms
             </li>
             <li className="offer__feature offer__feature--adults">
-              Max 4 adults
+              Max {offer.maxAdults} adults
             </li>
           </ul>
           <div className="offer__price">
@@ -107,87 +83,48 @@ function Offer(props: OfferProps): JSX.Element {
           <div className="offer__inside">
             <h2 className="offer__inside-title">What&amp;s inside</h2>
             <ul className="offer__inside-list">
-              <li className="offer__inside-item">Wi-Fi</li>
-              <li className="offer__inside-item">Washing machine</li>
-              <li className="offer__inside-item">Towels</li>
-              <li className="offer__inside-item">Heating</li>
-              <li className="offer__inside-item">Coffee machine</li>
-              <li className="offer__inside-item">Baby seat</li>
-              <li className="offer__inside-item">Kitchen</li>
-              <li className="offer__inside-item">Dishwasher</li>
-              <li className="offer__inside-item">Cabel TV</li>
-              <li className="offer__inside-item">Fridge</li>
+              {offer.goods.map((good) => (
+                <li className="offer__inside-item" key={good}>
+                  {good}
+                </li>
+              ))}
             </ul>
           </div>
           <div className="offer__host">
-            <h2 className="offer__host-title">Meet the host</h2>
+            <h2 className="offer__host-title">{offer.title}</h2>
             <div className="offer__host-user user">
               <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
                 <img
                   className="offer__avatar user__avatar"
-                  src="img/avatar-angelina.jpg"
+                  src={offer.host.avatarUrl}
                   width="74"
                   height="74"
                   alt="Host avatar"
                 />
               </div>
-              <span className="offer__user-name">Angelina</span>
-              <span className="offer__user-status">Pro</span>
+              <span className="offer__user-name">{offer.host.name}</span>
+              {offer.host.isPro && (
+                <span className="offer__user-status">Pro</span>
+              )}
             </div>
             <div className="offer__description">
-              <p className="offer__text">
-                A quiet cozy and picturesque that hides behind a a river by the
-                unique lightness of Amsterdam. The building is green and from
-                18th century.
-              </p>
-              <p className="offer__text">
-                An independent House, strategically located between Rembrand
-                Square and National Opera, but where the bustle of the city
-                comes to rest in this alley flowery and colorful.
-              </p>
+              <p className="offer__text">{offer.description}</p>
             </div>
           </div>
           <section className="offer__reviews reviews">
             <h2 className="reviews__title">
-              Reviews · <span className="reviews__amount">1</span>
+              Reviews ·{' '}
+              <span className="reviews__amount">{reviews.length}</span>
             </h2>
-            <ul className="reviews__list">
-              <li className="reviews__item">
-                <div className="reviews__user user">
-                  <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                    <img
-                      className="reviews__avatar user__avatar"
-                      src="img/avatar-max.jpg"
-                      width="54"
-                      height="54"
-                      alt="Reviews avatar"
-                    />
-                  </div>
-                  <span className="reviews__user-name">Max</span>
-                </div>
-                <div className="reviews__info">
-                  <div className="reviews__rating rating">
-                    <div className="reviews__stars rating__stars">
-                      <span style={{ width: '80%' }}></span>
-                      <span className="visually-hidden">Rating</span>
-                    </div>
-                  </div>
-                  <p className="reviews__text">
-                    A quiet cozy and picturesque that hides behind a a river by
-                    the unique lightness of Amsterdam. The building is green and
-                    from 18th century.
-                  </p>
-                  <time className="reviews__time" dateTime="2019-04-24">
-                    April 2019
-                  </time>
-                </div>
-              </li>
-            </ul>
+            <OfferReviewList reviews={reviews} />
             <OfferReviewForm />
           </section>
         </div>
       </div>
-      <section className="offer__map map"></section>
+      <Map offers={nearbyOffers} city={offer.city} baseClass="offer" />
+      <div className="container">
+        <NearbyOffers offers={nearbyOffers} />
+      </div>
     </section>
   );
 }

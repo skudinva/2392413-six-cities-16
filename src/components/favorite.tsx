@@ -1,5 +1,5 @@
 import { OfferEntity } from '../types';
-import { getRatingPercent } from '../utils';
+import RatingStars from './rating-stars';
 
 type FavoriteProps = {
   offer: OfferEntity;
@@ -7,7 +7,7 @@ type FavoriteProps = {
 
 function Favorite(props: FavoriteProps): JSX.Element {
   const { offer } = props;
-  const ratingPercent = getRatingPercent(offer.rating);
+
   return (
     <article className="favorites__card place-card">
       <div className="favorites__image-wrapper place-card__image-wrapper">
@@ -37,12 +37,7 @@ function Favorite(props: FavoriteProps): JSX.Element {
             <span className="visually-hidden">In bookmarks</span>
           </button>
         </div>
-        <div className="place-card__rating rating">
-          <div className="place-card__stars rating__stars">
-            <span style={{ width: `${ratingPercent}%` }}></span>
-            <span className="visually-hidden">Rating</span>
-          </div>
-        </div>
+        <RatingStars baseClass="place-card" rating={offer.rating} />
         <h2 className="place-card__name">
           <a href="#">{offer.title}</a>
         </h2>

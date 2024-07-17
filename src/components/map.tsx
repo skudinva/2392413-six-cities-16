@@ -8,7 +8,8 @@ import { CityEntity, OfferEntity } from '../types';
 type MapProps = {
   city: CityEntity | null;
   offers: OfferEntity[];
-  currentOffer: OfferEntity | null;
+  currentOffer?: OfferEntity;
+  baseClass: string;
 };
 
 const defaultCustomIcon = new Icon({
@@ -24,7 +25,7 @@ const currentCustomIcon = new Icon({
 });
 
 function Map(props: MapProps): JSX.Element {
-  const { city, offers, currentOffer } = props;
+  const { city, offers, currentOffer, baseClass } = props;
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
@@ -61,6 +62,6 @@ function Map(props: MapProps): JSX.Element {
     }
   }, [map, offers, currentOffer]);
 
-  return <section className="cities__map map" ref={mapRef}></section>;
+  return <section className={`${baseClass}__map map`} ref={mapRef}></section>;
 }
 export default Map;

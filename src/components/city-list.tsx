@@ -22,7 +22,7 @@ function CityList(props: CityListProps): JSX.Element {
       }}
     >
       {Object.values(cities).map((city, index) => {
-        const classes = [
+        const classNames = [
           'locations__item-link',
           'tabs__item',
           city.toString() === currentCity?.name ? 'tabs__item--active' : '',
@@ -31,7 +31,7 @@ function CityList(props: CityListProps): JSX.Element {
 
         return (
           <li className="locations__item" key={keyValue}>
-            <Link className={classes} to="#">
+            <Link className={classNames} to="#">
               <span>{city}</span>
             </Link>
           </li>
