@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { OfferEntity } from '../types';
 import PlaceCard from './place-card';
 
@@ -9,8 +8,6 @@ type PlaceCardListProps = {
 
 function PlaceCardList(props: PlaceCardListProps): JSX.Element {
   const { offers, onActiveOfferChange } = props;
-  const [activeOffer, setActiveOffer] = useState<OfferEntity | null>(null);
-  onActiveOfferChange(activeOffer);
 
   return (
     <div className="cities__places-list places__list tabs__content">
@@ -18,7 +15,7 @@ function PlaceCardList(props: PlaceCardListProps): JSX.Element {
         <PlaceCard
           offer={offer}
           key={offer.id}
-          onActiveOfferChange={setActiveOffer}
+          onActiveOfferChange={onActiveOfferChange}
           baseClass="cities"
         />
       ))}
