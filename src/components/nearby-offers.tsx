@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { OfferEntity } from '../types';
 import PlaceCard from './place-card';
 
@@ -9,8 +8,7 @@ type NearbyOffersProps = {
 
 function NearbyOffers(props: NearbyOffersProps): JSX.Element {
   const { offers, onActiveOfferChange } = props;
-  const [activeOffer, setActiveOffer] = useState<OfferEntity | null>(null);
-  onActiveOfferChange(activeOffer);
+
   return (
     <section className="near-places places">
       <h2 className="near-places__title">Other places in the neighbourhood</h2>
@@ -19,7 +17,7 @@ function NearbyOffers(props: NearbyOffersProps): JSX.Element {
           <PlaceCard
             offer={offer}
             key={offer.id}
-            onActiveOfferChange={setActiveOffer}
+            onActiveOfferChange={onActiveOfferChange}
             baseClass="near-places"
           />
         ))}
