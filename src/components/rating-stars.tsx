@@ -7,7 +7,7 @@ type RatingStarsProps = {
 function RatingStars(props: RatingStarsProps): JSX.Element {
   const { rating, baseClass, children } = props;
   const ratingPercent = getRatingPercent(rating);
-  //bug: children не отрисовывается
+
   return (
     <div className={`${baseClass}__rating rating`}>
       <div className={`${baseClass}__stars rating__stars`}>

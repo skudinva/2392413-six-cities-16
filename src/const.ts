@@ -2,6 +2,7 @@ import { CityEntity } from './types';
 
 export const Setting = {
   OffersCount: 5,
+  review: { minLength: 50, maxLength: 300 },
 };
 
 export enum AppRoute {

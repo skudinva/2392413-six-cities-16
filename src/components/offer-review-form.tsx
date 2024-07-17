@@ -1,5 +1,5 @@
 import { FormEvent, useState } from 'react';
-import { RatingTitle } from '../const';
+import { RatingTitle, Setting } from '../const';
 import Rating from './rating';
 
 function OfferReviewForm(): JSX.Element {
@@ -15,7 +15,10 @@ function OfferReviewForm(): JSX.Element {
     }
   };
 
-  const isSubmitButtonDisabled = !rating || review.length < 50;
+  const isSubmitButtonDisabled =
+    !rating ||
+    review.length < Setting.review.minLength ||
+    review.length > Setting.review.maxLength;
 
   return (
     <form

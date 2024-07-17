@@ -5,7 +5,9 @@ import RatingStars from './rating-stars';
 
 type PlaceCardProps = {
   offer: OfferEntity;
-  onActiveOfferChange: React.Dispatch<React.SetStateAction<OfferEntity | null>>;
+  onActiveOfferChange?: React.Dispatch<
+    React.SetStateAction<OfferEntity | null>
+  >;
   baseClass: string;
 };
 function PlaceCard(props: PlaceCardProps): JSX.Element {
@@ -14,8 +16,8 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
   return (
     <article
       className={`${baseClass}__card place-card`}
-      onMouseEnter={() => onActiveOfferChange({ ...offer })}
-      onMouseLeave={() => onActiveOfferChange(null)}
+      onMouseEnter={() => onActiveOfferChange && onActiveOfferChange(offer)}
+      onMouseLeave={() => onActiveOfferChange && onActiveOfferChange(null)}
     >
       {offer.isPremium && (
         <div className="place-card__mark">
