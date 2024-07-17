@@ -8,7 +8,7 @@ import { CityEntity, OfferEntity } from '../types';
 type MapProps = {
   city: CityEntity | null;
   offers: OfferEntity[];
-  currentOffer: OfferEntity | null;
+  currentOffer?: OfferEntity;
   baseClass: string;
 };
 

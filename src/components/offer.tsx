@@ -1,7 +1,6 @@
-import { useState } from 'react';
 import { offers } from '../mocks/offers';
 import { reviews } from '../mocks/reviews';
-import { OfferDetailEntity, OfferEntity } from '../types';
+import { OfferDetailEntity } from '../types';
 import Map from './map';
 import NearbyOffers from './nearby-offers';
 import OfferReviewForm from './offer-review-form';
@@ -21,8 +20,6 @@ function Offer(props: OfferProps): JSX.Element {
         nearbyOffer.city.name === offer.city.name && nearbyOffer.id !== offer.id
     )
     .slice(1, 4);
-
-  const [currentOffer, setCurrentOffer] = useState<OfferEntity | null>(null);
 
   return (
     <section className="offer">
@@ -124,17 +121,9 @@ function Offer(props: OfferProps): JSX.Element {
           </section>
         </div>
       </div>
-      <Map
-        offers={nearbyOffers}
-        city={offer.city}
-        currentOffer={currentOffer}
-        baseClass="offer"
-      />
+      <Map offers={nearbyOffers} city={offer.city} baseClass="offer" />
       <div className="container">
-        <NearbyOffers
-          offers={nearbyOffers}
-          onActiveOfferChange={setCurrentOffer}
-        />
+        <NearbyOffers offers={nearbyOffers} />
       </div>
     </section>
   );
