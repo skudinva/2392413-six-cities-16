@@ -1,12 +1,11 @@
 import { ReviewEntity } from '../types';
-import { getRatingPercent } from '../utils';
+import RatingStars from './rating-stars';
 
 type OfferReviewItemProps = {
   review: ReviewEntity;
 };
 function OfferReviewItem(props: OfferReviewItemProps): JSX.Element {
   const { review } = props;
-  const ratingPercent = getRatingPercent(review.rating);
   const date = new Date(review.date);
 
   return (
@@ -24,12 +23,7 @@ function OfferReviewItem(props: OfferReviewItemProps): JSX.Element {
         <span className="reviews__user-name">{review.user.name}</span>
       </div>
       <div className="reviews__info">
-        <div className="reviews__rating rating">
-          <div className="reviews__stars rating__stars">
-            <span style={{ width: `${ratingPercent}%` }}></span>
-            <span className="visually-hidden">Rating</span>
-          </div>
-        </div>
+        <RatingStars baseClass="reviews" rating={review.rating} />
         <p className="reviews__text">{review.comment}</p>
         <time className="reviews__time" dateTime={review.date}>
           {date.toLocaleDateString()}

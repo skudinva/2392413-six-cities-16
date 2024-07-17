@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { offers } from '../mocks/offers';
 import { reviews } from '../mocks/reviews';
 import { OfferDetailEntity, OfferEntity } from '../types';
-import { getRatingPercent } from '../utils';
 import Map from './map';
 import NearbyOffers from './nearby-offers';
 import OfferReviewForm from './offer-review-form';
 import OfferReviewList from './offer-review-list';
+import RatingStars from './rating-stars';
 
 type OfferProps = {
   offer: OfferDetailEntity;
@@ -14,7 +14,6 @@ type OfferProps = {
 
 function Offer(props: OfferProps): JSX.Element {
   const { offer } = props;
-  const ratingPercent = getRatingPercent(offer.rating);
 
   const nearbyOffers = offers
     .filter(
@@ -63,13 +62,11 @@ function Offer(props: OfferProps): JSX.Element {
             </button>
           </div>
           <div className="offer__rating rating">
-            <div className="offer__stars rating__stars">
-              <span style={{ width: `${ratingPercent}%` }}></span>
-              <span className="visually-hidden">Rating</span>
-            </div>
-            <span className="offer__rating-value rating__value">
-              {offer.rating}
-            </span>
+            <RatingStars baseClass="offer" rating={offer.rating}>
+              <span className="offer__rating-value rating__value">
+                {offer.rating}
+              </span>
+            </RatingStars>
           </div>
           <ul className="offer__features">
             <li className="offer__feature offer__feature--entire">

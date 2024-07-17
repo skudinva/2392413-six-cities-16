@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../const';
 import { OfferEntity } from '../types';
-import { getRatingPercent } from '../utils';
+import RatingStars from './rating-stars';
 
 type PlaceCardProps = {
   offer: OfferEntity;
@@ -10,7 +10,7 @@ type PlaceCardProps = {
 };
 function PlaceCard(props: PlaceCardProps): JSX.Element {
   const { offer, onActiveOfferChange, baseClass } = props;
-  const ratingPercent = getRatingPercent(offer.rating);
+
   return (
     <article
       className={`${baseClass}__card place-card`}
@@ -53,12 +53,7 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
             </span>
           </button>
         </div>
-        <div className="place-card__rating rating">
-          <div className="place-card__stars rating__stars">
-            <span style={{ width: `${ratingPercent}%` }}></span>
-            <span className="visually-hidden">Rating</span>
-          </div>
-        </div>
+        <RatingStars baseClass="place-card" rating={offer.rating} />
         <h2 className="place-card__name">
           <Link to={AppRoute.Offer.replace(':id', offer.id)}>
             {offer.title}
