@@ -6,7 +6,7 @@ export const setCurrentCity = createAction<PrepareAction<CityEntity>>(
   (city: CityEntity) => ({ payload: city })
 );
 
-export const updateOffer = createAction<PrepareAction<OfferEntity[]>>(
-  'updateOffer',
+export const setOffers = createAction<PrepareAction<OfferEntity[]>>(
+  'setOffers',
   (offers: OfferEntity[]) => ({ payload: offers })
 );

@@ -125,7 +125,12 @@ function Offer(): JSX.Element {
 
       {nearbyOffers && (
         <>
-          <Map offers={nearbyOffers} city={offer.city} baseClass="offer" />
+          <Map
+            currentOffer={offer}
+            offers={nearbyOffers}
+            city={offer.city}
+            baseClass="offer"
+          />
           <div className="container">
             <NearbyOffers offers={nearbyOffers} />
           </div>
