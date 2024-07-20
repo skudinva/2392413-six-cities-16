@@ -1,10 +1,5 @@
 import { CityEntity } from './types';
 
-export const Setting = {
-  OffersCount: 5,
-  review: { minLength: 50, maxLength: 300 },
-};
-
 export enum AppRoute {
   Main = '/',
   'Login' = '/login',
@@ -16,15 +11,6 @@ export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
-}
-
-export enum CityName {
-  Paris = 'Paris',
-  Cologne = 'Cologne',
-  Brussels = 'Brussels',
-  Amsterdam = 'Amsterdam',
-  Hamburg = 'Hamburg',
-  Dusseldorf = 'Dusseldorf',
 }
 
 export type RatingGrade = {
@@ -60,6 +46,15 @@ export const RatingTitle: [
     mark: 1,
   },
 ];
+
+export enum CityName {
+  Paris = 'Paris',
+  Cologne = 'Cologne',
+  Brussels = 'Brussels',
+  Amsterdam = 'Amsterdam',
+  Hamburg = 'Hamburg',
+  Dusseldorf = 'Dusseldorf',
+}
 
 export const Cities: [
   CityEntity,
@@ -119,8 +114,10 @@ export const Cities: [
   },
 ];
 
-export const URL_MARKER_DEFAULT =
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg';
+export const URL_MARKER_DEFAULT = '/img/pin.svg';
 
-export const URL_MARKER_CURRENT =
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg';
+export const URL_MARKER_CURRENT = '/img/pin-active.svg';
+
+export const Setting = {
+  review: { minLength: 50, maxLength: 300 },
+};

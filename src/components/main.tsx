@@ -1,37 +1,25 @@
 import { useState } from 'react';
-import { Cities, CityName } from '../const';
-import { AppProps, CityEntity, OfferEntity } from '../types';
+import { CityName } from '../const';
+import { useAppSelector } from '../hooks/use-app-dispatch';
+import { OfferEntity } from '../types';
+import { getCityOffers } from '../utils';
 import CityList from './city-list';
 import Map from './map';
 import OfferSort from './offer-sort';
 import PlaceCardList from './place-card-list';
 
-function Main({ offersCount, offers }: AppProps): JSX.Element {
-  const [currentCity, setCurrentCity] = useState<CityEntity | null>(null);
+function Main(): JSX.Element {
+  const currentCity = useAppSelector((state) => state.currentCity);
+  const offers = useAppSelector((state) => state.offers);
+  const cityOffers = getCityOffers(offers, currentCity);
   const [currentOffer, setCurrentOffer] = useState<OfferEntity | null>(null);
-
-  const handleCityClick = (cityName: string): void => {
-    Cities.some((city) => {
-      if (city.name === cityName) {
-        setCurrentCity(city);
-      }
-    });
-  };
-
-  const cityOffers = offers
-    .filter((offer) => currentCity && offer.city.name === currentCity.name)
-    .slice(0, offersCount);
 
   return (
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
       <div className="tabs">
         <section className="locations container">
-          <CityList
-            cities={CityName}
-            currentCity={currentCity}
-            onCityClick={handleCityClick}
-          />
+          <CityList cities={CityName} currentCity={currentCity} />
         </section>
       </div>
       <div className="cities">

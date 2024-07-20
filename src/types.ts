@@ -1,4 +1,5 @@
 import { AuthorizationStatus } from './const';
+import { store } from './store';
 declare global {
   interface ObjectConstructor {
     groupBy<Item, Key extends PropertyKey>(
@@ -14,11 +15,6 @@ declare global {
     ): Map<Key, Item[]>;
   }
 }
-
-export type AppProps = {
-  offersCount: number;
-  offers: OfferEntity[];
-};
 
 export type MainProps = {
   authorizationStatus: AuthorizationStatus;
@@ -83,3 +79,7 @@ export type ReviewEntity = {
   comment: string;
   rating: number;
 };
+
+export type State = ReturnType<typeof store.getState>;
+
+export type AppDispatch = typeof store.dispatch;

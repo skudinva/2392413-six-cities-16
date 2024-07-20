@@ -1,16 +1,14 @@
+import { useAppSelector } from '../hooks/use-app-dispatch';
 import { OfferEntity } from '../types';
 import Favorite from './favorite';
-
-type FavoriteListProps = {
-  offers: OfferEntity[];
-};
 
 type OfferByGroup = {
   [city: string]: OfferEntity[];
 };
 
-function FavoriteList(props: FavoriteListProps): JSX.Element {
-  const favoriteOffers = props.offers.filter((offer) => offer.isFavorite);
+function FavoriteList(): JSX.Element {
+  const offers = useAppSelector((state) => state.offers);
+  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
 
   const favoriteOffersByGroup = Object.groupBy(
     favoriteOffers,

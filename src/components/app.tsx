@@ -1,7 +1,8 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../const';
-import { offerDetail } from '../mocks/offer-detail';
-import { AppProps } from '../types';
+import { useAppDispatch } from '../hooks/use-app-dispatch';
+import { offers } from '../mocks/offers';
+import { setOffers } from '../store/action';
 import FavoriteList from './favorite-list';
 import Login from './login';
 import Main from './main';
@@ -10,7 +11,10 @@ import Offer from './offer';
 import Page404 from './page404';
 import PrivateRoute from './private-route';
 
-function App({ offersCount, offers }: AppProps): JSX.Element {
+function App(): JSX.Element {
+  const dispatch = useAppDispatch();
+  dispatch(setOffers(offers));
+
   return (
     <BrowserRouter>
       <Routes>
@@ -20,23 +24,17 @@ function App({ offersCount, offers }: AppProps): JSX.Element {
             <MainLayout authorizationStatus={AuthorizationStatus.NoAuth} />
           }
         >
-          <Route
-            index
-            element={<Main offersCount={offersCount} offers={offers} />}
-          />
+          <Route index element={<Main />} />
           <Route path={AppRoute.Login} element={<Login />} />
           <Route
             path={AppRoute.Favorites}
             element={
               <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
-                <FavoriteList offers={offers} />
+                <FavoriteList />
               </PrivateRoute>
             }
           />
-          <Route
-            path={AppRoute.Offer}
-            element={<Offer offer={offerDetail} />}
-          />
+          <Route path={AppRoute.Offer} element={<Offer />} />
         </Route>
         <Route path="*" element={<Page404 />} />
       </Routes>

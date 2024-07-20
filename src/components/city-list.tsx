@@ -1,20 +1,29 @@
 import { Link } from 'react-router-dom';
-import { CityName } from '../const';
+import { Cities, CityName } from '../const';
+import { useAppDispatch } from '../hooks/use-app-dispatch';
+
+import { setCurrentCity } from '../store/action';
 import { CityEntity } from '../types';
 type CityListProps = {
   cities: typeof CityName;
   currentCity: CityEntity | null;
-  onCityClick: (cityName: string) => void;
 };
 
 function CityList(props: CityListProps): JSX.Element {
-  const { cities, currentCity, onCityClick } = props;
+  const { cities, currentCity } = props;
+  const dispatch = useAppDispatch();
 
+  const onCityClick = (cityName: string): void => {
+    Cities.some((city) => {
+      if (city.name === cityName) {
+        dispatch(setCurrentCity(city));
+      }
+    });
+  };
   return (
     <ul
       className="locations__list tabs__list"
       onClick={(evt) => {
-        evt.preventDefault();
         const targetElement = evt.target as HTMLFormElement;
         if (targetElement.children.length === 0) {
           onCityClick(targetElement.innerText);

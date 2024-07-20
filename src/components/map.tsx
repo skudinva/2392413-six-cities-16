@@ -3,25 +3,25 @@ import 'leaflet/dist/leaflet.css';
 import { useEffect, useRef } from 'react';
 import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../const';
 import useMap from '../hooks/use-map';
-import { CityEntity, OfferEntity } from '../types';
+import { CityEntity, OfferDetailEntity, OfferEntity } from '../types';
 
 type MapProps = {
   city: CityEntity | null;
   offers: OfferEntity[];
-  currentOffer?: OfferEntity;
+  currentOffer: OfferEntity | OfferDetailEntity | null;
   baseClass: string;
 };
 
 const defaultCustomIcon = new Icon({
   iconUrl: URL_MARKER_DEFAULT,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
+  iconSize: [27, 39],
+  iconAnchor: [13, 39],
 });
 
 const currentCustomIcon = new Icon({
   iconUrl: URL_MARKER_CURRENT,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
+  iconSize: [27, 39],
+  iconAnchor: [13, 39],
 });
 
 function Map(props: MapProps): JSX.Element {
@@ -31,7 +31,7 @@ function Map(props: MapProps): JSX.Element {
 
   useEffect(() => {
     if (map && city) {
-      map.setView(
+      map.flyTo(
         [city.location.latitude, city.location.longitude],
         city.location.zoom
       );
@@ -42,18 +42,20 @@ function Map(props: MapProps): JSX.Element {
     if (map) {
       const markerLayer = layerGroup().addTo(map);
       offers.forEach((offer) => {
-        const marker = new Marker({
-          lat: offer.location.latitude,
-          lng: offer.location.longitude,
-        });
+        const marker = new Marker(
+          {
+            lat: offer.location.latitude,
+            lng: offer.location.longitude,
+          },
+          {
+            icon:
+              currentOffer && offer.id === currentOffer?.id
+                ? currentCustomIcon
+                : defaultCustomIcon,
+          }
+        );
 
-        marker
-          .setIcon(
-            currentOffer !== undefined && offer.title === currentOffer?.title
-              ? currentCustomIcon
-              : defaultCustomIcon
-          )
-          .addTo(markerLayer);
+        marker.addTo(markerLayer);
       });
 
       return () => {
