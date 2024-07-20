@@ -2,7 +2,7 @@ import { createReducer } from '@reduxjs/toolkit';
 import { Cities, SortType } from '../const';
 import { CityEntity } from '../types';
 import { OfferEntity } from './../types';
-import { setCurrentCity, setOffers } from './action';
+import { setCurrentCity, setCurrentSort, setOffers } from './action';
 
 type InitialState = {
   offers: OfferEntity[];
@@ -25,6 +25,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setOffers, (state, action) => {
       state.offers = action.payload;
+    })
+    .addCase(setCurrentSort, (state, action) => {
+      state.currentSort = action.payload;
     });
 });
 
