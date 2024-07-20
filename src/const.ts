@@ -54,6 +54,13 @@ export enum SortType {
   topRatedFirst = 'Top rated first',
 }
 
+export const SortList: [SortType, SortType, SortType, SortType] = [
+  SortType.popular,
+  SortType.priceLow2High,
+  SortType.priceHigh2Low,
+  SortType.topRatedFirst,
+];
+
 export enum CityName {
   Paris = 'Paris',
   Cologne = 'Cologne',
