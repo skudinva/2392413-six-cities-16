@@ -47,6 +47,13 @@ export const RatingTitle: [
   },
 ];
 
+export enum SortType {
+  popular = 'Popular',
+  priceLow2High = 'Price: low to high',
+  priceHigh2Low = 'Price: high to low',
+  topRatedFirst = 'Top rated first',
+}
+
 export enum CityName {
   Paris = 'Paris',
   Cologne = 'Cologne',
@@ -65,7 +72,7 @@ export const Cities: [
   CityEntity
 ] = [
   {
-    name: 'Paris',
+    name: CityName.Paris,
     location: {
       latitude: 48.85661,
       longitude: 2.351499,
@@ -73,7 +80,7 @@ export const Cities: [
     },
   },
   {
-    name: 'Cologne',
+    name: CityName.Cologne,
     location: {
       latitude: 50.938361,
       longitude: 6.959974,
@@ -81,7 +88,7 @@ export const Cities: [
     },
   },
   {
-    name: 'Brussels',
+    name: CityName.Brussels,
     location: {
       latitude: 50.846557,
       longitude: 4.351697,
@@ -89,7 +96,7 @@ export const Cities: [
     },
   },
   {
-    name: 'Amsterdam',
+    name: CityName.Amsterdam,
     location: {
       latitude: 52.37454,
       longitude: 4.897976,
@@ -97,7 +104,7 @@ export const Cities: [
     },
   },
   {
-    name: 'Hamburg',
+    name: CityName.Hamburg,
     location: {
       latitude: 53.550341,
       longitude: 10.000654,
@@ -105,7 +112,7 @@ export const Cities: [
     },
   },
   {
-    name: 'Dusseldorf',
+    name: CityName.Dusseldorf,
     location: {
       latitude: 51.225402,
       longitude: 6.776314,

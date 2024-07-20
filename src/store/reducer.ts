@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { Cities } from '../const';
+import { Cities, SortType } from '../const';
 import { CityEntity } from '../types';
 import { OfferEntity } from './../types';
 import { setCurrentCity, setOffers } from './action';
@@ -8,12 +8,14 @@ type InitialState = {
   offers: OfferEntity[];
   currentCity: CityEntity;
   favorites: OfferEntity[];
+  currentSort: SortType;
 };
 
 const initialState: InitialState = {
   offers: [],
   currentCity: Cities[0],
   favorites: [],
+  currentSort: SortType.popular,
 };
 
 const reducer = createReducer(initialState, (builder) => {
