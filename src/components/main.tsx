@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { CityName } from '../const';
 import { useAppSelector } from '../hooks/use-app-dispatch';
 import { OfferEntity } from '../types';
-import { getCityOffers } from '../utils';
+import { applySorting, getCityOffers } from '../utils';
 import CityList from './city-list';
 import Map from './map';
 import OfferSort from './offer-sort';
@@ -10,8 +10,14 @@ import PlaceCardList from './place-card-list';
 
 function Main(): JSX.Element {
   const currentCity = useAppSelector((state) => state.currentCity);
+  const currentSort = useAppSelector((state) => state.currentSort);
   const offers = useAppSelector((state) => state.offers);
   const cityOffers = getCityOffers(offers, currentCity);
+  const sortFunction = applySorting[currentSort];
+  if (sortFunction) {
+    cityOffers.sort(sortFunction);
+  }
+
   const [currentOffer, setCurrentOffer] = useState<OfferEntity | null>(null);
 
   return (
