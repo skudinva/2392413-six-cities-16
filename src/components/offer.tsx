@@ -1,25 +1,26 @@
-import { offers } from '../mocks/offers';
+import { useAppSelector } from '../hooks/use-app-dispatch';
+import { offerDetail } from '../mocks/offer-detail';
 import { reviews } from '../mocks/reviews';
-import { OfferDetailEntity } from '../types';
 import Map from './map';
 import NearbyOffers from './nearby-offers';
 import OfferReviewForm from './offer-review-form';
 import OfferReviewList from './offer-review-list';
 import RatingStars from './rating-stars';
 
-type OfferProps = {
-  offer: OfferDetailEntity;
-};
+function Offer(): JSX.Element {
+  //  const { id } = useParams();
+  const offers = useAppSelector((state) => state.offers);
+  const offer = offerDetail;
 
-function Offer(props: OfferProps): JSX.Element {
-  const { offer } = props;
-
-  const nearbyOffers = offers
-    .filter(
-      (nearbyOffer) =>
-        nearbyOffer.city.name === offer.city.name && nearbyOffer.id !== offer.id
-    )
-    .slice(1, 4);
+  const nearbyOffers =
+    offer &&
+    offers
+      .filter(
+        (nearbyOffer) =>
+          nearbyOffer.city.name === offer.city.name &&
+          nearbyOffer.id !== offer.id
+      )
+      .slice(1, 4);
 
   return (
     <section className="offer">
@@ -121,10 +122,15 @@ function Offer(props: OfferProps): JSX.Element {
           </section>
         </div>
       </div>
-      <Map offers={nearbyOffers} city={offer.city} baseClass="offer" />
-      <div className="container">
-        <NearbyOffers offers={nearbyOffers} />
-      </div>
+
+      {nearbyOffers && (
+        <>
+          <Map offers={nearbyOffers} city={offer.city} baseClass="offer" />
+          <div className="container">
+            <NearbyOffers offers={nearbyOffers} />
+          </div>
+        </>
+      )}
     </section>
   );
 }
