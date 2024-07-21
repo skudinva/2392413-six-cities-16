@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../const';
+import { AppRoute } from '../const';
 import { useAppDispatch } from '../hooks/use-app-dispatch';
 import { offers } from '../mocks/offers';
 import { setOffers } from '../store/action';
@@ -18,18 +18,13 @@ function App(): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path={AppRoute.Main}
-          element={
-            <MainLayout authorizationStatus={AuthorizationStatus.NoAuth} />
-          }
-        >
+        <Route path={AppRoute.Main} element={<MainLayout />}>
           <Route index element={<Main />} />
           <Route path={AppRoute.Login} element={<Login />} />
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+              <PrivateRoute>
                 <FavoriteList />
               </PrivateRoute>
             }

@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { Cities, SortType } from '../const';
+import { AuthorizationStatus, Cities, SortType } from '../const';
 import { CityEntity } from '../types';
 import { OfferEntity } from './../types';
 import { setCurrentCity, setCurrentSort, setOffers } from './action';
@@ -9,6 +9,7 @@ type InitialState = {
   currentCity: CityEntity;
   favorites: OfferEntity[];
   currentSort: SortType;
+  authorizationStatus: AuthorizationStatus;
 };
 
 const initialState: InitialState = {
@@ -16,6 +17,7 @@ const initialState: InitialState = {
   currentCity: Cities[0],
   favorites: [],
   currentSort: SortType.popular,
+  authorizationStatus: AuthorizationStatus.Auth,
 };
 
 const reducer = createReducer(initialState, (builder) => {
