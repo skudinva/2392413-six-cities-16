@@ -2,7 +2,12 @@ import { createReducer } from '@reduxjs/toolkit';
 import { AuthorizationStatus, Cities, SortType } from '../const';
 import { CityEntity } from '../types';
 import { OfferEntity } from './../types';
-import { setCurrentCity, setCurrentSort, setOffers } from './action';
+import {
+  setAuthorizationStatus,
+  setCurrentCity,
+  setCurrentSort,
+  setOffers,
+} from './action';
 
 type InitialState = {
   offers: OfferEntity[];
@@ -17,7 +22,7 @@ const initialState: InitialState = {
   currentCity: Cities[0],
   favorites: [],
   currentSort: SortType.popular,
-  authorizationStatus: AuthorizationStatus.Auth,
+  authorizationStatus: AuthorizationStatus.Unknown,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -30,6 +35,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setCurrentSort, (state, action) => {
       state.currentSort = action.payload;
+    })
+    .addCase(setAuthorizationStatus, (state, action) => {
+      state.authorizationStatus = action.payload;
     });
 });
 
