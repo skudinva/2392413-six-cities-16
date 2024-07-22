@@ -1,6 +1,6 @@
 import { createAction, PrepareAction } from '@reduxjs/toolkit';
 import { AuthorizationStatus, SortType } from '../const';
-import { CityEntity, OfferEntity } from '../types';
+import { AuthInfo, CityEntity, OfferEntity } from '../types';
 
 export const setCurrentCity = createAction<PrepareAction<CityEntity>>(
   'setCurrentCity',
@@ -26,4 +26,9 @@ export const setAuthorizationStatus = createAction<
 export const setOffersLoading = createAction<PrepareAction<boolean>>(
   'setOffersLoading',
   (isOffersLoading: boolean) => ({ payload: isOffersLoading })
+);
+
+export const setUserProfile = createAction<PrepareAction<AuthInfo>>(
+  'setUserProfile',
+  (user: AuthInfo) => ({ payload: user })
 );
