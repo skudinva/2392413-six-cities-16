@@ -6,6 +6,8 @@ function SignUser(): JSX.Element {
   const authorizationStatus = useAppSelector(
     (state) => state.authorizationStatus
   );
+  const userProfile = useAppSelector((state) => state.userProfile);
+  const favorites = useAppSelector((state) => state.favorites);
   const isAuthUser = authorizationStatus === AuthorizationStatus.Auth;
 
   return (
@@ -17,12 +19,14 @@ function SignUser(): JSX.Element {
             to={AppRoute.Favorites}
           >
             <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-            {isAuthUser ? (
+            {isAuthUser && userProfile ? (
               <>
                 <span className="header__user-name user__name">
-                  Oliver.conner@gmail.com
+                  {userProfile.email}
                 </span>
-                <span className="header__favorite-count">3</span>
+                <span className="header__favorite-count">
+                  {favorites.length}
+                </span>
               </>
             ) : (
               <span className="header__login">Sign in</span>
