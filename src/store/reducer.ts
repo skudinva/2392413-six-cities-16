@@ -12,6 +12,7 @@ import {
   setAuthorizationStatus,
   setCurrentCity,
   setCurrentSort,
+  setError,
   setOffer,
   setOffers,
   setOffersLoading,
@@ -29,6 +30,7 @@ type InitialState = {
   authorizationStatus: AuthorizationStatus;
   userProfile: AuthInfo | null;
   isOffersLoading: boolean;
+  error: string | null;
 };
 
 const initialState: InitialState = {
@@ -41,6 +43,7 @@ const initialState: InitialState = {
   authorizationStatus: AuthorizationStatus.Unknown,
   userProfile: null,
   isOffersLoading: false,
+  error: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -71,6 +74,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(appendReview, (state, action) => {
       state.reviews = [...state.reviews, action.payload];
+    })
+    .addCase(setError, (state, action) => {
+      state.error = action.payload;
     });
 });
 

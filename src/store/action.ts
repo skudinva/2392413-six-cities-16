@@ -44,12 +44,11 @@ export const setAuthorizationStatus = createAction<
   payload: status,
 }));
 
-export const setOffersLoading = createAction<PrepareAction<boolean>>(
-  'setOffersLoading',
-  (isOffersLoading: boolean) => ({ payload: isOffersLoading })
-);
+export const setOffersLoading = createAction<boolean>('setOffersLoading');
 
 export const setUserProfile = createAction<PrepareAction<AuthInfo>>(
   'setUserProfile',
   (user: AuthInfo) => ({ payload: user })
 );
+
+export const setError = createAction<string | null>('setError');

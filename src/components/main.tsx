@@ -4,21 +4,15 @@ import { useAppSelector } from '../hooks/use-app-dispatch';
 import { OfferEntity } from '../types';
 import { applySorting, getCityOffers } from '../utils';
 import CityList from './city-list';
-import Loader from './loader/loader';
 import Map from './map';
 import OfferSort from './offer-sort';
 import PlaceCardList from './place-card-list';
 
 function Main(): JSX.Element {
-  const isOffersLoading = useAppSelector((state) => state.isOffersLoading);
   const currentCity = useAppSelector((state) => state.currentCity);
   const currentSort = useAppSelector((state) => state.currentSort);
   const offers = useAppSelector((state) => state.offers);
   const [currentOffer, setCurrentOffer] = useState<OfferEntity | null>(null);
-
-  if (isOffersLoading) {
-    return <Loader />;
-  }
 
   const cityOffers = getCityOffers(offers, currentCity);
   const sortFunction = applySorting[currentSort];

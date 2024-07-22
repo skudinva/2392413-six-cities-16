@@ -135,6 +135,7 @@ export const URL_MARKER_CURRENT = '/img/pin-active.svg';
 export const Setting = {
   review: { minLength: 50, maxLength: 300 },
 };
+export const TIMEOUT_SHOW_ERROR = 2000;
 
 export enum APIRoute {
   Offers = '/offers',

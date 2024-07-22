@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
-import { APIRoute, AuthorizationStatus } from '../const';
+import { store } from '.';
+import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
 import { dropToken, setToken } from '../services/token';
 import {
   AppDispatch,
@@ -13,6 +14,7 @@ import {
 import {
   appendReview,
   setAuthorizationStatus,
+  setError,
   setOffer,
   setOffers,
   setOffersLoading,
@@ -33,8 +35,8 @@ export const fetchOfferAction = createAsyncThunk<
 >('fetchOfferAction', async (_arg, { dispatch, extra: api }) => {
   dispatch(setOffersLoading(true));
   const { data } = await api.get<OfferEntity[]>(APIRoute.Offers);
-  dispatch(setOffers(data));
   dispatch(setOffersLoading(false));
+  dispatch(setOffers(data));
 });
 
 export const fetchOfferDetailAction = createAsyncThunk<
@@ -139,3 +141,7 @@ export const PostReviewAction = createAsyncThunk<
     }
   }
 );
+
+export const clearErrorAction = createAsyncThunk('clearErrorAction', () => {
+  setTimeout(() => store.dispatch(setError(null)), TIMEOUT_SHOW_ERROR);
+});
