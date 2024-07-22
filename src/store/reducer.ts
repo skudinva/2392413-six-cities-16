@@ -7,6 +7,7 @@ import {
   setCurrentCity,
   setCurrentSort,
   setOffers,
+  setOffersLoading,
 } from './action';
 
 type InitialState = {
@@ -15,6 +16,7 @@ type InitialState = {
   favorites: OfferEntity[];
   currentSort: SortType;
   authorizationStatus: AuthorizationStatus;
+  isOffersLoading: boolean;
 };
 
 const initialState: InitialState = {
@@ -23,6 +25,7 @@ const initialState: InitialState = {
   favorites: [],
   currentSort: SortType.popular,
   authorizationStatus: AuthorizationStatus.Unknown,
+  isOffersLoading: false,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -38,6 +41,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setAuthorizationStatus, (state, action) => {
       state.authorizationStatus = action.payload;
+    })
+    .addCase(setOffersLoading, (state, action) => {
+      state.isOffersLoading = action.payload;
     });
 });
 

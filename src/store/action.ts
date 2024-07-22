@@ -22,3 +22,8 @@ export const setAuthorizationStatus = createAction<
 >('setAuthorizationStatus', (status: AuthorizationStatus) => ({
   payload: status,
 }));
+
+export const setOffersLoading = createAction<PrepareAction<boolean>>(
+  'setOffersLoading',
+  (isOffersLoading: boolean) => ({ payload: isOffersLoading })
+);
