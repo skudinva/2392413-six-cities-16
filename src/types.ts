@@ -75,7 +75,7 @@ export type ReviewEntity = {
   rating: number;
 };
 
-export type UserLoginStatus = UserEntity & {
+export type AuthInfo = UserEntity & {
   email: string;
   token: string;
 };

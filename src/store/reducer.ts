@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { AuthorizationStatus, Cities, SortType } from '../const';
-import { CityEntity, UserLoginStatus } from '../types';
+import { AuthInfo, CityEntity } from '../types';
 import { OfferEntity } from './../types';
 import {
   setAuthorizationStatus,
@@ -17,7 +17,7 @@ type InitialState = {
   favorites: OfferEntity[];
   currentSort: SortType;
   authorizationStatus: AuthorizationStatus;
-  userProfile: UserLoginStatus | null;
+  userProfile: AuthInfo | null;
   isOffersLoading: boolean;
 };
 
