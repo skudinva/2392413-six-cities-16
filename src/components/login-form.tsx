@@ -1,4 +1,4 @@
-import { FormEvent, KeyboardEvent, useState } from 'react';
+import { FormEvent, useRef } from 'react';
 import { useAppDispatch } from '../hooks/use-app-dispatch';
 import { loginAction } from '../store/api-actions';
 
@@ -8,25 +8,27 @@ const isPasswordValid = (password: string) =>
 const isEmailValid = (email: string) => email.length;
 
 function LoginForm(): JSX.Element {
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const emailRef = useRef<HTMLInputElement | null>(null);
+  const passwordRef = useRef<HTMLInputElement | null>(null);
   const dispatch = useAppDispatch();
 
-  const onEmailInput = (evt: KeyboardEvent<HTMLInputElement>) => {
-    setEmail(evt.currentTarget.value);
-  };
-
-  const onPasswordInput = (evt: KeyboardEvent<HTMLInputElement>) => {
-    setPassword(evt.currentTarget.value);
-  };
-
-  const onFormSubmit = (evt: FormEvent) => {
+  const onFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    dispatch(loginAction({ email, password }));
+    if (emailRef.current !== null && passwordRef.current !== null) {
+      dispatch(
+        loginAction({
+          email: emailRef.current.value,
+          password: passwordRef.current.value,
+        })
+      );
+    }
   };
 
   const isSubmitButtonDisabled: boolean =
-    !isEmailValid(email) || !isPasswordValid(password);
+    !emailRef.current ||
+    !passwordRef.current ||
+    !isEmailValid(emailRef.current.value) ||
+    !isPasswordValid(passwordRef.current.value);
   return (
     <section className="login">
       <h1 className="login__title">Sign in</h1>
@@ -44,7 +46,7 @@ function LoginForm(): JSX.Element {
             name="email"
             placeholder="Email"
             required
-            onInput={onEmailInput}
+            ref={emailRef}
           />
         </div>
         <div className="login__input-wrapper form__input-wrapper">
@@ -55,7 +57,7 @@ function LoginForm(): JSX.Element {
             name="password"
             placeholder="Password"
             required
-            onInput={onPasswordInput}
+            ref={passwordRef}
           />
         </div>
         <button
