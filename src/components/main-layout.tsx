@@ -1,9 +1,8 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import { AppRoute } from '../const';
-import { MainProps } from '../types';
 import SignUser from './sign-user';
 
-function MainLayout({ authorizationStatus }: MainProps): JSX.Element {
+function MainLayout(): JSX.Element {
   const { pathname } = useLocation();
   const isLoginForm = pathname === (AppRoute.Login as string);
   return (
@@ -22,9 +21,7 @@ function MainLayout({ authorizationStatus }: MainProps): JSX.Element {
                 />
               </a>
             </div>
-            {!isLoginForm && (
-              <SignUser authorizationStatus={authorizationStatus} />
-            )}
+            {!isLoginForm && <SignUser />}
           </div>
         </div>
       </header>

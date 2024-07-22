@@ -1,4 +1,3 @@
-import { AuthorizationStatus } from './const';
 import { store } from './store';
 declare global {
   interface ObjectConstructor {
@@ -16,11 +15,7 @@ declare global {
   }
 }
 
-export type MainProps = {
-  authorizationStatus: AuthorizationStatus;
-};
-
-export type PrivateRouteProps = MainProps & {
+export type PrivateRouteProps = {
   children: JSX.Element;
 };
 
