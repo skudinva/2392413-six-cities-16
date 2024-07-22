@@ -1,16 +1,35 @@
-import { useAppSelector } from '../hooks/use-app-dispatch';
-import { offerDetail } from '../mocks/offer-detail';
-import { reviews } from '../mocks/reviews';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../hooks/use-app-dispatch';
+import {
+  fetchOfferDetailAction,
+  fetchReviewAction,
+} from '../store/api-actions';
+import Loader from './loader/loader';
 import Map from './map';
 import NearbyOffers from './nearby-offers';
 import OfferReviewForm from './offer-review-form';
 import OfferReviewList from './offer-review-list';
+import Page404 from './page404';
 import RatingStars from './rating-stars';
 
 function Offer(): JSX.Element {
-  //  const { id } = useParams();
+  const { id } = useParams();
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchOfferDetailAction({ id }));
+    dispatch(fetchReviewAction({ id }));
+  });
+
   const offers = useAppSelector((state) => state.offers);
-  const offer = offerDetail;
+  const offer = useAppSelector((state) => state.offer);
+  const reviews = useAppSelector((state) => state.reviews);
+
+  if (!id) {
+    return <Page404 />;
+  }
 
   const nearbyOffers =
     offer &&
@@ -22,7 +41,7 @@ function Offer(): JSX.Element {
       )
       .slice(1, 4);
 
-  return (
+  return offer ? (
     <section className="offer">
       <div className="offer__gallery-container container">
         <div className="offer__gallery">
@@ -137,6 +156,8 @@ function Offer(): JSX.Element {
         </>
       )}
     </section>
+  ) : (
+    <Loader />
   );
 }
 

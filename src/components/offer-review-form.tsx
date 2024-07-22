@@ -1,10 +1,15 @@
 import { FormEvent, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { RatingTitle, Setting } from '../const';
+import { useAppDispatch } from '../hooks/use-app-dispatch';
+import { PostReview, PostReviewAction } from '../store/api-actions';
 import Rating from './rating';
 
 function OfferReviewForm(): JSX.Element {
+  const { id } = useParams();
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState('');
+  const dispatch = useAppDispatch();
 
   const onChangeForm = (evt: FormEvent): void => {
     const { name, value } = evt.target as HTMLFormElement;
@@ -13,6 +18,19 @@ function OfferReviewForm(): JSX.Element {
     } else if (name === 'review') {
       setReview(String(value));
     }
+  };
+
+  const onFormSubmit = (evt: FormEvent) => {
+    evt.preventDefault();
+    if (!id) {
+      return;
+    }
+    const data: PostReview = {
+      id,
+      comment: review,
+      rating: rating,
+    };
+    dispatch(PostReviewAction(data));
   };
 
   const isSubmitButtonDisabled =
@@ -26,6 +44,7 @@ function OfferReviewForm(): JSX.Element {
       action="#"
       method="post"
       onChange={onChangeForm}
+      onSubmit={onFormSubmit}
     >
       <label className="reviews__label form__label" htmlFor="review">
         Your review

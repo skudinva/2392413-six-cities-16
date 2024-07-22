@@ -1,18 +1,28 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { AuthorizationStatus, Cities, SortType } from '../const';
-import { AuthInfo, CityEntity } from '../types';
+import {
+  AuthInfo,
+  CityEntity,
+  OfferDetailEntity,
+  ReviewEntity,
+} from '../types';
 import { OfferEntity } from './../types';
 import {
+  appendReview,
   setAuthorizationStatus,
   setCurrentCity,
   setCurrentSort,
+  setOffer,
   setOffers,
   setOffersLoading,
+  setReviews,
   setUserProfile,
 } from './action';
 
 type InitialState = {
   offers: OfferEntity[];
+  offer: OfferDetailEntity | null;
+  reviews: ReviewEntity[] | [];
   currentCity: CityEntity;
   favorites: OfferEntity[];
   currentSort: SortType;
@@ -23,6 +33,8 @@ type InitialState = {
 
 const initialState: InitialState = {
   offers: [],
+  offer: null,
+  reviews: [],
   currentCity: Cities[0],
   favorites: [],
   currentSort: SortType.popular,
@@ -50,6 +62,15 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setUserProfile, (state, action) => {
       state.userProfile = action.payload;
+    })
+    .addCase(setOffer, (state, action) => {
+      state.offer = action.payload;
+    })
+    .addCase(setReviews, (state, action) => {
+      state.reviews = action.payload;
+    })
+    .addCase(appendReview, (state, action) => {
+      state.reviews = [...state.reviews, action.payload];
     });
 });
 

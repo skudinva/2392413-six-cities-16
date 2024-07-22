@@ -2,11 +2,21 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 import { APIRoute, AuthorizationStatus } from '../const';
 import { dropToken, setToken } from '../services/token';
-import { AppDispatch, AuthInfo, OfferEntity, State } from '../types';
 import {
+  AppDispatch,
+  AuthInfo,
+  OfferDetailEntity,
+  OfferEntity,
+  ReviewEntity,
+  State,
+} from '../types';
+import {
+  appendReview,
   setAuthorizationStatus,
+  setOffer,
   setOffers,
   setOffersLoading,
+  setReviews,
   setUserProfile,
 } from './action';
 
@@ -20,18 +30,27 @@ export const fetchOfferAction = createAsyncThunk<
   void,
   undefined,
   AsyncThunkPropWithAxios
->('setOffers', async (_arg, { dispatch, extra: api }) => {
+>('fetchOfferAction', async (_arg, { dispatch, extra: api }) => {
   dispatch(setOffersLoading(true));
   const { data } = await api.get<OfferEntity[]>(APIRoute.Offers);
   dispatch(setOffers(data));
   dispatch(setOffersLoading(false));
 });
 
+export const fetchOfferDetailAction = createAsyncThunk<
+  void,
+  { id: string | undefined },
+  AsyncThunkPropWithAxios
+>('fetchOfferDetailAction', async ({ id }, { dispatch, extra: api }) => {
+  const { data } = await api.get<OfferDetailEntity>(`${APIRoute.Offers}/${id}`);
+  dispatch(setOffer(data));
+});
+
 export const checkLoginAction = createAsyncThunk<
   void,
   undefined,
   AsyncThunkPropWithAxios
->('checkLogin', async (_arg, { dispatch, extra: api }) => {
+>('checkLoginAction', async (_arg, { dispatch, extra: api }) => {
   try {
     const { data } = await api.get<AuthInfo>(APIRoute.Login);
     setToken(data.token);
@@ -82,3 +101,41 @@ export const logoutAction = createAsyncThunk<
     dropToken();
   }
 });
+
+export const fetchReviewAction = createAsyncThunk<
+  void,
+  { id: string | undefined },
+  AsyncThunkPropWithAxios
+>('fetchReviewAction', async ({ id }, { dispatch, extra: api }) => {
+  const { data } = await api.get<ReviewEntity[]>(`${APIRoute.Comments}/${id}`);
+  dispatch(setReviews(data));
+});
+
+export type PostReview = {
+  id: string;
+  comment: string;
+  rating: number;
+};
+
+export const PostReviewAction = createAsyncThunk<
+  void,
+  PostReview,
+  AsyncThunkPropWithAxios
+>(
+  'PostReviewAction',
+  async ({ id, comment, rating }, { dispatch, extra: api }) => {
+    try {
+      const { data } = await api.post<ReviewEntity>(
+        `${APIRoute.Comments}/${id}`,
+        {
+          comment: comment,
+          rating: rating,
+        }
+      );
+
+      dispatch(appendReview(data));
+    } catch (error) {
+      //dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
+    }
+  }
+);

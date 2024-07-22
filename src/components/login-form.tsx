@@ -20,7 +20,7 @@ function LoginForm(): JSX.Element {
     setPassword(evt.currentTarget.value);
   };
 
-  const onSubmit = (evt: FormEvent) => {
+  const onFormSubmit = (evt: FormEvent) => {
     evt.preventDefault();
     dispatch(loginAction({ email, password }));
   };
@@ -34,7 +34,7 @@ function LoginForm(): JSX.Element {
         className="login__form form"
         action="#"
         method="post"
-        onSubmit={onSubmit}
+        onSubmit={onFormSubmit}
       >
         <div className="login__input-wrapper form__input-wrapper">
           <label className="visually-hidden">E-mail</label>
