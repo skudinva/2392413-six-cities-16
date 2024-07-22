@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 import { APIRoute, AuthorizationStatus } from '../const';
-import { setToken } from '../services/token';
+import { dropToken, setToken } from '../services/token';
 import { AppDispatch, AuthInfo, OfferEntity, State } from '../types';
 import {
   setAuthorizationStatus,
@@ -34,14 +34,6 @@ export const checkLoginAction = createAsyncThunk<
 >('checkLogin', async (_arg, { dispatch, extra: api }) => {
   try {
     const { data } = await api.get<AuthInfo>(APIRoute.Login);
-    /*
-     const data: AuthInfo = {
-      name: 'SkudinVA',
-      avatarUrl: '',
-      isPro: false,
-      email: 'skudinva@gmail.com',
-      token: 'jhsgjhs78^*&',
-    };*/
     setToken(data.token);
     dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
     dispatch(setUserProfile(data));
@@ -72,5 +64,21 @@ export const loginAction = createAsyncThunk<
     dispatch(setUserProfile(data));
   } catch (error) {
     dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
+  }
+});
+
+export const logoutAction = createAsyncThunk<
+  void,
+  undefined,
+  AsyncThunkPropWithAxios
+>('logoutAction', async (_arg, { dispatch, extra: api }) => {
+  try {
+    await api.delete(APIRoute.Logout);
+    dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
+  } catch (error) {
+    throw new Error('Error logoff');
+  } finally {
+    dispatch(setUserProfile(null));
+    dropToken();
   }
 });
