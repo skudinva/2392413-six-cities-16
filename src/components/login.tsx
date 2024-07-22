@@ -1,7 +1,16 @@
-import { Cities } from '../const';
+import { Navigate } from 'react-router-dom';
+import { AppRoute, AuthorizationStatus, Cities } from '../const';
+import { useAppSelector } from '../hooks/use-app-dispatch';
 import LoginForm from './login-form';
 
 function Login(): JSX.Element {
+  const authorizationStatus = useAppSelector(
+    (state) => state.authorizationStatus
+  );
+
+  if (authorizationStatus === AuthorizationStatus.Auth) {
+    return <Navigate to={AppRoute.Main} />;
+  }
   const city = Cities[0];
   return (
     <main className="page__main page__main--login">
