@@ -2,11 +2,6 @@ import { FormEvent, useRef } from 'react';
 import { useAppDispatch } from '../hooks/use-app-dispatch';
 import { loginAction } from '../store/api-actions';
 
-const isPasswordValid = (password: string) =>
-  password.length && /\d/g.test(password) && /[a-zA-Zа-яА-Я]/g.test(password);
-
-const isEmailValid = (email: string) => email.length;
-
 function LoginForm(): JSX.Element {
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
@@ -14,6 +9,7 @@ function LoginForm(): JSX.Element {
 
   const onFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
+
     if (emailRef.current !== null && passwordRef.current !== null) {
       dispatch(
         loginAction({
@@ -24,11 +20,6 @@ function LoginForm(): JSX.Element {
     }
   };
 
-  const isSubmitButtonDisabled: boolean =
-    !emailRef.current ||
-    !passwordRef.current ||
-    !isEmailValid(emailRef.current.value) ||
-    !isPasswordValid(passwordRef.current.value);
   return (
     <section className="login">
       <h1 className="login__title">Sign in</h1>
@@ -60,11 +51,7 @@ function LoginForm(): JSX.Element {
             ref={passwordRef}
           />
         </div>
-        <button
-          className="login__submit form__submit button"
-          type="submit"
-          disabled={isSubmitButtonDisabled}
-        >
+        <button className="login__submit form__submit button" type="submit">
           Sign in
         </button>
       </form>

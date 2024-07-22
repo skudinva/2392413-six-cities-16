@@ -1,5 +1,5 @@
 import { createAction, PrepareAction } from '@reduxjs/toolkit';
-import { AuthorizationStatus, SortType } from '../const';
+import { AppRoute, AuthorizationStatus, SortType } from '../const';
 import {
   AuthInfo,
   CityEntity,
@@ -52,3 +52,5 @@ export const setUserProfile = createAction<PrepareAction<AuthInfo>>(
 );
 
 export const setError = createAction<string | null>('setError');
+
+export const redirectToRoute = createAction<AppRoute>('redirectToRoute');

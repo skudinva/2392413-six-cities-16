@@ -1,7 +1,9 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
+import browserHistory from '../browser-history';
 import { AppRoute, AuthorizationStatus } from '../const';
 import { useAppSelector } from '../hooks/use-app-dispatch';
 import FavoriteList from './favorite-list';
+import HistoryRouter from './history-route';
 import Loader from './loader/loader';
 import Login from './login';
 import Main from './main';
@@ -21,7 +23,7 @@ function App(): JSX.Element {
   }
 
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
         <Route path={AppRoute.Main} element={<MainLayout />}>
           <Route index element={<Main />} />
@@ -38,7 +40,7 @@ function App(): JSX.Element {
         </Route>
         <Route path="*" element={<Page404 />} />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 export default App;
