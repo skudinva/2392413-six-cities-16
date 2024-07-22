@@ -135,3 +135,9 @@ export const URL_MARKER_CURRENT = '/img/pin-active.svg';
 export const Setting = {
   review: { minLength: 50, maxLength: 300 },
 };
+
+export enum APIRoute {
+  Offers = '/offers',
+  Login = '/login',
+  Logout = '/logout',
+}

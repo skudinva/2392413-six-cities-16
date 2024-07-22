@@ -1,8 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AppRoute } from '../const';
-import { useAppDispatch } from '../hooks/use-app-dispatch';
-import { offers } from '../mocks/offers';
-import { setOffers } from '../store/action';
 import FavoriteList from './favorite-list';
 import Login from './login';
 import Main from './main';
@@ -12,9 +9,6 @@ import Page404 from './page404';
 import PrivateRoute from './private-route';
 
 function App(): JSX.Element {
-  const dispatch = useAppDispatch();
-  dispatch(setOffers(offers));
-
   return (
     <BrowserRouter>
       <Routes>

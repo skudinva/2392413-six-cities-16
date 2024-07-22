@@ -1,5 +1,5 @@
 import { createAction, PrepareAction } from '@reduxjs/toolkit';
-import { SortType } from '../const';
+import { AuthorizationStatus, SortType } from '../const';
 import { CityEntity, OfferEntity } from '../types';
 
 export const setCurrentCity = createAction<PrepareAction<CityEntity>>(
@@ -15,4 +15,15 @@ export const setOffers = createAction<PrepareAction<OfferEntity[]>>(
 export const setCurrentSort = createAction<PrepareAction<SortType>>(
   'setCurrentSort',
   (sort: SortType) => ({ payload: sort })
+);
+
+export const setAuthorizationStatus = createAction<
+  PrepareAction<AuthorizationStatus>
+>('setAuthorizationStatus', (status: AuthorizationStatus) => ({
+  payload: status,
+}));
+
+export const setOffersLoading = createAction<PrepareAction<boolean>>(
+  'setOffersLoading',
+  (isOffersLoading: boolean) => ({ payload: isOffersLoading })
 );
