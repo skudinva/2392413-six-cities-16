@@ -83,13 +83,13 @@ export const fetchFavoriteOffersAction = createAsyncThunk<
 
 export const postFavoriteOfferAction = createAsyncThunk<
   void,
-  { id: string; isFavorite: number },
+  { id: string; isFavorite: boolean },
   AsyncThunkPropWithAxios
 >(
   'postFavoriteOfferAction',
   async ({ id, isFavorite }, { dispatch, extra: api }) => {
     const { data } = await api.post<OfferEntity>(
-      `${APIRoute.Favorite}/${id}/${isFavorite}`
+      `${APIRoute.Favorite}/${id}/${Number(isFavorite)}`
     );
     if (isFavorite) {
       dispatch(appendFavoriteOffer(data));

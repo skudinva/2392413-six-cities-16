@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../const';
+import { useAppDispatch } from '../hooks/use-app-dispatch';
+import { postFavoriteOfferAction } from '../store/api-actions';
 import { OfferEntity } from '../types';
 import RatingStars from './rating-stars';
 
@@ -12,6 +14,16 @@ type PlaceCardProps = {
 };
 function PlaceCard(props: PlaceCardProps): JSX.Element {
   const { offer, onActiveOfferChange, baseClass } = props;
+  const dispatch = useAppDispatch();
+
+  const onFavoriteButtonClick = () => {
+    dispatch(
+      postFavoriteOfferAction({
+        id: offer.id,
+        isFavorite: !offer.isFavorite,
+      })
+    );
+  };
 
   return (
     <article
@@ -46,6 +58,7 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
               offer.isFavorite ? ' place-card__bookmark-button--active' : ''
             )}
             type="button"
+            onClick={() => onFavoriteButtonClick()}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
