@@ -1,7 +1,5 @@
-import { useEffect } from 'react';
 import PlaceCard from '../components/place-card';
-import { useAppDispatch, useAppSelector } from '../hooks/store';
-import { fetchFavoriteOffersAction } from '../store/api-actions';
+import { useAppSelector } from '../hooks/store';
 import { OfferEntity } from '../types';
 
 type OfferByGroup = {
@@ -9,13 +7,7 @@ type OfferByGroup = {
 };
 
 function FavoriteList(): JSX.Element {
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(fetchFavoriteOffersAction());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
   const favoriteOffers = useAppSelector((state) => state.favoriteOffers);
-
   const favoriteOffersByGroup = Object.groupBy(
     favoriteOffers,
     (offer: OfferEntity) => offer.city.name
