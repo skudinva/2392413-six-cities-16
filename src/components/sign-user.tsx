@@ -8,7 +8,7 @@ function SignUser(): JSX.Element {
     (state) => state.authorizationStatus
   );
   const userProfile = useAppSelector((state) => state.userProfile);
-  const favorites = useAppSelector((state) => state.favorites);
+  const favoriteOffers = useAppSelector((state) => state.favoriteOffers);
   const isAuthUser = authorizationStatus === AuthorizationStatus.Auth;
   const dispatch = useAppDispatch();
 
@@ -31,7 +31,7 @@ function SignUser(): JSX.Element {
                   {userProfile.email}
                 </span>
                 <span className="header__favorite-count">
-                  {favorites.length}
+                  {favoriteOffers.length}
                 </span>
               </>
             ) : (

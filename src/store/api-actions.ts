@@ -15,6 +15,7 @@ import {
   appendReview,
   redirectToRoute,
   setAuthorizationStatus,
+  setFavoriteOffers,
   setNearbyOffers,
   setOffer,
   setOffers,
@@ -67,6 +68,15 @@ export const fetchNearbyOfferAction = createAsyncThunk<
     `${APIRoute.Offers}/${id}/nearby`
   );
   dispatch(setNearbyOffers(data));
+});
+
+export const fetchFavoriteOffersAction = createAsyncThunk<
+  void,
+  undefined,
+  AsyncThunkPropWithAxios
+>('fetchFavoriteOffersAction', async (_arg, { dispatch, extra: api }) => {
+  const { data } = await api.get<OfferEntity[]>(APIRoute.Favorite);
+  dispatch(setFavoriteOffers(data));
 });
 
 export const checkLoginAction = createAsyncThunk<

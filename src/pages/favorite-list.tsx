@@ -1,5 +1,7 @@
+import { useEffect } from 'react';
 import Favorite from '../components/favorite';
-import { useAppSelector } from '../hooks/use-app-dispatch';
+import { useAppDispatch, useAppSelector } from '../hooks/use-app-dispatch';
+import { fetchFavoriteOffersAction } from '../store/api-actions';
 import { OfferEntity } from '../types';
 
 type OfferByGroup = {
@@ -7,8 +9,12 @@ type OfferByGroup = {
 };
 
 function FavoriteList(): JSX.Element {
-  const offers = useAppSelector((state) => state.offers);
-  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fetchFavoriteOffersAction());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const favoriteOffers = useAppSelector((state) => state.favoriteOffers);
 
   const favoriteOffersByGroup = Object.groupBy(
     favoriteOffers,
