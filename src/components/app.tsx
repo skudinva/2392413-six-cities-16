@@ -38,7 +38,7 @@ function App(): JSX.Element {
           />
           <Route path={AppRoute.Offer} element={<Offer />} />
         </Route>
-        <Route path="*" element={<Page404 />} />
+        <Route path={AppRoute.Unknown} element={<Page404 />} />
       </Routes>
     </HistoryRouter>
   );
