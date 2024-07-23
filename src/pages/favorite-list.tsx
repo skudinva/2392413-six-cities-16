@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import Favorite from '../components/favorite';
+import PlaceCard from '../components/place-card';
 import { useAppDispatch, useAppSelector } from '../hooks/use-app-dispatch';
 import { fetchFavoriteOffersAction } from '../store/api-actions';
 import { OfferEntity } from '../types';
@@ -38,7 +38,11 @@ function FavoriteList(): JSX.Element {
                 </div>
                 <div className="favorites__places">
                   {favoriteOffersByGroup[city].map((offer) => (
-                    <Favorite offer={offer} key={offer.id} />
+                    <PlaceCard
+                      offer={offer}
+                      key={offer.id}
+                      baseClass="favorites"
+                    />
                   ))}
                 </div>
               </li>

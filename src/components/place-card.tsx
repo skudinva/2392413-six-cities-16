@@ -47,7 +47,7 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
           />
         </a>
       </div>
-      <div className="place-card__info">
+      <div className={`${baseClass}__card-info place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{offer.price}</b>
