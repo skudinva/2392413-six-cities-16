@@ -91,6 +91,7 @@ export const postFavoriteOfferAction = createAsyncThunk<
     const { data } = await api.post<OfferEntity>(
       `${APIRoute.Favorite}/${id}/${Number(isFavorite)}`
     );
+
     if (isFavorite) {
       dispatch(appendFavoriteOffer(data));
     } else {

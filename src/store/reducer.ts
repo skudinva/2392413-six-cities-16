@@ -91,7 +91,7 @@ const reducer = createReducer(initialState, (builder) => {
       state.reviews = [...state.reviews, action.payload];
     })
     .addCase(appendFavoriteOffer, (state, action) => {
-      // state.favoriteOffers = [...state.favoriteOffers, action.payload];
+      state.favoriteOffers = [...state.favoriteOffers, action.payload];
       setIsFavoriteState(state.offers, action.payload);
     })
     .addCase(deleteFavoriteOffer, (state, action) => {

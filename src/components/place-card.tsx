@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../const';
 import { useAppDispatch } from '../hooks/store';
@@ -15,14 +16,18 @@ type PlaceCardProps = {
 function PlaceCard(props: PlaceCardProps): JSX.Element {
   const { offer, onActiveOfferChange, baseClass } = props;
   const dispatch = useAppDispatch();
+  const [isFavorite, setIsFavorite] = useState(offer.isFavorite);
 
   const onFavoriteButtonClick = () => {
+    const newIsFavorite = !isFavorite;
+
     dispatch(
       postFavoriteOfferAction({
         id: offer.id,
-        isFavorite: !offer.isFavorite,
+        isFavorite: newIsFavorite,
       })
     );
+    setIsFavorite(newIsFavorite);
   };
 
   return (
@@ -55,7 +60,7 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
           </div>
           <button
             className={'place-card__bookmark-button button'.concat(
-              offer.isFavorite ? ' place-card__bookmark-button--active' : ''
+              isFavorite ? ' place-card__bookmark-button--active' : ''
             )}
             type="button"
             onClick={() => onFavoriteButtonClick()}
@@ -64,7 +69,7 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
             <span className="visually-hidden">
-              {offer.isFavorite ? 'In bookmarks' : 'To bookmarks'}
+              {isFavorite ? 'In bookmarks' : 'To bookmarks'}
             </span>
           </button>
         </div>
