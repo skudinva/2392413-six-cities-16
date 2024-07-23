@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { AuthorizationStatus } from '../const';
 import { useAppDispatch, useAppSelector } from '../hooks/use-app-dispatch';
 import { fetchReviewAction } from '../store/api-actions';
 import OfferReviewForm from './offer-review-form';
@@ -12,7 +13,9 @@ function OfferReview(): JSX.Element {
     dispatch(fetchReviewAction({ id }));
   });
   const reviews = useAppSelector((state) => state.reviews);
-
+  const authorizationStatus = useAppSelector(
+    (state) => state.authorizationStatus
+  );
   return (
     <section className="offer__reviews reviews">
       <h2 className="reviews__title">
@@ -23,7 +26,7 @@ function OfferReview(): JSX.Element {
           <OfferReviewItem review={review} key={review.id} />
         ))}
       </ul>
-      <OfferReviewForm />
+      {authorizationStatus === AuthorizationStatus.Auth && <OfferReviewForm />}
     </section>
   );
 }
