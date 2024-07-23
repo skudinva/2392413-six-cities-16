@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom';
+import LoginForm from '../components/login-form';
 import { AppRoute, AuthorizationStatus, Cities } from '../const';
-import { useAppSelector } from '../hooks/use-app-dispatch';
-import LoginForm from './login-form';
+import { useAppSelector } from '../hooks/store';
 
 function Login(): JSX.Element {
   const authorizationStatus = useAppSelector(

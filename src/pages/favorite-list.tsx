@@ -1,15 +1,13 @@
-import { useAppSelector } from '../hooks/use-app-dispatch';
+import PlaceCard from '../components/place-card';
+import { useAppSelector } from '../hooks/store';
 import { OfferEntity } from '../types';
-import Favorite from './favorite';
 
 type OfferByGroup = {
   [city: string]: OfferEntity[];
 };
 
 function FavoriteList(): JSX.Element {
-  const offers = useAppSelector((state) => state.offers);
-  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
-
+  const favoriteOffers = useAppSelector((state) => state.favoriteOffers);
   const favoriteOffersByGroup = Object.groupBy(
     favoriteOffers,
     (offer: OfferEntity) => offer.city.name
@@ -32,7 +30,11 @@ function FavoriteList(): JSX.Element {
                 </div>
                 <div className="favorites__places">
                   {favoriteOffersByGroup[city].map((offer) => (
-                    <Favorite offer={offer} key={offer.id} />
+                    <PlaceCard
+                      offer={offer}
+                      key={offer.id}
+                      baseClass="favorites"
+                    />
                   ))}
                 </div>
               </li>

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { SortList } from '../const';
-import { useAppDispatch, useAppSelector } from '../hooks/use-app-dispatch';
+import { useAppDispatch, useAppSelector } from '../hooks/store';
 import { setCurrentSort } from '../store/action';
 
 function OfferSort(): JSX.Element {

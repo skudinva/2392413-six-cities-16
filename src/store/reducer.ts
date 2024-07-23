@@ -1,20 +1,35 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { AuthorizationStatus, Cities, SortType } from '../const';
-import { AuthInfo, CityEntity } from '../types';
+import {
+  AuthInfo,
+  CityEntity,
+  OfferDetailEntity,
+  ReviewEntity,
+} from '../types';
 import { OfferEntity } from './../types';
 import {
+  appendFavoriteOffer,
+  appendReview,
+  deleteFavoriteOffer,
   setAuthorizationStatus,
   setCurrentCity,
   setCurrentSort,
+  setFavoriteOffers,
+  setNearbyOffers,
+  setOffer,
   setOffers,
   setOffersLoading,
+  setReviews,
   setUserProfile,
 } from './action';
 
 type InitialState = {
   offers: OfferEntity[];
+  offer: OfferDetailEntity | null;
+  nearbyOffer: OfferEntity[];
+  reviews: ReviewEntity[] | [];
   currentCity: CityEntity;
-  favorites: OfferEntity[];
+  favoriteOffers: OfferEntity[];
   currentSort: SortType;
   authorizationStatus: AuthorizationStatus;
   userProfile: AuthInfo | null;
@@ -23,12 +38,27 @@ type InitialState = {
 
 const initialState: InitialState = {
   offers: [],
+  offer: null,
+  nearbyOffer: [],
+  reviews: [],
   currentCity: Cities[0],
-  favorites: [],
+  favoriteOffers: [],
   currentSort: SortType.popular,
   authorizationStatus: AuthorizationStatus.Unknown,
   userProfile: null,
   isOffersLoading: false,
+};
+
+const setIsFavoriteState = (
+  offers: OfferEntity[],
+  newOfferState: OfferEntity
+): void => {
+  offers.some((offer) => {
+    if (offer.id === newOfferState.id) {
+      offer.isFavorite = newOfferState.isFavorite;
+      return true;
+    }
+  });
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -50,6 +80,31 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setUserProfile, (state, action) => {
       state.userProfile = action.payload;
+    })
+    .addCase(setOffer, (state, action) => {
+      state.offer = action.payload;
+    })
+    .addCase(setReviews, (state, action) => {
+      state.reviews = action.payload;
+    })
+    .addCase(appendReview, (state, action) => {
+      state.reviews = [...state.reviews, action.payload];
+    })
+    .addCase(appendFavoriteOffer, (state, action) => {
+      state.favoriteOffers = [...state.favoriteOffers, action.payload];
+      setIsFavoriteState(state.offers, action.payload);
+    })
+    .addCase(deleteFavoriteOffer, (state, action) => {
+      state.favoriteOffers = state.favoriteOffers.filter(
+        (offer) => offer.id !== action.payload.id
+      );
+      setIsFavoriteState(state.offers, action.payload);
+    })
+    .addCase(setNearbyOffers, (state, action) => {
+      state.nearbyOffer = action.payload;
+    })
+    .addCase(setFavoriteOffers, (state, action) => {
+      state.favoriteOffers = action.payload;
     });
 });
 

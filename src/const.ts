@@ -5,6 +5,7 @@ export enum AppRoute {
   'Login' = '/login',
   'Favorites' = '/favorites',
   'Offer' = '/offer/:id',
+  'Unknown' = '*',
 }
 
 export enum AuthorizationStatus {
@@ -140,4 +141,6 @@ export enum APIRoute {
   Offers = '/offers',
   Login = '/login',
   Logout = '/logout',
+  Comments = '/comments',
+  Favorite = '/favorite',
 }

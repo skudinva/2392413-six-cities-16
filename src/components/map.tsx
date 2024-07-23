@@ -3,11 +3,16 @@ import 'leaflet/dist/leaflet.css';
 import { useEffect, useRef } from 'react';
 import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../const';
 import useMap from '../hooks/use-map';
-import { CityEntity, OfferDetailEntity, OfferEntity } from '../types';
+import {
+  CityEntity,
+  OfferDetailEntity,
+  OfferEntity,
+  OfferLocation,
+} from '../types';
 
 type MapProps = {
-  city: CityEntity | null;
-  offers: OfferEntity[];
+  city: CityEntity;
+  offers: OfferLocation[];
   currentOffer: OfferEntity | OfferDetailEntity | null;
   baseClass: string;
 };

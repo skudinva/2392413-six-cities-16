@@ -30,6 +30,11 @@ export type CityEntity = {
   location: LocationEntity;
 };
 
+export type OfferLocation = {
+  id: string;
+  location: LocationEntity;
+};
+
 export type OfferEntity = {
   id: string;
   title: string;
@@ -43,16 +48,7 @@ export type OfferEntity = {
   previewImage: string;
 };
 
-export type OfferDetailEntity = {
-  id: string;
-  title: string;
-  type: string;
-  price: number;
-  city: CityEntity;
-  location: LocationEntity;
-  isFavorite: boolean;
-  isPremium: boolean;
-  rating: number;
+export type OfferDetailEntity = Omit<OfferEntity, 'previewImage'> & {
   description: string;
   bedrooms: number;
   goods: [string];

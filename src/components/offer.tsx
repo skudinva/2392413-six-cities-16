@@ -1,28 +1,37 @@
-import { useAppSelector } from '../hooks/use-app-dispatch';
-import { offerDetail } from '../mocks/offer-detail';
-import { reviews } from '../mocks/reviews';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../hooks/store';
+import {
+  fetchNearbyOfferAction,
+  fetchOfferDetailAction,
+} from '../store/api-actions';
+import FavoriteButton from './favorite-button';
+import Loader from './loader/loader';
 import Map from './map';
 import NearbyOffers from './nearby-offers';
-import OfferReviewForm from './offer-review-form';
-import OfferReviewList from './offer-review-list';
+import OfferReview from './offer-review';
+import Page404 from './page404';
 import RatingStars from './rating-stars';
 
 function Offer(): JSX.Element {
-  //  const { id } = useParams();
-  const offers = useAppSelector((state) => state.offers);
-  const offer = offerDetail;
+  const { id } = useParams();
 
-  const nearbyOffers =
-    offer &&
-    offers
-      .filter(
-        (nearbyOffer) =>
-          nearbyOffer.city.name === offer.city.name &&
-          nearbyOffer.id !== offer.id
-      )
-      .slice(1, 4);
+  const dispatch = useAppDispatch();
 
-  return (
+  useEffect(() => {
+    dispatch(fetchOfferDetailAction({ id }));
+    dispatch(fetchNearbyOfferAction({ id }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
+
+  const nearbyOffers = useAppSelector((state) => state.nearbyOffer.slice(1, 4));
+  const offer = useAppSelector((state) => state.offer);
+
+  if (!id) {
+    return <Page404 />;
+  }
+
+  return offer ? (
     <section className="offer">
       <div className="offer__gallery-container container">
         <div className="offer__gallery">
@@ -45,19 +54,15 @@ function Offer(): JSX.Element {
           )}
           <div className="offer__name-wrapper">
             <h1 className="offer__name">{offer.title}</h1>
-            <button
-              className={'offer__bookmark-button button'.concat(
-                offer.isFavorite ? ' offer__bookmark-button--active' : ' '
-              )}
-              type="button"
+            <FavoriteButton
+              baseClass="offer"
+              isFavorite={offer.isFavorite}
+              id={offer.id}
             >
               <svg className="offer__bookmark-icon" width="31" height="33">
                 <use xlinkHref="#icon-bookmark"></use>
               </svg>
-              <span className="visually-hidden">
-                {offer.isFavorite ? 'In bookmarks' : 'To bookmarks'}
-              </span>
-            </button>
+            </FavoriteButton>
           </div>
           <div className="offer__rating rating">
             <RatingStars baseClass="offer" rating={offer.rating}>
@@ -112,14 +117,7 @@ function Offer(): JSX.Element {
               <p className="offer__text">{offer.description}</p>
             </div>
           </div>
-          <section className="offer__reviews reviews">
-            <h2 className="reviews__title">
-              Reviews ·{' '}
-              <span className="reviews__amount">{reviews.length}</span>
-            </h2>
-            <OfferReviewList reviews={reviews} />
-            <OfferReviewForm />
-          </section>
+          <OfferReview />
         </div>
       </div>
 
@@ -127,7 +125,7 @@ function Offer(): JSX.Element {
         <>
           <Map
             currentOffer={offer}
-            offers={nearbyOffers}
+            offers={[offer, ...nearbyOffers]}
             city={offer.city}
             baseClass="offer"
           />
@@ -137,6 +135,8 @@ function Offer(): JSX.Element {
         </>
       )}
     </section>
+  ) : (
+    <Loader />
   );
 }
 

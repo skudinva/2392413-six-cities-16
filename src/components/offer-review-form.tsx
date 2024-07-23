@@ -1,18 +1,30 @@
 import { FormEvent, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { RatingTitle, Setting } from '../const';
+import { useAppDispatch } from '../hooks/store';
+import { PostReview, PostReviewAction } from '../store/api-actions';
 import Rating from './rating';
 
 function OfferReviewForm(): JSX.Element {
+  const { id } = useParams();
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState('');
+  const dispatch = useAppDispatch();
 
-  const onChangeForm = (evt: FormEvent): void => {
-    const { name, value } = evt.target as HTMLFormElement;
-    if (name === 'rating') {
-      setRating(+value);
-    } else if (name === 'review') {
-      setReview(String(value));
+  const onFormSubmit = (evt: FormEvent) => {
+    evt.preventDefault();
+    if (!id) {
+      return;
     }
+    const data: PostReview = {
+      id,
+      comment: review,
+      rating: rating,
+    };
+    dispatch(PostReviewAction(data)).then(() => {
+      setRating(0);
+      setReview('');
+    });
   };
 
   const isSubmitButtonDisabled =
@@ -25,7 +37,7 @@ function OfferReviewForm(): JSX.Element {
       className="reviews__form form"
       action="#"
       method="post"
-      onChange={onChangeForm}
+      onSubmit={onFormSubmit}
     >
       <label className="reviews__label form__label" htmlFor="review">
         Your review
@@ -33,7 +45,16 @@ function OfferReviewForm(): JSX.Element {
       <div className="reviews__rating-form form__rating">
         {RatingTitle.map((ratingItem) => {
           const keyValue = `${ratingItem.mark}-rating`;
-          return <Rating rating={ratingItem} key={keyValue} />;
+          return (
+            <Rating
+              rating={ratingItem}
+              key={keyValue}
+              selectedRating={rating}
+              onChangeRating={(evt) => {
+                setRating(+evt.target.value);
+              }}
+            />
+          );
         })}
       </div>
       <textarea
@@ -41,6 +62,10 @@ function OfferReviewForm(): JSX.Element {
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
+        value={review}
+        onInput={(evt: React.ChangeEvent<HTMLTextAreaElement>) => {
+          setReview(evt.target.value);
+        }}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
