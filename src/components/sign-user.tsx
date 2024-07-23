@@ -41,9 +41,9 @@ function SignUser(): JSX.Element {
         </li>
         {isAuthUser && (
           <li className="header__nav-item">
-            <a className="header__nav-link" href="#" onClick={onLogout}>
+            <Link className="header__nav-link" to="" onClick={onLogout}>
               <span className="header__signout">Sign out</span>
-            </a>
+            </Link>
           </li>
         )}
       </ul>
