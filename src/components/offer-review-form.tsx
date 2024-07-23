@@ -11,15 +11,6 @@ function OfferReviewForm(): JSX.Element {
   const [review, setReview] = useState('');
   const dispatch = useAppDispatch();
 
-  const onChangeForm = (evt: FormEvent): void => {
-    const { name, value } = evt.target as HTMLFormElement;
-    if (name === 'rating') {
-      setRating(+value);
-    } else if (name === 'review') {
-      setReview(String(value));
-    }
-  };
-
   const onFormSubmit = (evt: FormEvent) => {
     evt.preventDefault();
     if (!id) {
@@ -46,7 +37,6 @@ function OfferReviewForm(): JSX.Element {
       className="reviews__form form"
       action="#"
       method="post"
-      onChange={onChangeForm}
       onSubmit={onFormSubmit}
     >
       <label className="reviews__label form__label" htmlFor="review">
@@ -60,6 +50,9 @@ function OfferReviewForm(): JSX.Element {
               rating={ratingItem}
               key={keyValue}
               selectedRating={rating}
+              onChangeRating={(evt) => {
+                setRating(+evt.target.value);
+              }}
             />
           );
         })}
@@ -70,6 +63,9 @@ function OfferReviewForm(): JSX.Element {
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={review}
+        onInput={(evt: React.ChangeEvent<HTMLTextAreaElement>) => {
+          setReview(evt.target.value);
+        }}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
