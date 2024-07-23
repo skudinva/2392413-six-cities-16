@@ -1,15 +1,11 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../hooks/use-app-dispatch';
-import {
-  fetchOfferDetailAction,
-  fetchReviewAction,
-} from '../store/api-actions';
+import { fetchOfferDetailAction } from '../store/api-actions';
 import Loader from './loader/loader';
 import Map from './map';
 import NearbyOffers from './nearby-offers';
-import OfferReviewForm from './offer-review-form';
-import OfferReviewList from './offer-review-list';
+import OfferReview from './offer-review';
 import Page404 from './page404';
 import RatingStars from './rating-stars';
 
@@ -20,12 +16,10 @@ function Offer(): JSX.Element {
 
   useEffect(() => {
     dispatch(fetchOfferDetailAction({ id }));
-    dispatch(fetchReviewAction({ id }));
   });
 
   const offers = useAppSelector((state) => state.offers);
   const offer = useAppSelector((state) => state.offer);
-  const reviews = useAppSelector((state) => state.reviews);
 
   if (!id) {
     return <Page404 />;
@@ -131,14 +125,7 @@ function Offer(): JSX.Element {
               <p className="offer__text">{offer.description}</p>
             </div>
           </div>
-          <section className="offer__reviews reviews">
-            <h2 className="reviews__title">
-              Reviews ·{' '}
-              <span className="reviews__amount">{reviews.length}</span>
-            </h2>
-            <OfferReviewList reviews={reviews} />
-            <OfferReviewForm />
-          </section>
+          <OfferReview />
         </div>
       </div>
 
