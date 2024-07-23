@@ -12,7 +12,9 @@ import {
   State,
 } from '../types';
 import {
+  appendFavoriteOffer,
   appendReview,
+  deleteFavoriteOffer,
   redirectToRoute,
   setAuthorizationStatus,
   setFavoriteOffers,
@@ -78,6 +80,24 @@ export const fetchFavoriteOffersAction = createAsyncThunk<
   const { data } = await api.get<OfferEntity[]>(APIRoute.Favorite);
   dispatch(setFavoriteOffers(data));
 });
+
+export const postFavoriteOfferAction = createAsyncThunk<
+  void,
+  { id: string; isFavorite: number },
+  AsyncThunkPropWithAxios
+>(
+  'postFavoriteOfferAction',
+  async ({ id, isFavorite }, { dispatch, extra: api }) => {
+    const { data } = await api.post<OfferEntity>(
+      `${APIRoute.Favorite}/${id}/${isFavorite}`
+    );
+    if (isFavorite) {
+      dispatch(appendFavoriteOffer(data));
+    } else {
+      dispatch(deleteFavoriteOffer(data));
+    }
+  }
+);
 
 export const checkLoginAction = createAsyncThunk<
   void,

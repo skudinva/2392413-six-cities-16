@@ -8,7 +8,9 @@ import {
 } from '../types';
 import { OfferEntity } from './../types';
 import {
+  appendFavoriteOffer,
   appendReview,
+  deleteFavoriteOffer,
   setAuthorizationStatus,
   setCurrentCity,
   setCurrentSort,
@@ -75,6 +77,14 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(appendReview, (state, action) => {
       state.reviews = [...state.reviews, action.payload];
+    })
+    .addCase(appendFavoriteOffer, (state, action) => {
+      state.favoriteOffers = [...state.favoriteOffers, action.payload];
+    })
+    .addCase(deleteFavoriteOffer, (state, action) => {
+      state.favoriteOffers = state.favoriteOffers.filter(
+        (offer) => offer.id !== action.payload.id
+      );
     })
     .addCase(setNearbyOffers, (state, action) => {
       state.nearbyOffer = action.payload;
