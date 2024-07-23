@@ -31,6 +31,8 @@ function OfferReviewForm(): JSX.Element {
       rating: rating,
     };
     dispatch(PostReviewAction(data));
+    setRating(0);
+    setReview('');
   };
 
   const isSubmitButtonDisabled =
@@ -52,7 +54,13 @@ function OfferReviewForm(): JSX.Element {
       <div className="reviews__rating-form form__rating">
         {RatingTitle.map((ratingItem) => {
           const keyValue = `${ratingItem.mark}-rating`;
-          return <Rating rating={ratingItem} key={keyValue} />;
+          return (
+            <Rating
+              rating={ratingItem}
+              key={keyValue}
+              selectedRating={rating}
+            />
+          );
         })}
       </div>
       <textarea
@@ -60,6 +68,7 @@ function OfferReviewForm(): JSX.Element {
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
+        value={review}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">

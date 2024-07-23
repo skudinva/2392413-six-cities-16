@@ -2,10 +2,12 @@ import { RatingGrade } from '../const';
 
 type RatingProps = {
   rating: RatingGrade;
+  selectedRating: number;
 };
 
 function Rating(props: RatingProps): JSX.Element {
   const { title, mark } = props.rating;
+  const { selectedRating } = props;
 
   return (
     <>
@@ -15,6 +17,7 @@ function Rating(props: RatingProps): JSX.Element {
         value={mark}
         id={`${mark}-stars`}
         type="radio"
+        checked={mark === selectedRating}
       />
       <label
         htmlFor={`${mark}-stars`}
