@@ -30,9 +30,10 @@ function OfferReviewForm(): JSX.Element {
       comment: review,
       rating: rating,
     };
-    dispatch(PostReviewAction(data));
-    setRating(0);
-    setReview('');
+    dispatch(PostReviewAction(data)).then(() => {
+      setRating(0);
+      setReview('');
+    });
   };
 
   const isSubmitButtonDisabled =
