@@ -51,6 +51,4 @@ export const setUserProfile = createAction<PrepareAction<AuthInfo>>(
   (user: AuthInfo) => ({ payload: user })
 );
 
-export const setError = createAction<string | null>('setError');
-
 export const redirectToRoute = createAction<AppRoute>('redirectToRoute');

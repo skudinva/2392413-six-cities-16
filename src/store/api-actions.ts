@@ -1,12 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
-import { store } from '.';
-import {
-  APIRoute,
-  AppRoute,
-  AuthorizationStatus,
-  TIMEOUT_SHOW_ERROR,
-} from '../const';
+import { APIRoute, AppRoute, AuthorizationStatus } from '../const';
 import { dropToken, setToken } from '../services/token';
 import {
   AppDispatch,
@@ -20,7 +14,6 @@ import {
   appendReview,
   redirectToRoute,
   setAuthorizationStatus,
-  setError,
   setOffer,
   setOffers,
   setOffersLoading,
@@ -148,7 +141,3 @@ export const PostReviewAction = createAsyncThunk<
     }
   }
 );
-
-export const clearErrorAction = createAsyncThunk('clearErrorAction', () => {
-  setTimeout(() => store.dispatch(setError(null)), TIMEOUT_SHOW_ERROR);
-});

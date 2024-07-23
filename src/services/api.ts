@@ -5,7 +5,8 @@ import axios, {
   InternalAxiosRequestConfig,
 } from 'axios';
 import { StatusCodes } from 'http-status-codes';
-import { processErrorHandle } from './process-error-handle';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { getToken } from './token';
 
 const BACKEND_URL = 'https://16.design.htmlacademy.pro/six-cities';
@@ -44,7 +45,10 @@ export const createAPI = (): AxiosInstance => {
     (error: AxiosError<DetailMessageType>) => {
       if (error.response && shouldDisplayError(error.response)) {
         const detailMessage = error.response.data;
-        processErrorHandle(detailMessage.message);
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+        toast.warn(detailMessage.message, {
+          theme: 'dark',
+        });
       }
       throw error;
     }
