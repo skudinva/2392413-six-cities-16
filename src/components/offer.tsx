@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../hooks/store';
@@ -6,6 +5,7 @@ import {
   fetchNearbyOfferAction,
   fetchOfferDetailAction,
 } from '../store/api-actions';
+import FavoriteButton from './favorite-button';
 import Loader from './loader/loader';
 import Map from './map';
 import NearbyOffers from './nearby-offers';
@@ -54,19 +54,15 @@ function Offer(): JSX.Element {
           )}
           <div className="offer__name-wrapper">
             <h1 className="offer__name">{offer.title}</h1>
-            <button
-              className={classNames('offer__bookmark-button', 'button', {
-                'offer__bookmark-button--active': offer.isFavorite,
-              })}
-              type="button"
+            <FavoriteButton
+              baseClass="offer"
+              isFavorite={offer.isFavorite}
+              id={offer.id}
             >
               <svg className="offer__bookmark-icon" width="31" height="33">
                 <use xlinkHref="#icon-bookmark"></use>
               </svg>
-              <span className="visually-hidden">
-                {offer.isFavorite ? 'In bookmarks' : 'To bookmarks'}
-              </span>
-            </button>
+            </FavoriteButton>
           </div>
           <div className="offer__rating rating">
             <RatingStars baseClass="offer" rating={offer.rating}>

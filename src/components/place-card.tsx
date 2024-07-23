@@ -1,10 +1,7 @@
-import classNames from 'classnames';
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../const';
-import { useAppDispatch } from '../hooks/store';
-import { postFavoriteOfferAction } from '../store/api-actions';
 import { OfferEntity } from '../types';
+import FavoriteButton from './favorite-button';
 import RatingStars from './rating-stars';
 
 type PlaceCardProps = {
@@ -16,20 +13,6 @@ type PlaceCardProps = {
 };
 function PlaceCard(props: PlaceCardProps): JSX.Element {
   const { offer, onActiveOfferChange, baseClass } = props;
-  const dispatch = useAppDispatch();
-  const [isFavorite, setIsFavorite] = useState(offer.isFavorite);
-
-  const onFavoriteButtonClick = () => {
-    const newIsFavorite = !isFavorite;
-
-    dispatch(
-      postFavoriteOfferAction({
-        id: offer.id,
-        isFavorite: newIsFavorite,
-      })
-    );
-    setIsFavorite(newIsFavorite);
-  };
 
   return (
     <article
@@ -59,20 +42,15 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
             <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button
-            className={classNames('place-card__bookmark-button', 'button', {
-              'place-card__bookmark-button--active': isFavorite,
-            })}
-            type="button"
-            onClick={() => onFavoriteButtonClick()}
+          <FavoriteButton
+            baseClass="place-card"
+            isFavorite={offer.isFavorite}
+            id={offer.id}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
-            <span className="visually-hidden">
-              {isFavorite ? 'In bookmarks' : 'To bookmarks'}
-            </span>
-          </button>
+          </FavoriteButton>
         </div>
         <RatingStars baseClass="place-card" rating={offer.rating} />
         <h2 className="place-card__name">
