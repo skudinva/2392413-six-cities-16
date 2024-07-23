@@ -11,7 +11,8 @@ function OfferReview(): JSX.Element {
   const { id } = useParams();
   useEffect(() => {
     dispatch(fetchReviewAction({ id }));
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const reviews = useAppSelector((state) => state.reviews);
   const authorizationStatus = useAppSelector(
     (state) => state.authorizationStatus

@@ -18,6 +18,11 @@ export const setOffers = createAction<PrepareAction<OfferEntity[]>>(
   (offers: OfferEntity[]) => ({ payload: offers })
 );
 
+export const setNearbyOffers = createAction<PrepareAction<OfferEntity[]>>(
+  'setNearbyOffers',
+  (nearbyOffers: OfferEntity[]) => ({ payload: nearbyOffers })
+);
+
 export const setOffer = createAction<PrepareAction<OfferDetailEntity>>(
   'setOffer',
   (offer: OfferDetailEntity) => ({ payload: offer })

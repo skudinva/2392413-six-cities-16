@@ -12,6 +12,7 @@ import {
   setAuthorizationStatus,
   setCurrentCity,
   setCurrentSort,
+  setNearbyOffers,
   setOffer,
   setOffers,
   setOffersLoading,
@@ -22,6 +23,7 @@ import {
 type InitialState = {
   offers: OfferEntity[];
   offer: OfferDetailEntity | null;
+  nearbyOffer: OfferEntity[];
   reviews: ReviewEntity[] | [];
   currentCity: CityEntity;
   favorites: OfferEntity[];
@@ -34,6 +36,7 @@ type InitialState = {
 const initialState: InitialState = {
   offers: [],
   offer: null,
+  nearbyOffer: [],
   reviews: [],
   currentCity: Cities[0],
   favorites: [],
@@ -71,6 +74,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(appendReview, (state, action) => {
       state.reviews = [...state.reviews, action.payload];
+    })
+    .addCase(setNearbyOffers, (state, action) => {
+      state.nearbyOffer = action.payload;
     });
 });
 

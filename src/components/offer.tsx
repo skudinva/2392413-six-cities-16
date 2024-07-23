@@ -1,7 +1,10 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../hooks/use-app-dispatch';
-import { fetchOfferDetailAction } from '../store/api-actions';
+import {
+  fetchNearbyOfferAction,
+  fetchOfferDetailAction,
+} from '../store/api-actions';
 import Loader from './loader/loader';
 import Map from './map';
 import NearbyOffers from './nearby-offers';
@@ -16,24 +19,16 @@ function Offer(): JSX.Element {
 
   useEffect(() => {
     dispatch(fetchOfferDetailAction({ id }));
-  });
+    dispatch(fetchNearbyOfferAction({ id }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  const offers = useAppSelector((state) => state.offers);
+  const nearbyOffers = useAppSelector((state) => state.nearbyOffer.slice(1, 4));
   const offer = useAppSelector((state) => state.offer);
 
   if (!id) {
     return <Page404 />;
   }
-
-  const nearbyOffers =
-    offer &&
-    offers
-      .filter(
-        (nearbyOffer) =>
-          nearbyOffer.city.name === offer.city.name &&
-          nearbyOffer.id !== offer.id
-      )
-      .slice(1, 4);
 
   return offer ? (
     <section className="offer">

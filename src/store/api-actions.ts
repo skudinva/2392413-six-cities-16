@@ -14,6 +14,7 @@ import {
   appendReview,
   redirectToRoute,
   setAuthorizationStatus,
+  setNearbyOffers,
   setOffer,
   setOffers,
   setOffersLoading,
@@ -45,6 +46,17 @@ export const fetchOfferDetailAction = createAsyncThunk<
 >('fetchOfferDetailAction', async ({ id }, { dispatch, extra: api }) => {
   const { data } = await api.get<OfferDetailEntity>(`${APIRoute.Offers}/${id}`);
   dispatch(setOffer(data));
+});
+
+export const fetchNearbyOfferAction = createAsyncThunk<
+  void,
+  { id: string | undefined },
+  AsyncThunkPropWithAxios
+>('fetchNearbyOfferAction', async ({ id }, { dispatch, extra: api }) => {
+  const { data } = await api.get<ReviewEntity[]>(
+    `${APIRoute.Offers}/${id}/nearby`
+  );
+  dispatch(setNearbyOffers(data));
 });
 
 export const checkLoginAction = createAsyncThunk<
