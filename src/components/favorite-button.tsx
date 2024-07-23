@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { useState } from 'react';
-import { useAppDispatch } from '../hooks/store';
+import { AuthorizationStatus } from '../const';
+import { useAppDispatch, useAppSelector } from '../hooks/store';
 import { postFavoriteOfferAction } from '../store/api-actions';
 
 type FavoriteButtonProps = {
@@ -13,7 +14,11 @@ type FavoriteButtonProps = {
 function FavoriteButton(props: FavoriteButtonProps): JSX.Element {
   const { id, baseClass, children } = props;
   const dispatch = useAppDispatch();
+  const authorizationStatus = useAppSelector(
+    (state) => state.authorizationStatus
+  );
   const [isFavorite, setIsFavorite] = useState(props.isFavorite);
+  const isAuth = authorizationStatus === AuthorizationStatus.Auth;
 
   const onFavoriteButtonClick = () => {
     const newIsFavorite = !isFavorite;
@@ -33,7 +38,7 @@ function FavoriteButton(props: FavoriteButtonProps): JSX.Element {
         [`${baseClass}__bookmark-button--active`]: isFavorite,
       })}
       type="button"
-      onClick={() => onFavoriteButtonClick()}
+      onClick={isAuth ? () => onFavoriteButtonClick() : undefined}
     >
       {children}
       <span className="visually-hidden">
