@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../const';
@@ -59,9 +60,9 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button
-            className={'place-card__bookmark-button button'.concat(
-              isFavorite ? ' place-card__bookmark-button--active' : ''
-            )}
+            className={classNames('place-card__bookmark-button', 'button', {
+              'place-card__bookmark-button--active': isFavorite,
+            })}
             type="button"
             onClick={() => onFavoriteButtonClick()}
           >
