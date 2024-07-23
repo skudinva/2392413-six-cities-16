@@ -133,7 +133,7 @@ function Offer(): JSX.Element {
         <>
           <Map
             currentOffer={offer}
-            offers={nearbyOffers}
+            offers={[offer, ...nearbyOffers]}
             city={offer.city}
             baseClass="offer"
           />
