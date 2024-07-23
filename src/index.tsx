@@ -3,11 +3,12 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import App from './components/app';
 import { store } from './store';
-import { fetchOfferAction } from './store/api-actions';
+import { checkLoginAction, fetchOfferAction } from './store/api-actions';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+store.dispatch(checkLoginAction());
 store.dispatch(fetchOfferAction());
 root.render(
   <React.StrictMode>
