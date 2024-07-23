@@ -11,7 +11,7 @@ import {
 } from '../types';
 
 type MapProps = {
-  city: CityEntity | null;
+  city: CityEntity;
   offers: OfferLocation[];
   currentOffer: OfferEntity | OfferDetailEntity | null;
   baseClass: string;
