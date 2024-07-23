@@ -12,7 +12,7 @@ function OfferReview(): JSX.Element {
   useEffect(() => {
     dispatch(fetchReviewAction({ id }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [id]);
   const reviews = useAppSelector((state) => state.reviews);
   const authorizationStatus = useAppSelector(
     (state) => state.authorizationStatus
