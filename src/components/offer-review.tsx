@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { AuthorizationStatus } from '../const';
-import { useAppDispatch, useAppSelector } from '../hooks/use-app-dispatch';
+import { useAppDispatch, useAppSelector } from '../hooks/store';
 import { fetchReviewAction } from '../store/api-actions';
 import OfferReviewForm from './offer-review-form';
 import OfferReviewItem from './offer-review-item';

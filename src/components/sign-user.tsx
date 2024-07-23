@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../const';
-import { useAppDispatch, useAppSelector } from '../hooks/use-app-dispatch';
+import { useAppDispatch, useAppSelector } from '../hooks/store';
 import { logoutAction } from '../store/api-actions';
 
 function SignUser(): JSX.Element {

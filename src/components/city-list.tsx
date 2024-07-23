@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Cities, CityName } from '../const';
-import { useAppDispatch } from '../hooks/use-app-dispatch';
+import { useAppDispatch } from '../hooks/store';
 
 import classNames from 'classnames';
 import { setCurrentCity } from '../store/action';

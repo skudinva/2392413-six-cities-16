@@ -1,7 +1,7 @@
 import { FormEvent, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { RatingTitle, Setting } from '../const';
-import { useAppDispatch } from '../hooks/use-app-dispatch';
+import { useAppDispatch } from '../hooks/store';
 import { PostReview, PostReviewAction } from '../store/api-actions';
 import Rating from './rating';
 

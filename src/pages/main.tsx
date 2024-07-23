@@ -4,7 +4,7 @@ import Map from '../components/map';
 import OfferSort from '../components/offer-sort';
 import PlaceCardList from '../components/place-card-list';
 import { CityName } from '../const';
-import { useAppSelector } from '../hooks/use-app-dispatch';
+import { useAppSelector } from '../hooks/store';
 import { OfferEntity } from '../types';
 import { applySorting, getCityOffers } from '../utils';
 

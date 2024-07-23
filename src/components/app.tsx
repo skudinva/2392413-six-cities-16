@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import browserHistory from '../browser-history';
 import { AppRoute, AuthorizationStatus } from '../const';
-import { useAppSelector } from '../hooks/use-app-dispatch';
+import { useAppSelector } from '../hooks/store';
 import FavoriteList from '../pages/favorite-list';
 import Login from '../pages/login';
 import Main from '../pages/main';

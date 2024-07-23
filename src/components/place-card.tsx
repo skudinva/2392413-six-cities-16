@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../const';
-import { useAppDispatch } from '../hooks/use-app-dispatch';
+import { useAppDispatch } from '../hooks/store';
 import { postFavoriteOfferAction } from '../store/api-actions';
 import { OfferEntity } from '../types';
 import RatingStars from './rating-stars';

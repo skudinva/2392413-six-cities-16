@@ -1,5 +1,5 @@
 import { FormEvent, useRef } from 'react';
-import { useAppDispatch } from '../hooks/use-app-dispatch';
+import { useAppDispatch } from '../hooks/store';
 import { loginAction } from '../store/api-actions';
 
 function LoginForm(): JSX.Element {
