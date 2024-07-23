@@ -1,12 +1,12 @@
 import { useState } from 'react';
+import CityList from '../components/city-list';
+import Map from '../components/map';
+import OfferSort from '../components/offer-sort';
+import PlaceCardList from '../components/place-card-list';
 import { CityName } from '../const';
 import { useAppSelector } from '../hooks/use-app-dispatch';
 import { OfferEntity } from '../types';
 import { applySorting, getCityOffers } from '../utils';
-import CityList from './city-list';
-import Map from './map';
-import OfferSort from './offer-sort';
-import PlaceCardList from './place-card-list';
 
 function Main(): JSX.Element {
   const currentCity = useAppSelector((state) => state.currentCity);

@@ -1,6 +1,6 @@
+import Favorite from '../components/favorite';
 import { useAppSelector } from '../hooks/use-app-dispatch';
 import { OfferEntity } from '../types';
-import Favorite from './favorite';
 
 type OfferByGroup = {
   [city: string]: OfferEntity[];
