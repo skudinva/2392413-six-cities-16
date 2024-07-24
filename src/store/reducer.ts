@@ -1,4 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
+import { StatusCodes } from 'http-status-codes';
 import { AuthorizationStatus, Cities, SortType } from '../const';
 import {
   AuthInfo,
@@ -19,6 +20,7 @@ import {
   setOffer,
   setOffers,
   setOffersLoading,
+  setResponseStatus,
   setReviews,
   setUserProfile,
 } from './action';
@@ -34,6 +36,7 @@ type InitialState = {
   authorizationStatus: AuthorizationStatus;
   userProfile: AuthInfo | null;
   isOffersLoading: boolean;
+  responseStatus: StatusCodes;
 };
 
 const initialState: InitialState = {
@@ -47,6 +50,7 @@ const initialState: InitialState = {
   authorizationStatus: AuthorizationStatus.Unknown,
   userProfile: null,
   isOffersLoading: false,
+  responseStatus: StatusCodes.ACCEPTED,
 };
 
 const setIsFavoriteState = (
@@ -105,6 +109,10 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setFavoriteOffers, (state, action) => {
       state.favoriteOffers = action.payload;
+    })
+
+    .addCase(setResponseStatus, (state, action) => {
+      state.responseStatus = action.payload;
     });
 });
 

@@ -1,4 +1,5 @@
 import { createAction, PrepareAction } from '@reduxjs/toolkit';
+import { StatusCodes } from 'http-status-codes';
 import { AppRoute, AuthorizationStatus, SortType } from '../const';
 import {
   AuthInfo,
@@ -72,3 +73,5 @@ export const setUserProfile = createAction<PrepareAction<AuthInfo>>(
 );
 
 export const redirectToRoute = createAction<AppRoute>('redirectToRoute');
+
+export const setResponseStatus = createAction<StatusCodes>('setResponseStatus');

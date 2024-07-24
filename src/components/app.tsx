@@ -1,3 +1,4 @@
+import { StatusCodes } from 'http-status-codes';
 import { Route, Routes } from 'react-router-dom';
 import browserHistory from '../browser-history';
 import { AppRoute, AuthorizationStatus } from '../const';
@@ -14,9 +15,14 @@ import PrivateRoute from './private-route';
 
 function App(): JSX.Element {
   const isOffersLoading = useAppSelector((state) => state.isOffersLoading);
+  const responseStatus = useAppSelector((state) => state.responseStatus);
   const authorizationStatus = useAppSelector(
     (state) => state.authorizationStatus
   );
+
+  if (responseStatus === StatusCodes.NOT_FOUND) {
+    return <Page404 />;
+  }
 
   if (isOffersLoading || authorizationStatus === AuthorizationStatus.Unknown) {
     return <Loader />;

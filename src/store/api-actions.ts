@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosError, AxiosInstance } from 'axios';
-import { StatusCodes } from 'http-status-codes';
 import { APIRoute, AppRoute, AuthorizationStatus } from '../const';
 import { dropToken, setToken } from '../services/token';
 import {
@@ -22,6 +21,7 @@ import {
   setOffer,
   setOffers,
   setOffersLoading,
+  setResponseStatus,
   setReviews,
   setUserProfile,
 } from './action';
@@ -55,8 +55,9 @@ export const fetchOfferDetailAction = createAsyncThunk<
     dispatch(setOffer(data));
   } catch (error) {
     const { response } = error as AxiosError;
-    if (response && response.status === +StatusCodes.NOT_FOUND) {
-      dispatch(redirectToRoute(AppRoute.Unknown));
+
+    if (response) {
+      dispatch(setResponseStatus(response.status));
     }
   }
 });
