@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../const';
 import { useAppDispatch, useAppSelector } from '../hooks/store';
-import { redirectToRoute } from '../store/action';
 import { postFavoriteOfferAction } from '../store/api-actions';
 
 type FavoriteButtonProps = {
@@ -20,11 +20,13 @@ function FavoriteButton(props: FavoriteButtonProps): JSX.Element {
   );
   const [isFavorite, setIsFavorite] = useState(props.isFavorite);
   const isAuth = authorizationStatus === AuthorizationStatus.Auth;
+  const navigate = useNavigate();
 
   const onFavoriteButtonClick = () => {
     if (!isAuth) {
-      dispatch(redirectToRoute(AppRoute.Login));
-      return;
+      navigate(AppRoute.Login);
+      //dispatch(redirectToRoute(AppRoute.Login));
+      //return;
     }
     const newIsFavorite = !isFavorite;
 
