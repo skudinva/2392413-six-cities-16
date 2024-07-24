@@ -15,8 +15,9 @@ function OfferReview(): JSX.Element {
   const reviews = useAppSelector((state) => state.reviews);
 
   const outputReviews = [...reviews]
-    .sort((nextReview, currentReview) =>
-      Number(Date.parse(currentReview.date) > Date.parse(nextReview.date))
+    .sort(
+      (nextReview, currentReview) =>
+        Date.parse(currentReview.date) - Date.parse(nextReview.date)
     )
     .slice(0, 10);
 
