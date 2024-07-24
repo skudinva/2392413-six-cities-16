@@ -26,7 +26,7 @@ function FavoriteButton(props: FavoriteButtonProps): JSX.Element {
     if (!isAuth) {
       navigate(AppRoute.Login);
       //dispatch(redirectToRoute(AppRoute.Login));
-      //return;
+      return;
     }
     const newIsFavorite = !isFavorite;
 

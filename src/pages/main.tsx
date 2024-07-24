@@ -39,9 +39,10 @@ function Main(): JSX.Element {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">
-                {currentCity
-                  ? `${cityOffers.length} places to stay in ${currentCity.name}`
-                  : ''}
+                {currentCity &&
+                  `${cityOffers.length} ${
+                    cityOffers.length > 1 ? 'places' : 'place'
+                  } to stay in ${currentCity.name}`}
               </b>
               <OfferSort />
               <PlaceCardList

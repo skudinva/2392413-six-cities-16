@@ -20,6 +20,7 @@ function MainLayout(): JSX.Element {
         'page--main': isMainPage,
         'page--favorites-empty': isEmptyFavoritePage,
         'page--gray': isGrayPage,
+        'page--login': isLoginForm,
       })}
     >
       <header className="header">
