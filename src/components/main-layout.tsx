@@ -1,12 +1,27 @@
+import classNames from 'classnames';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { AppRoute } from '../const';
+import { useAppSelector } from '../hooks/store';
 import SignUser from './sign-user';
 
 function MainLayout(): JSX.Element {
   const { pathname } = useLocation();
+  const favoriteOffers = useAppSelector((state) => state.favoriteOffers);
   const isLoginForm = pathname === String(AppRoute.Login);
+  const isFavoritePage = pathname === String(AppRoute.Favorites);
+  const isEmptyFavoritePage = !favoriteOffers.length && isFavoritePage;
+  const isGrayPage =
+    pathname === String(AppRoute.Main) || pathname === String(AppRoute.Login);
+  const isMainPage = pathname === String(AppRoute.Main);
+
   return (
-    <div className="page page--gray page--main">
+    <div
+      className={classNames('page', {
+        'page--main': isMainPage,
+        'page--favorites-empty': isEmptyFavoritePage,
+        'page--gray': isGrayPage,
+      })}
+    >
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
@@ -28,8 +43,20 @@ function MainLayout(): JSX.Element {
           </div>
         </div>
       </header>
-
       <Outlet />
+      {isFavoritePage && (
+        <footer className="footer">
+          <a className="footer__logo-link" href="main.html">
+            <img
+              className="footer__logo"
+              src="img/logo.svg"
+              alt="6 cities logo"
+              width="64"
+              height="33"
+            />
+          </a>
+        </footer>
+      )}
     </div>
   );
 }
