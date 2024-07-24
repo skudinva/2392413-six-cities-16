@@ -23,3 +23,16 @@ export const applySorting = {
     currentOffer: OfferEntity
   ) => currentOffer.rating - nextOffer.rating,
 };
+
+export const getRandomInteger = function (
+  firstNumber: number,
+  secondNumber: number
+) {
+  const lower = Math.ceil(Math.min(firstNumber, secondNumber));
+  const upper = Math.floor(Math.max(firstNumber, secondNumber));
+  const result = Math.random() * (upper - lower + 1) + lower;
+  return Math.floor(result);
+};
+
+export const getRandomArrayElement = <T>(elements: T[]): T =>
+  elements[getRandomInteger(0, elements.length - 1)];
