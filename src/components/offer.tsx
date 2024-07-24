@@ -21,8 +21,7 @@ function Offer(): JSX.Element {
   useEffect(() => {
     dispatch(fetchOfferDetailAction({ id }));
     dispatch(fetchNearbyOfferAction({ id }));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+  }, [dispatch, id]);
 
   const nearbyOffers = useAppSelector((state) => state.nearbyOffer.slice(0, 3));
   const offer = useAppSelector((state) => state.offer);
