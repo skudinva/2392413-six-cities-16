@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../hooks/store';
@@ -34,7 +35,7 @@ function Offer(): JSX.Element {
     <section className="offer">
       <div className="offer__gallery-container container">
         <div className="offer__gallery">
-          {offer.images.map((image, index) => {
+          {offer.images.slice(0, 6).map((image, index) => {
             const keyValue = `${index}-image`;
             return (
               <div className="offer__image-wrapper" key={keyValue}>
@@ -98,7 +99,15 @@ function Offer(): JSX.Element {
           <div className="offer__host">
             <h2 className="offer__host-title">{offer.title}</h2>
             <div className="offer__host-user user">
-              <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
+              <div
+                className={classNames(
+                  'offer__avatar-wrapper',
+                  'user__avatar-wrapper',
+                  {
+                    'offer__avatar-wrapper--pro': offer.host.isPro,
+                  }
+                )}
+              >
                 <img
                   className="offer__avatar user__avatar"
                   src={offer.host.avatarUrl}
