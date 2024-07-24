@@ -9,6 +9,9 @@ function MainLayout(): JSX.Element {
   const favoriteOffers = useAppSelector((state) => state.favoriteOffers);
   const isLoginForm = pathname === String(AppRoute.Login);
   const isFavoritePage = pathname === String(AppRoute.Favorites);
+  const isOfferPage = pathname.startsWith(
+    String(AppRoute.Offer).replace('/:id', '')
+  );
   const isEmptyFavoritePage = !favoriteOffers.length && isFavoritePage;
   const isGrayPage =
     pathname === String(AppRoute.Main) || pathname === String(AppRoute.Login);
@@ -21,6 +24,7 @@ function MainLayout(): JSX.Element {
         'page--favorites-empty': isEmptyFavoritePage,
         'page--gray': isGrayPage,
         'page--login': isLoginForm,
+        'page__main--offer': isOfferPage,
       })}
     >
       <header className="header">

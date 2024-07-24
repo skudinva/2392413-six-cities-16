@@ -1,17 +1,16 @@
 import { Link } from 'react-router-dom';
 import { Cities, CityName } from '../const';
-import { useAppDispatch } from '../hooks/store';
+import { useAppDispatch, useAppSelector } from '../hooks/store';
 
 import classNames from 'classnames';
 import { setCurrentCity } from '../store/action';
-import { CityEntity } from '../types';
 type CityListProps = {
   cities: typeof CityName;
-  currentCity: CityEntity;
 };
 
 function CityList(props: CityListProps): JSX.Element {
-  const { cities, currentCity } = props;
+  const { cities } = props;
+  const currentCity = useAppSelector((state) => state.currentCity);
   const dispatch = useAppDispatch();
 
   const onCityClick = (cityName: string): void => {
