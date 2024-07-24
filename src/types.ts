@@ -15,10 +15,6 @@ declare global {
   }
 }
 
-export type PrivateRouteProps = {
-  children: JSX.Element;
-};
-
 export type LocationEntity = {
   latitude: number;
   longitude: number;
