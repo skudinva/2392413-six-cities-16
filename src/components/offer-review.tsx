@@ -14,6 +14,13 @@ function OfferReview(): JSX.Element {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
   const reviews = useAppSelector((state) => state.reviews);
+
+  const outputReviews = [...reviews]
+    .sort((nextReview, currentReview) =>
+      Number(Date.parse(currentReview.date) > Date.parse(nextReview.date))
+    )
+    .slice(0, 10);
+
   const authorizationStatus = useAppSelector(
     (state) => state.authorizationStatus
   );
@@ -23,7 +30,7 @@ function OfferReview(): JSX.Element {
         Reviews · <span className="reviews__amount">{reviews.length}</span>
       </h2>
       <ul className="reviews__list">
-        {reviews.map((review) => (
+        {outputReviews.map((review) => (
           <OfferReviewItem review={review} key={review.id} />
         ))}
       </ul>
