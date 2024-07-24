@@ -1,7 +1,8 @@
 import classNames from 'classnames';
 import { useState } from 'react';
-import { AuthorizationStatus } from '../const';
+import { AppRoute, AuthorizationStatus } from '../const';
 import { useAppDispatch, useAppSelector } from '../hooks/store';
+import { redirectToRoute } from '../store/action';
 import { postFavoriteOfferAction } from '../store/api-actions';
 
 type FavoriteButtonProps = {
@@ -21,6 +22,10 @@ function FavoriteButton(props: FavoriteButtonProps): JSX.Element {
   const isAuth = authorizationStatus === AuthorizationStatus.Auth;
 
   const onFavoriteButtonClick = () => {
+    if (!isAuth) {
+      dispatch(redirectToRoute(AppRoute.Login));
+      return;
+    }
     const newIsFavorite = !isFavorite;
 
     dispatch(
@@ -38,7 +43,7 @@ function FavoriteButton(props: FavoriteButtonProps): JSX.Element {
         [`${baseClass}__bookmark-button--active`]: isFavorite,
       })}
       type="button"
-      onClick={isAuth ? () => onFavoriteButtonClick() : undefined}
+      onClick={onFavoriteButtonClick}
     >
       {children}
       <span className="visually-hidden">
