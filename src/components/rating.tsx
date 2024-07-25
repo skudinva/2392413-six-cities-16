@@ -3,12 +3,13 @@ import { RatingGrade } from '../const';
 type RatingProps = {
   rating: RatingGrade;
   selectedRating: number;
+  isDisabled: boolean;
   onChangeRating: React.ChangeEventHandler<HTMLInputElement>;
 };
 
 function Rating(props: RatingProps): JSX.Element {
   const { title, mark } = props.rating;
-  const { selectedRating, onChangeRating } = props;
+  const { selectedRating, isDisabled, onChangeRating } = props;
 
   return (
     <>
@@ -18,6 +19,7 @@ function Rating(props: RatingProps): JSX.Element {
         value={mark}
         id={`${mark}-stars`}
         type="radio"
+        disabled={isDisabled}
         checked={mark === selectedRating}
         onChange={onChangeRating}
       />

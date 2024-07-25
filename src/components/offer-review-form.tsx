@@ -7,6 +7,7 @@ import Rating from './rating';
 
 function OfferReviewForm(): JSX.Element {
   const { id } = useParams();
+  const [isRequestSending, setIsRequestSending] = useState(false);
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState('');
   const dispatch = useAppDispatch();
@@ -21,17 +22,19 @@ function OfferReviewForm(): JSX.Element {
       comment: review,
       rating: rating,
     };
+    setIsRequestSending(true);
     dispatch(PostReviewAction(data)).then(() => {
       setRating(0);
       setReview('');
+      setIsRequestSending(false);
     });
   };
 
   const isSubmitButtonDisabled =
     !rating ||
     review.length < Setting.review.minLength ||
-    review.length > Setting.review.maxLength;
-
+    review.length > Setting.review.maxLength ||
+    isRequestSending;
   return (
     <form
       className="reviews__form form"
@@ -48,6 +51,7 @@ function OfferReviewForm(): JSX.Element {
           return (
             <Rating
               rating={ratingItem}
+              isDisabled={isRequestSending}
               key={keyValue}
               selectedRating={rating}
               onChangeRating={(evt) => {
@@ -63,6 +67,7 @@ function OfferReviewForm(): JSX.Element {
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={review}
+        disabled={isRequestSending}
         onInput={(evt: React.ChangeEvent<HTMLTextAreaElement>) => {
           setReview(evt.target.value);
         }}
