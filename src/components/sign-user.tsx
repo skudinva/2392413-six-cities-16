@@ -2,13 +2,16 @@ import { Link } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../const';
 import { useAppDispatch, useAppSelector } from '../hooks/store';
 import { logoutAction } from '../store/api-actions';
+import { getFavoriteOffers } from '../store/offer-process/selectors';
+import {
+  getAuthorizationStatus,
+  getUserProfile,
+} from '../store/user-process/selectors';
 
 function SignUser(): JSX.Element {
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus
-  );
-  const userProfile = useAppSelector((state) => state.userProfile);
-  const favoriteOffers = useAppSelector((state) => state.favoriteOffers);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const userProfile = useAppSelector(getUserProfile);
+  const favoriteOffers = useAppSelector(getFavoriteOffers);
   const isAuthUser = authorizationStatus === AuthorizationStatus.Auth;
   const dispatch = useAppDispatch();
 

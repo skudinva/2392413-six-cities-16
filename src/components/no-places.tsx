@@ -1,7 +1,8 @@
 import { useAppSelector } from '../hooks/store';
+import { getCurrentCity } from '../store/offer-process/selectors';
 
 function NoPlaces(): JSX.Element {
-  const currentCity = useAppSelector((state) => state.currentCity);
+  const currentCity = useAppSelector(getCurrentCity);
   return (
     <div className="cities__places-container container cities__places-container--empty">
       <section className="cities__no-places">

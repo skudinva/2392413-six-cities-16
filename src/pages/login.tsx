@@ -3,13 +3,12 @@ import LoginForm from '../components/login-form';
 import { AppRoute, AuthorizationStatus, Cities } from '../const';
 import { useAppDispatch, useAppSelector } from '../hooks/store';
 import { setCurrentCity } from '../store/action';
+import { getAuthorizationStatus } from '../store/user-process/selectors';
 import { getRandomArrayElement } from '../utils';
 
 function Login(): JSX.Element {
   const dispatch = useAppDispatch();
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus
-  );
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   if (authorizationStatus === AuthorizationStatus.Auth) {
     return <Navigate to={AppRoute.Main} />;

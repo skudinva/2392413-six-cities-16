@@ -144,3 +144,7 @@ export enum APIRoute {
   Comments = '/comments',
   Favorite = '/favorite',
 }
+export enum NameSpace {
+  Data = 'DATA',
+  User = 'USER',
+}

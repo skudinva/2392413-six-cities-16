@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import { AuthorizationStatus } from '../const';
 import { useAppDispatch, useAppSelector } from '../hooks/store';
 import { fetchReviewAction } from '../store/api-actions';
+import { getReviews } from '../store/offer-process/selectors';
+import { getAuthorizationStatus } from '../store/user-process/selectors';
 import OfferReviewForm from './offer-review-form';
 import OfferReviewItem from './offer-review-item';
 
@@ -12,7 +14,7 @@ function OfferReview(): JSX.Element {
   useEffect(() => {
     dispatch(fetchReviewAction({ id }));
   }, [dispatch, id]);
-  const reviews = useAppSelector((state) => state.reviews);
+  const reviews = useAppSelector(getReviews);
 
   const outputReviews = [...reviews]
     .sort(
@@ -21,9 +23,7 @@ function OfferReview(): JSX.Element {
     )
     .slice(0, 10);
 
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus
-  );
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   return (
     <section className="offer__reviews reviews">
       <h2 className="reviews__title">
