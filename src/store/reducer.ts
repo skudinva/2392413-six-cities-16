@@ -110,6 +110,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setFavoriteOffers, (state, action) => {
       state.favoriteOffers = action.payload;
+      state.favoriteOffers.map((favoriteOffer) => {
+        setIsFavoriteState(state.offers, favoriteOffer);
+      });
     })
     .addCase(clearFavoritesOffers, (state) => {
       state.offers.map((offer) => (offer.isFavorite = false));

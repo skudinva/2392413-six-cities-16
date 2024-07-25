@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosError, AxiosInstance } from 'axios';
-import { APIRoute, AppRoute, AuthorizationStatus } from '../const';
+import { APIRoute, AuthorizationStatus } from '../const';
 import { dropToken, setToken } from '../services/token';
 import {
   AppDispatch,
@@ -15,7 +15,6 @@ import {
   appendReview,
   clearFavoritesOffers,
   deleteFavoriteOffer,
-  redirectToRoute,
   setAuthorizationStatus,
   setFavoriteOffers,
   setNearbyOffers,
@@ -137,7 +136,8 @@ export const loginAction = createAsyncThunk<
     setToken(data.token);
     dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
     dispatch(setUserProfile(data));
-    dispatch(redirectToRoute(AppRoute.Main));
+    //dispatch(fetchFavoriteOffersAction());
+    //dispatch(redirectToRoute(AppRoute.Main));
   } catch (error) {
     dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
   }

@@ -1,10 +1,23 @@
 import classNames from 'classnames';
+import { useEffect } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
-import { AppRoute } from '../const';
-import { useAppSelector } from '../hooks/store';
+import { AppRoute, AuthorizationStatus } from '../const';
+import { useAppDispatch, useAppSelector } from '../hooks/store';
+import { fetchFavoriteOffersAction } from '../store/api-actions';
 import SignUser from './sign-user';
 
 function MainLayout(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const authorizationStatus = useAppSelector(
+    (state) => state.authorizationStatus
+  );
+
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(fetchFavoriteOffersAction());
+    }
+  }, [dispatch, authorizationStatus]);
+
   const { pathname } = useLocation();
   const favoriteOffers = useAppSelector((state) => state.favoriteOffers);
   const isLoginForm = pathname === String(AppRoute.Login);
