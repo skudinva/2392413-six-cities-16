@@ -104,6 +104,9 @@ export const offerProcess = createSlice({
             (favoriteOffer) => favoriteOffer.id !== offer.id
           );
         }
+        if (state.offer && state.offer.id === offer.id) {
+          state.offer.isFavorite = offer.isFavorite;
+        }
         setIsFavoriteState(state.offers, offer);
       })
       .addCase(clearFavoritesOffers, (state) => {
