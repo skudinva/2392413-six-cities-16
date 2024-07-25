@@ -32,6 +32,14 @@ type AsyncThunkPropWithAxios = {
   extra: AxiosInstance;
 };
 
+const catchError = (dispatch: AppDispatch, error: AxiosError) => {
+  const { response } = error;
+
+  if (response) {
+    dispatch(setResponseStatus(response.status));
+  }
+};
+
 export const fetchOfferAction = createAsyncThunk<
   void,
   undefined,
@@ -54,11 +62,7 @@ export const fetchOfferDetailAction = createAsyncThunk<
     );
     dispatch(setOffer(data));
   } catch (error) {
-    const { response } = error as AxiosError;
-
-    if (response) {
-      dispatch(setResponseStatus(response.status));
-    }
+    catchError(dispatch, error as AxiosError);
   }
 });
 
@@ -188,7 +192,7 @@ export const PostReviewAction = createAsyncThunk<
 
       dispatch(appendReview(data));
     } catch (error) {
-      //dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
+      catchError(dispatch, error as AxiosError);
     }
   }
 );
