@@ -24,6 +24,8 @@ export const setFavoriteOffers = createAction<PrepareAction<OfferEntity[]>>(
   (offers: OfferEntity[]) => ({ payload: offers })
 );
 
+export const clearFavoritesOffers = createAction('clearFavoritesOffers');
+
 export const appendFavoriteOffer = createAction<PrepareAction<OfferEntity>>(
   'appendFavoriteOffer',
   (offer: OfferEntity) => ({ payload: offer })

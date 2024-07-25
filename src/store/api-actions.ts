@@ -13,6 +13,7 @@ import {
 import {
   appendFavoriteOffer,
   appendReview,
+  clearFavoritesOffers,
   deleteFavoriteOffer,
   redirectToRoute,
   setAuthorizationStatus,
@@ -150,7 +151,7 @@ export const logoutAction = createAsyncThunk<
   await api.delete(APIRoute.Logout);
   dropToken();
   dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
-  dispatch(setFavoriteOffers([]));
+  dispatch(clearFavoritesOffers());
   dispatch(setUserProfile(null));
 });
 

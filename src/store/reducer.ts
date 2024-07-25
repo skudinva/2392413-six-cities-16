@@ -11,6 +11,7 @@ import { OfferEntity } from './../types';
 import {
   appendFavoriteOffer,
   appendReview,
+  clearFavoritesOffers,
   deleteFavoriteOffer,
   setAuthorizationStatus,
   setCurrentCity,
@@ -110,7 +111,14 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(setFavoriteOffers, (state, action) => {
       state.favoriteOffers = action.payload;
     })
-
+    .addCase(clearFavoritesOffers, (state) => {
+      state.offers.map((offer) => (offer.isFavorite = false));
+      state.nearbyOffer.map((offer) => (offer.isFavorite = false));
+      if (state.offer) {
+        state.offer.isFavorite = false;
+      }
+      state.favoriteOffers = [];
+    })
     .addCase(setResponseStatus, (state, action) => {
       state.responseStatus = action.payload;
     });
