@@ -12,7 +12,8 @@ function SignUser(): JSX.Element {
   const isAuthUser = authorizationStatus === AuthorizationStatus.Auth;
   const dispatch = useAppDispatch();
 
-  const onLogout = () => {
+  const onLogout = (evt: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    evt.preventDefault();
     dispatch(logoutAction());
   };
 

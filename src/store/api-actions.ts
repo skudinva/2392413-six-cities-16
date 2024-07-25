@@ -147,15 +147,11 @@ export const logoutAction = createAsyncThunk<
   undefined,
   AsyncThunkPropWithAxios
 >('logoutAction', async (_arg, { dispatch, extra: api }) => {
-  try {
-    await api.delete(APIRoute.Logout);
-    dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
-  } catch (error) {
-    throw new Error('Error logoff');
-  } finally {
-    dispatch(setUserProfile(null));
-    dropToken();
-  }
+  await api.delete(APIRoute.Logout);
+  dropToken();
+  dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
+  dispatch(setFavoriteOffers([]));
+  dispatch(setUserProfile(null));
 });
 
 export const fetchReviewAction = createAsyncThunk<
