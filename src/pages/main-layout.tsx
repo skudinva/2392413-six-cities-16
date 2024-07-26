@@ -5,7 +5,7 @@ import SignUser from '../components/sign-user';
 import { AppRoute } from '../const';
 import { useAppDispatch, useAppSelector } from '../hooks/store';
 import { fetchFavoriteOffersAction } from '../store/api-actions';
-import { getFavoriteOffers } from '../store/offer-process/selectors';
+import { getFavoriteOffersCount } from '../store/offer-process/selectors';
 import { getIsAuthUser } from '../store/user-process/selectors';
 
 function MainLayout(): JSX.Element {
@@ -18,13 +18,13 @@ function MainLayout(): JSX.Element {
   }, [dispatch, isAuthUser]);
 
   const { pathname } = useLocation();
-  const favoriteOffers = useAppSelector(getFavoriteOffers);
+  const favoriteOffersCount = useAppSelector(getFavoriteOffersCount);
   const isLoginForm = pathname === String(AppRoute.Login);
   const isFavoritePage = pathname === String(AppRoute.Favorites);
   const isOfferPage = pathname.startsWith(
     String(AppRoute.Offer).replace('/:id', '')
   );
-  const isEmptyFavoritePage = !favoriteOffers.length && isFavoritePage;
+  const isEmptyFavoritePage = !favoriteOffersCount && isFavoritePage;
   const isGrayPage =
     pathname === String(AppRoute.Main) || pathname === String(AppRoute.Login);
   const isMainPage = pathname === String(AppRoute.Main);
