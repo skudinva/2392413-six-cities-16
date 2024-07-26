@@ -1,6 +1,13 @@
 import { createAction, PrepareAction } from '@reduxjs/toolkit';
-import { AuthorizationStatus, SortType } from '../const';
-import { AuthInfo, CityEntity, OfferEntity } from '../types';
+import { StatusCodes } from 'http-status-codes';
+import { AppRoute, AuthorizationStatus, SortType } from '../const';
+import {
+  AuthInfo,
+  CityEntity,
+  OfferDetailEntity,
+  OfferEntity,
+  ReviewEntity,
+} from '../types';
 
 export const setCurrentCity = createAction<PrepareAction<CityEntity>>(
   'setCurrentCity',
@@ -10,6 +17,43 @@ export const setCurrentCity = createAction<PrepareAction<CityEntity>>(
 export const setOffers = createAction<PrepareAction<OfferEntity[]>>(
   'setOffers',
   (offers: OfferEntity[]) => ({ payload: offers })
+);
+
+export const setFavoriteOffers = createAction<PrepareAction<OfferEntity[]>>(
+  'setFavoriteOffers',
+  (offers: OfferEntity[]) => ({ payload: offers })
+);
+
+export const clearFavoritesOffers = createAction('clearFavoritesOffers');
+
+export const appendFavoriteOffer = createAction<PrepareAction<OfferEntity>>(
+  'appendFavoriteOffer',
+  (offer: OfferEntity) => ({ payload: offer })
+);
+
+export const deleteFavoriteOffer = createAction<PrepareAction<OfferEntity>>(
+  'deleteFavoriteOffer',
+  (offer: OfferEntity) => ({ payload: offer })
+);
+
+export const setNearbyOffers = createAction<PrepareAction<OfferEntity[]>>(
+  'setNearbyOffers',
+  (nearbyOffers: OfferEntity[]) => ({ payload: nearbyOffers })
+);
+
+export const setOffer = createAction<PrepareAction<OfferDetailEntity>>(
+  'setOffer',
+  (offer: OfferDetailEntity) => ({ payload: offer })
+);
+
+export const setReviews = createAction<PrepareAction<ReviewEntity[]>>(
+  'setReviews',
+  (reviews: ReviewEntity[]) => ({ payload: reviews })
+);
+
+export const appendReview = createAction<PrepareAction<ReviewEntity>>(
+  'appendReview',
+  (review: ReviewEntity) => ({ payload: review })
 );
 
 export const setCurrentSort = createAction<PrepareAction<SortType>>(
@@ -23,12 +67,13 @@ export const setAuthorizationStatus = createAction<
   payload: status,
 }));
 
-export const setOffersLoading = createAction<PrepareAction<boolean>>(
-  'setOffersLoading',
-  (isOffersLoading: boolean) => ({ payload: isOffersLoading })
-);
+export const setOffersLoading = createAction<boolean>('setOffersLoading');
 
 export const setUserProfile = createAction<PrepareAction<AuthInfo>>(
   'setUserProfile',
   (user: AuthInfo) => ({ payload: user })
 );
+
+export const redirectToRoute = createAction<AppRoute>('redirectToRoute');
+
+export const setResponseStatus = createAction<StatusCodes>('setResponseStatus');

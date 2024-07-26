@@ -4,6 +4,13 @@ import RatingStars from './rating-stars';
 type OfferReviewItemProps = {
   review: ReviewEntity;
 };
+const reviewsTimeAsText = (date: Date): string => {
+  const formatter = new Intl.DateTimeFormat('en', {
+    month: 'long',
+    year: 'numeric',
+  });
+  return formatter.format(date);
+};
 function OfferReviewItem(props: OfferReviewItemProps): JSX.Element {
   const { review } = props;
   const date = new Date(review.date);
@@ -26,7 +33,7 @@ function OfferReviewItem(props: OfferReviewItemProps): JSX.Element {
         <RatingStars baseClass="reviews" rating={review.rating} />
         <p className="reviews__text">{review.comment}</p>
         <time className="reviews__time" dateTime={review.date}>
-          {date.toLocaleDateString()}
+          {reviewsTimeAsText(date)}
         </time>
       </div>
     </li>

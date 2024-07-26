@@ -15,10 +15,6 @@ declare global {
   }
 }
 
-export type PrivateRouteProps = {
-  children: JSX.Element;
-};
-
 export type LocationEntity = {
   latitude: number;
   longitude: number;
@@ -27,6 +23,11 @@ export type LocationEntity = {
 
 export type CityEntity = {
   name: string;
+  location: LocationEntity;
+};
+
+export type OfferLocation = {
+  id: string;
   location: LocationEntity;
 };
 
@@ -43,16 +44,7 @@ export type OfferEntity = {
   previewImage: string;
 };
 
-export type OfferDetailEntity = {
-  id: string;
-  title: string;
-  type: string;
-  price: number;
-  city: CityEntity;
-  location: LocationEntity;
-  isFavorite: boolean;
-  isPremium: boolean;
-  rating: number;
+export type OfferDetailEntity = Omit<OfferEntity, 'previewImage'> & {
   description: string;
   bedrooms: number;
   goods: [string];

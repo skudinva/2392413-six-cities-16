@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../const';
-import { useAppDispatch, useAppSelector } from '../hooks/use-app-dispatch';
+import { useAppDispatch, useAppSelector } from '../hooks/store';
 import { logoutAction } from '../store/api-actions';
 
 function SignUser(): JSX.Element {
@@ -8,11 +8,12 @@ function SignUser(): JSX.Element {
     (state) => state.authorizationStatus
   );
   const userProfile = useAppSelector((state) => state.userProfile);
-  const favorites = useAppSelector((state) => state.favorites);
+  const favoriteOffers = useAppSelector((state) => state.favoriteOffers);
   const isAuthUser = authorizationStatus === AuthorizationStatus.Auth;
   const dispatch = useAppDispatch();
 
-  const onLogout = () => {
+  const onLogout = (evt: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    evt.preventDefault();
     dispatch(logoutAction());
   };
 
@@ -31,7 +32,7 @@ function SignUser(): JSX.Element {
                   {userProfile.email}
                 </span>
                 <span className="header__favorite-count">
-                  {favorites.length}
+                  {favoriteOffers.length}
                 </span>
               </>
             ) : (
@@ -41,9 +42,9 @@ function SignUser(): JSX.Element {
         </li>
         {isAuthUser && (
           <li className="header__nav-item">
-            <a className="header__nav-link" href="#" onClick={onLogout}>
+            <Link className="header__nav-link" to="" onClick={onLogout}>
               <span className="header__signout">Sign out</span>
-            </a>
+            </Link>
           </li>
         )}
       </ul>

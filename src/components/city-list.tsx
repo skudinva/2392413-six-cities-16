@@ -1,16 +1,16 @@
 import { Link } from 'react-router-dom';
 import { Cities, CityName } from '../const';
-import { useAppDispatch } from '../hooks/use-app-dispatch';
+import { useAppDispatch, useAppSelector } from '../hooks/store';
 
+import classNames from 'classnames';
 import { setCurrentCity } from '../store/action';
-import { CityEntity } from '../types';
 type CityListProps = {
   cities: typeof CityName;
-  currentCity: CityEntity | null;
 };
 
 function CityList(props: CityListProps): JSX.Element {
-  const { cities, currentCity } = props;
+  const { cities } = props;
+  const currentCity = useAppSelector((state) => state.currentCity);
   const dispatch = useAppDispatch();
 
   const onCityClick = (cityName: string): void => {
@@ -31,16 +31,16 @@ function CityList(props: CityListProps): JSX.Element {
       }}
     >
       {Object.values(cities).map((city, index) => {
-        const classNames = [
-          'locations__item-link',
-          'tabs__item',
-          city.toString() === currentCity?.name ? 'tabs__item--active' : '',
-        ].join(' ');
         const keyValue = `${index}-${city}`;
-
+        const isCurrentCity = city.toString() === currentCity.name;
         return (
           <li className="locations__item" key={keyValue}>
-            <Link className={classNames} to="#">
+            <Link
+              className={classNames('locations__item-link', 'tabs__item', {
+                'tabs__item--active': isCurrentCity,
+              })}
+              to="#"
+            >
               <span>{city}</span>
             </Link>
           </li>

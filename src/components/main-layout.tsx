@@ -1,17 +1,53 @@
-import { Outlet, useLocation } from 'react-router-dom';
-import { AppRoute } from '../const';
+import classNames from 'classnames';
+import { useEffect } from 'react';
+import { Link, Outlet, useLocation } from 'react-router-dom';
+import { AppRoute, AuthorizationStatus } from '../const';
+import { useAppDispatch, useAppSelector } from '../hooks/store';
+import { fetchFavoriteOffersAction } from '../store/api-actions';
 import SignUser from './sign-user';
 
 function MainLayout(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const authorizationStatus = useAppSelector(
+    (state) => state.authorizationStatus
+  );
+
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(fetchFavoriteOffersAction());
+    }
+  }, [dispatch, authorizationStatus]);
+
   const { pathname } = useLocation();
-  const isLoginForm = pathname === (AppRoute.Login as string);
+  const favoriteOffers = useAppSelector((state) => state.favoriteOffers);
+  const isLoginForm = pathname === String(AppRoute.Login);
+  const isFavoritePage = pathname === String(AppRoute.Favorites);
+  const isOfferPage = pathname.startsWith(
+    String(AppRoute.Offer).replace('/:id', '')
+  );
+  const isEmptyFavoritePage = !favoriteOffers.length && isFavoritePage;
+  const isGrayPage =
+    pathname === String(AppRoute.Main) || pathname === String(AppRoute.Login);
+  const isMainPage = pathname === String(AppRoute.Main);
+
   return (
-    <div className="page page--gray page--main">
+    <div
+      className={classNames('page', {
+        'page--main': isMainPage,
+        'page--favorites-empty': isEmptyFavoritePage,
+        'page--gray': isGrayPage,
+        'page--login': isLoginForm,
+        'page__main--offer': isOfferPage,
+      })}
+    >
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link header__logo-link--active">
+              <Link
+                className="header__logo-link header__logo-link--active"
+                to={AppRoute.Main}
+              >
                 <img
                   className="header__logo"
                   src="img/logo.svg"
@@ -19,14 +55,26 @@ function MainLayout(): JSX.Element {
                   width="81"
                   height="41"
                 />
-              </a>
+              </Link>
             </div>
             {!isLoginForm && <SignUser />}
           </div>
         </div>
       </header>
-
       <Outlet />
+      {isFavoritePage && (
+        <footer className="footer">
+          <a className="footer__logo-link" href="main.html">
+            <img
+              className="footer__logo"
+              src="img/logo.svg"
+              alt="6 cities logo"
+              width="64"
+              height="33"
+            />
+          </a>
+        </footer>
+      )}
     </div>
   );
 }

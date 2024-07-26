@@ -1,12 +1,28 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { AxiosInstance } from 'axios';
+import { AxiosError, AxiosInstance } from 'axios';
 import { APIRoute, AuthorizationStatus } from '../const';
 import { dropToken, setToken } from '../services/token';
-import { AppDispatch, AuthInfo, OfferEntity, State } from '../types';
 import {
+  AppDispatch,
+  AuthInfo,
+  OfferDetailEntity,
+  OfferEntity,
+  ReviewEntity,
+  State,
+} from '../types';
+import {
+  appendFavoriteOffer,
+  appendReview,
+  clearFavoritesOffers,
+  deleteFavoriteOffer,
   setAuthorizationStatus,
+  setFavoriteOffers,
+  setNearbyOffers,
+  setOffer,
   setOffers,
   setOffersLoading,
+  setResponseStatus,
+  setReviews,
   setUserProfile,
 } from './action';
 
@@ -20,18 +36,76 @@ export const fetchOfferAction = createAsyncThunk<
   void,
   undefined,
   AsyncThunkPropWithAxios
->('setOffers', async (_arg, { dispatch, extra: api }) => {
+>('fetchOfferAction', async (_arg, { dispatch, extra: api }) => {
   dispatch(setOffersLoading(true));
   const { data } = await api.get<OfferEntity[]>(APIRoute.Offers);
-  dispatch(setOffers(data));
   dispatch(setOffersLoading(false));
+  dispatch(setOffers(data));
 });
+
+export const fetchOfferDetailAction = createAsyncThunk<
+  void,
+  { id: string | undefined },
+  AsyncThunkPropWithAxios
+>('fetchOfferDetailAction', async ({ id }, { dispatch, extra: api }) => {
+  try {
+    const { data } = await api.get<OfferDetailEntity>(
+      `${APIRoute.Offers}/${id}`
+    );
+    dispatch(setOffer(data));
+  } catch (error) {
+    const { response } = error as AxiosError;
+
+    if (response) {
+      dispatch(setResponseStatus(response.status));
+    }
+  }
+});
+
+export const fetchNearbyOfferAction = createAsyncThunk<
+  void,
+  { id: string | undefined },
+  AsyncThunkPropWithAxios
+>('fetchNearbyOfferAction', async ({ id }, { dispatch, extra: api }) => {
+  const { data } = await api.get<ReviewEntity[]>(
+    `${APIRoute.Offers}/${id}/nearby`
+  );
+  dispatch(setNearbyOffers(data));
+});
+
+export const fetchFavoriteOffersAction = createAsyncThunk<
+  void,
+  undefined,
+  AsyncThunkPropWithAxios
+>('fetchFavoriteOffersAction', async (_arg, { dispatch, extra: api }) => {
+  const { data } = await api.get<OfferEntity[]>(APIRoute.Favorite);
+  dispatch(setFavoriteOffers(data));
+});
+
+export const postFavoriteOfferAction = createAsyncThunk<
+  void,
+  { id: string; isFavorite: boolean },
+  AsyncThunkPropWithAxios
+>(
+  'postFavoriteOfferAction',
+  async ({ id, isFavorite }, { dispatch, extra: api }) => {
+    const { data } = await api.post<OfferEntity>(
+      `${APIRoute.Favorite}/${id}/${Number(isFavorite)}`
+    );
+
+    if (isFavorite) {
+      dispatch(appendFavoriteOffer(data));
+    } else {
+      dispatch(deleteFavoriteOffer(data));
+    }
+  }
+);
 
 export const checkLoginAction = createAsyncThunk<
   void,
   undefined,
   AsyncThunkPropWithAxios
->('checkLogin', async (_arg, { dispatch, extra: api }) => {
+>('checkLoginAction', async (_arg, { dispatch, extra: api }) => {
   try {
     const { data } = await api.get<AuthInfo>(APIRoute.Login);
     setToken(data.token);
@@ -62,6 +136,8 @@ export const loginAction = createAsyncThunk<
     setToken(data.token);
     dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
     dispatch(setUserProfile(data));
+    //dispatch(fetchFavoriteOffersAction());
+    //dispatch(redirectToRoute(AppRoute.Main));
   } catch (error) {
     dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
   }
@@ -72,13 +148,47 @@ export const logoutAction = createAsyncThunk<
   undefined,
   AsyncThunkPropWithAxios
 >('logoutAction', async (_arg, { dispatch, extra: api }) => {
-  try {
-    await api.delete(APIRoute.Logout);
-    dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
-  } catch (error) {
-    throw new Error('Error logoff');
-  } finally {
-    dispatch(setUserProfile(null));
-    dropToken();
-  }
+  await api.delete(APIRoute.Logout);
+  dropToken();
+  dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
+  dispatch(clearFavoritesOffers());
+  dispatch(setUserProfile(null));
 });
+
+export const fetchReviewAction = createAsyncThunk<
+  void,
+  { id: string | undefined },
+  AsyncThunkPropWithAxios
+>('fetchReviewAction', async ({ id }, { dispatch, extra: api }) => {
+  const { data } = await api.get<ReviewEntity[]>(`${APIRoute.Comments}/${id}`);
+  dispatch(setReviews(data));
+});
+
+export type PostReview = {
+  id: string;
+  comment: string;
+  rating: number;
+};
+
+export const PostReviewAction = createAsyncThunk<
+  void,
+  PostReview,
+  AsyncThunkPropWithAxios
+>(
+  'PostReviewAction',
+  async ({ id, comment, rating }, { dispatch, extra: api }) => {
+    try {
+      const { data } = await api.post<ReviewEntity>(
+        `${APIRoute.Comments}/${id}`,
+        {
+          comment: comment,
+          rating: rating,
+        }
+      );
+
+      dispatch(appendReview(data));
+    } catch (error) {
+      //dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
+    }
+  }
+);
