@@ -55,6 +55,10 @@ export type OfferDetailEntity = Omit<OfferEntity, 'previewImage'> & {
   maxAdults: number;
 };
 
+export type OfferByGroup = {
+  [city: string]: OfferEntity[];
+};
+
 export type UserEntity = {
   name: string;
   avatarUrl: string;

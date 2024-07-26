@@ -2,28 +2,23 @@ import classNames from 'classnames';
 import FavoriteEmpty from '../components/favorite-empty';
 import PlaceCard from '../components/place-card';
 import { useAppSelector } from '../hooks/store';
-import { getFavoriteOffers } from '../store/offer-process/selectors';
-import { OfferEntity } from '../types';
-
-type OfferByGroup = {
-  [city: string]: OfferEntity[];
-};
+import {
+  getFavoriteOffersByGroup,
+  getFavoriteOffersCount,
+} from '../store/offer-process/selectors';
 
 function Favorite(): JSX.Element {
-  const favoriteOffers = useAppSelector(getFavoriteOffers);
-  const favoriteOffersByGroup = Object.groupBy(
-    favoriteOffers,
-    (offer: OfferEntity) => offer.city.name
-  ) as OfferByGroup;
+  const favoriteOffersCount = useAppSelector(getFavoriteOffersCount);
+  const favoriteOffersByGroup = useAppSelector(getFavoriteOffersByGroup);
 
   return (
     <main
       className={classNames('page__main', 'page__main--favorites', {
-        'page__main--favorites-empty': !favoriteOffers.length,
+        'page__main--favorites-empty': !favoriteOffersCount,
       })}
     >
       <div className="page__favorites-container container">
-        {favoriteOffers.length ? (
+        {favoriteOffersCount ? (
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">

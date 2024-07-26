@@ -2,6 +2,7 @@ import { StatusCodes } from 'http-status-codes';
 import { NameSpace, PostReviewState, SortType } from '../../const';
 import {
   CityEntity,
+  OfferByGroup,
   OfferDetailEntity,
   OfferEntity,
   ReviewEntity,
@@ -16,6 +17,11 @@ export const getOffer = (state: State): OfferDetailEntity | null =>
 
 export const getFavoriteOffers = (state: State): OfferEntity[] =>
   state[NameSpace.Data].favoriteOffers;
+
+export const getFavoriteOffersByGroup = (state: State): OfferByGroup => {
+  const offers = state[NameSpace.Data].favoriteOffers;
+  return Object.groupBy(offers, (offer: OfferEntity) => offer.city.name);
+};
 
 export const getFavoriteOffersCount = (state: State): number =>
   state[NameSpace.Data].favoriteOffers.length;
