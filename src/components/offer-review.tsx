@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { Setting } from '../const';
 import { useAppDispatch, useAppSelector } from '../hooks/store';
 import { fetchReviewAction } from '../store/api-actions';
 import { getReviews } from '../store/offer-process/selectors';
@@ -21,7 +22,7 @@ function OfferReview(): JSX.Element {
       (nextReview, currentReview) =>
         Date.parse(currentReview.date) - Date.parse(nextReview.date)
     )
-    .slice(0, 10);
+    .slice(0, Setting.review.maxOutputComments);
 
   return (
     <section className="offer__reviews reviews">

@@ -38,8 +38,8 @@ function OfferReviewForm(): JSX.Element {
 
   const isSubmitButtonDisabled =
     !rating ||
-    review.length < Setting.review.minLength ||
-    review.length > Setting.review.maxLength ||
+    review.length < Setting.review.minCommentLength ||
+    review.length > Setting.review.maxCommentLength ||
     isPostReviewSending;
   return (
     <form
