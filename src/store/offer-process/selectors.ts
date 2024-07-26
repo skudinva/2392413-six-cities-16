@@ -8,12 +8,30 @@ import {
   ReviewEntity,
   State,
 } from '../../types';
+import { applySorting } from '../../utils';
 
 export const getOffers = (state: State): OfferEntity[] =>
   state[NameSpace.Data].offers;
 
+export const getOffersCount = (state: State): number =>
+  state[NameSpace.Data].offers.length;
+
 export const getOffer = (state: State): OfferDetailEntity | null =>
   state[NameSpace.Data].offer;
+export const getCurrentCityOffers = (state: State): OfferEntity[] => {
+  const city = state[NameSpace.Data].currentCity;
+  const offers = state[NameSpace.Data].offers;
+  return offers.filter((offer) => city.name && offer.city.name === city.name);
+};
+
+export const getOrderedCityOffers = (state: State): OfferEntity[] => {
+  const cityOffers = getCurrentCityOffers(state);
+  const sortFunction = applySorting[state[NameSpace.Data].currentSort];
+  if (sortFunction) {
+    cityOffers.sort(sortFunction);
+  }
+  return cityOffers;
+};
 
 export const getFavoriteOffers = (state: State): OfferEntity[] =>
   state[NameSpace.Data].favoriteOffers;
@@ -34,12 +52,6 @@ export const getReviews = (state: State): ReviewEntity[] =>
 
 export const getPostReviewState = (state: State): PostReviewState =>
   state[NameSpace.Data].postReviewState;
-
-export const getCurrentCityOffers = (state: State): OfferEntity[] => {
-  const city = state[NameSpace.Data].currentCity;
-  const offers = state[NameSpace.Data].offers;
-  return offers.filter((offer) => city.name && offer.city.name === city.name);
-};
 
 export const getOffersLoadingState = (state: State): boolean =>
   state[NameSpace.Data].isOffersLoading;
