@@ -1,15 +1,15 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { AuthorizationStatus } from '../const';
 import { useAppDispatch, useAppSelector } from '../hooks/store';
 import { fetchReviewAction } from '../store/api-actions';
 import { getReviews } from '../store/offer-process/selectors';
-import { getAuthorizationStatus } from '../store/user-process/selectors';
+import { getIsAuthUser } from '../store/user-process/selectors';
 import OfferReviewForm from './offer-review-form';
 import OfferReviewItem from './offer-review-item';
 
 function OfferReview(): JSX.Element {
   const dispatch = useAppDispatch();
+  const isAuthUser = useAppSelector(getIsAuthUser);
   const { id } = useParams();
   useEffect(() => {
     dispatch(fetchReviewAction({ id }));
@@ -23,7 +23,6 @@ function OfferReview(): JSX.Element {
     )
     .slice(0, 10);
 
-  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   return (
     <section className="offer__reviews reviews">
       <h2 className="reviews__title">
@@ -34,7 +33,7 @@ function OfferReview(): JSX.Element {
           <OfferReviewItem review={review} key={review.id} />
         ))}
       </ul>
-      {authorizationStatus === AuthorizationStatus.Auth && <OfferReviewForm />}
+      {isAuthUser && <OfferReviewForm />}
     </section>
   );
 }

@@ -1,18 +1,15 @@
 import { Link } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../const';
+import { AppRoute } from '../const';
 import { useAppDispatch, useAppSelector } from '../hooks/store';
 import { logoutAction } from '../store/api-actions';
 import { getFavoriteOffers } from '../store/offer-process/selectors';
-import {
-  getAuthorizationStatus,
-  getUserProfile,
-} from '../store/user-process/selectors';
+import { getIsAuthUser, getUserProfile } from '../store/user-process/selectors';
 
 function SignUser(): JSX.Element {
-  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const userProfile = useAppSelector(getUserProfile);
   const favoriteOffers = useAppSelector(getFavoriteOffers);
-  const isAuthUser = authorizationStatus === AuthorizationStatus.Auth;
+  const isAuthUser = useAppSelector(getIsAuthUser);
+
   const dispatch = useAppDispatch();
 
   const onLogout = (evt: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {

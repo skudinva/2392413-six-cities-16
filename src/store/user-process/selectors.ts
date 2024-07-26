@@ -10,3 +10,6 @@ export const getAuthCheckedStatus = (state: State): boolean =>
 
 export const getUserProfile = (state: State): AuthInfo | null =>
   state[NameSpace.User].userProfile;
+
+export const getIsAuthUser = (state: State): boolean =>
+  state[NameSpace.User].authorizationStatus === AuthorizationStatus.Auth;
