@@ -2,15 +2,14 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../const';
 import { useAppDispatch, useAppSelector } from '../hooks/store';
 import { logoutAction } from '../store/api-actions';
-import { getFavoriteOffers } from '../store/offer-process/selectors';
+import { getFavoriteOffersCount } from '../store/offer-process/selectors';
 import { getIsAuthUser, getUserProfile } from '../store/user-process/selectors';
 
 function SignUser(): JSX.Element {
-  const userProfile = useAppSelector(getUserProfile);
-  const favoriteOffers = useAppSelector(getFavoriteOffers);
-  const isAuthUser = useAppSelector(getIsAuthUser);
-
   const dispatch = useAppDispatch();
+  const userProfile = useAppSelector(getUserProfile);
+  const favoriteOffersCount = useAppSelector(getFavoriteOffersCount);
+  const isAuthUser = useAppSelector(getIsAuthUser);
 
   const onLogout = (evt: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     evt.preventDefault();
@@ -32,7 +31,7 @@ function SignUser(): JSX.Element {
                   {userProfile.email}
                 </span>
                 <span className="header__favorite-count">
-                  {favoriteOffers.length}
+                  {favoriteOffersCount}
                 </span>
               </>
             ) : (

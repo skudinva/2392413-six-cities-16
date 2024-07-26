@@ -17,6 +17,9 @@ export const getOffer = (state: State): OfferDetailEntity | null =>
 export const getFavoriteOffers = (state: State): OfferEntity[] =>
   state[NameSpace.Data].favoriteOffers;
 
+export const getFavoriteOffersCount = (state: State): number =>
+  state[NameSpace.Data].favoriteOffers.length;
+
 export const getNearbyOffers = (state: State): OfferEntity[] =>
   state[NameSpace.Data].nearbyOffer;
 
