@@ -1,12 +1,12 @@
 import classNames from 'classnames';
 import { useEffect } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
+import SignUser from '../components/sign-user';
 import { AppRoute, AuthorizationStatus } from '../const';
 import { useAppDispatch, useAppSelector } from '../hooks/store';
 import { fetchFavoriteOffersAction } from '../store/api-actions';
 import { getFavoriteOffers } from '../store/offer-process/selectors';
 import { getAuthorizationStatus } from '../store/user-process/selectors';
-import SignUser from './sign-user';
 
 function MainLayout(): JSX.Element {
   const dispatch = useAppDispatch();

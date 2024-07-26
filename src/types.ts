@@ -1,5 +1,5 @@
 import { StatusCodes } from 'http-status-codes';
-import { AuthorizationStatus, SortType } from './const';
+import { AuthorizationStatus, PostReviewState, SortType } from './const';
 import { store } from './store';
 declare global {
   interface ObjectConstructor {
@@ -80,12 +80,6 @@ export type UserProcess = {
   authorizationStatus: AuthorizationStatus;
   userProfile: AuthInfo | null;
 };
-
-export enum PostReviewState {
-  Sending = 'Sending',
-  Send = 'Send',
-  Error = 'Error',
-}
 
 export type OfferProcess = {
   offers: OfferEntity[];

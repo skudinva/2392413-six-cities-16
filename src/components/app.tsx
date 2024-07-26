@@ -6,6 +6,7 @@ import { useAppSelector } from '../hooks/store';
 import Favorite from '../pages/favorite';
 import Login from '../pages/login';
 import Main from '../pages/main';
+import MainLayout from '../pages/main-layout';
 import {
   getOffersLoadingState,
   getResponseStatusCode,
@@ -13,7 +14,6 @@ import {
 import { getAuthorizationStatus } from '../store/user-process/selectors';
 import HistoryRouter from './history-route';
 import Loader from './loader/loader';
-import MainLayout from './main-layout';
 import Offer from './offer';
 import Page404 from './page404';
 import PrivateRoute from './private-route';
