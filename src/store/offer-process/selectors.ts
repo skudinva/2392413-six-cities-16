@@ -1,10 +1,9 @@
 import { StatusCodes } from 'http-status-codes';
-import { NameSpace, SortType } from '../../const';
+import { NameSpace, PostReviewState, SortType } from '../../const';
 import {
   CityEntity,
   OfferDetailEntity,
   OfferEntity,
-  PostReviewState,
   ReviewEntity,
   State,
 } from '../../types';

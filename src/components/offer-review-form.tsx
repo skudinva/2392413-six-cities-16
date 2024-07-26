@@ -1,10 +1,10 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { RatingTitle, Setting } from '../const';
+import { PostReviewState, RatingTitle, Setting } from '../const';
 import { useAppDispatch, useAppSelector } from '../hooks/store';
 import { PostReviewAction } from '../store/api-actions';
 import { getPostReviewState } from '../store/offer-process/selectors';
-import { PostReview, PostReviewState } from '../types';
+import { PostReview } from '../types';
 import Rating from './rating';
 
 function OfferReviewForm(): JSX.Element {

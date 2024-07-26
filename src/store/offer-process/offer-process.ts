@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { StatusCodes } from 'http-status-codes';
-import { Cities, NameSpace, SortType } from '../../const';
-import { OfferEntity, OfferProcess, PostReviewState } from '../../types';
+import { Cities, NameSpace, PostReviewState, SortType } from '../../const';
+import { OfferEntity, OfferProcess } from '../../types';
 import {
   fetchFavoriteOffersAction,
   fetchNearbyOfferAction,
