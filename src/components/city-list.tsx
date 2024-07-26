@@ -14,23 +14,20 @@ function CityList(props: CityListProps): JSX.Element {
   const currentCity = useAppSelector(getCurrentCity);
   const dispatch = useAppDispatch();
 
-  const onCityClick = (cityName: string): void => {
-    Cities.some((city) => {
-      if (city.name === cityName) {
-        dispatch(setCurrentCity(city));
-      }
-    });
+  const onCityClick = (evt: React.MouseEvent<HTMLUListElement, MouseEvent>) => {
+    const targetElement = evt.target as HTMLFormElement;
+    if (!targetElement.children.length) {
+      const selectCityName = targetElement.innerText;
+
+      Cities.some((city) => {
+        if (city.name === selectCityName) {
+          dispatch(setCurrentCity(city));
+        }
+      });
+    }
   };
   return (
-    <ul
-      className="locations__list tabs__list"
-      onClick={(evt) => {
-        const targetElement = evt.target as HTMLFormElement;
-        if (targetElement.children.length === 0) {
-          onCityClick(targetElement.innerText);
-        }
-      }}
-    >
+    <ul className="locations__list tabs__list" onClick={onCityClick}>
       {Object.values(cities).map((city, index) => {
         const keyValue = `${index}-${city}`;
         const isCurrentCity = city.toString() === currentCity.name;
