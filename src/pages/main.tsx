@@ -7,15 +7,22 @@ import OfferSort from '../components/offer-sort';
 import PlaceCardList from '../components/place-card-list';
 import { CityName } from '../const';
 import { useAppSelector } from '../hooks/store';
+import {
+  getCurrentCity,
+  getCurrentCityOffers,
+  getCurrentSort,
+  getOffers,
+} from '../store/offer-process/selectors';
 import { OfferEntity } from '../types';
-import { applySorting, getCityOffers } from '../utils';
+import { applySorting } from '../utils';
 
 function Main(): JSX.Element {
-  const currentCity = useAppSelector((state) => state.currentCity);
-  const currentSort = useAppSelector((state) => state.currentSort);
-  const offers = useAppSelector((state) => state.offers);
+  const currentCity = useAppSelector(getCurrentCity);
+  const currentSort = useAppSelector(getCurrentSort);
+  const cityOffers = useAppSelector(getCurrentCityOffers);
+
+  const offers = useAppSelector(getOffers);
   const [currentOffer, setCurrentOffer] = useState<OfferEntity | null>(null);
-  const cityOffers = getCityOffers(offers, currentCity);
   const sortFunction = applySorting[currentSort];
   if (sortFunction) {
     cityOffers.sort(sortFunction);

@@ -1,25 +1,24 @@
 import classNames from 'classnames';
 import { useEffect } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../const';
+import SignUser from '../components/sign-user';
+import { AppRoute } from '../const';
 import { useAppDispatch, useAppSelector } from '../hooks/store';
 import { fetchFavoriteOffersAction } from '../store/api-actions';
-import SignUser from './sign-user';
+import { getFavoriteOffers } from '../store/offer-process/selectors';
+import { getIsAuthUser } from '../store/user-process/selectors';
 
 function MainLayout(): JSX.Element {
   const dispatch = useAppDispatch();
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus
-  );
-
+  const isAuthUser = useAppSelector(getIsAuthUser);
   useEffect(() => {
-    if (authorizationStatus === AuthorizationStatus.Auth) {
+    if (isAuthUser) {
       dispatch(fetchFavoriteOffersAction());
     }
-  }, [dispatch, authorizationStatus]);
+  }, [dispatch, isAuthUser]);
 
   const { pathname } = useLocation();
-  const favoriteOffers = useAppSelector((state) => state.favoriteOffers);
+  const favoriteOffers = useAppSelector(getFavoriteOffers);
   const isLoginForm = pathname === String(AppRoute.Login);
   const isFavoritePage = pathname === String(AppRoute.Favorites);
   const isOfferPage = pathname.startsWith(

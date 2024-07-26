@@ -6,19 +6,22 @@ import { useAppSelector } from '../hooks/store';
 import Favorite from '../pages/favorite';
 import Login from '../pages/login';
 import Main from '../pages/main';
+import MainLayout from '../pages/main-layout';
+import {
+  getOffersLoadingState,
+  getResponseStatusCode,
+} from '../store/offer-process/selectors';
+import { getAuthorizationStatus } from '../store/user-process/selectors';
 import HistoryRouter from './history-route';
 import Loader from './loader/loader';
-import MainLayout from './main-layout';
 import Offer from './offer';
 import Page404 from './page404';
 import PrivateRoute from './private-route';
 
 function App(): JSX.Element {
-  const isOffersLoading = useAppSelector((state) => state.isOffersLoading);
-  const responseStatus = useAppSelector((state) => state.responseStatus);
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus
-  );
+  const isOffersLoading = useAppSelector(getOffersLoadingState);
+  const responseStatus = useAppSelector(getResponseStatusCode);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   if (responseStatus === StatusCodes.NOT_FOUND) {
     return <Page404 />;

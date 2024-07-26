@@ -2,11 +2,12 @@ import { useState } from 'react';
 import { SortList } from '../const';
 import { useAppDispatch, useAppSelector } from '../hooks/store';
 import { setCurrentSort } from '../store/action';
+import { getCurrentSort } from '../store/offer-process/selectors';
 
 function OfferSort(): JSX.Element {
   const [isSortListDropdown, setIsSortListDropdown] = useState(false);
   const dispatch = useAppDispatch();
-  const currentSort = useAppSelector((state) => state.currentSort);
+  const currentSort = useAppSelector(getCurrentSort);
 
   const onSortChange = (
     evt: React.MouseEvent<HTMLUListElement, MouseEvent>

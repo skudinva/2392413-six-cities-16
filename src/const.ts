@@ -144,3 +144,13 @@ export enum APIRoute {
   Comments = '/comments',
   Favorite = '/favorite',
 }
+export enum NameSpace {
+  Data = 'DATA',
+  User = 'USER',
+}
+
+export enum PostReviewState {
+  Sending = 'Sending',
+  Send = 'Send',
+  Error = 'Error',
+}

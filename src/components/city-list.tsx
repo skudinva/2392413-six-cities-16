@@ -4,13 +4,14 @@ import { useAppDispatch, useAppSelector } from '../hooks/store';
 
 import classNames from 'classnames';
 import { setCurrentCity } from '../store/action';
+import { getCurrentCity } from '../store/offer-process/selectors';
 type CityListProps = {
   cities: typeof CityName;
 };
 
 function CityList(props: CityListProps): JSX.Element {
   const { cities } = props;
-  const currentCity = useAppSelector((state) => state.currentCity);
+  const currentCity = useAppSelector(getCurrentCity);
   const dispatch = useAppDispatch();
 
   const onCityClick = (cityName: string): void => {

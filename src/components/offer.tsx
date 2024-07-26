@@ -6,6 +6,7 @@ import {
   fetchNearbyOfferAction,
   fetchOfferDetailAction,
 } from '../store/api-actions';
+import { getNearbyOffers, getOffer } from '../store/offer-process/selectors';
 import FavoriteButton from './favorite-button';
 import Loader from './loader/loader';
 import Map from './map';
@@ -24,8 +25,8 @@ function Offer(): JSX.Element {
     dispatch(fetchNearbyOfferAction({ id }));
   }, [dispatch, id]);
 
-  const nearbyOffers = useAppSelector((state) => state.nearbyOffer.slice(0, 3));
-  const offer = useAppSelector((state) => state.offer);
+  const nearbyOffers = useAppSelector(getNearbyOffers).slice(0, 3);
+  const offer = useAppSelector(getOffer);
 
   if (!id) {
     return <Page404 />;

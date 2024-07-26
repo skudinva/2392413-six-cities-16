@@ -1,16 +1,19 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { RatingTitle, Setting } from '../const';
-import { useAppDispatch } from '../hooks/store';
-import { PostReview, PostReviewAction } from '../store/api-actions';
+import { PostReviewState, RatingTitle, Setting } from '../const';
+import { useAppDispatch, useAppSelector } from '../hooks/store';
+import { PostReviewAction } from '../store/api-actions';
+import { getPostReviewState } from '../store/offer-process/selectors';
+import { PostReview } from '../types';
 import Rating from './rating';
 
 function OfferReviewForm(): JSX.Element {
   const { id } = useParams();
-  const [isRequestSending, setIsRequestSending] = useState(false);
+  const postReviewState = useAppSelector(getPostReviewState);
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState('');
   const dispatch = useAppDispatch();
+  const isPostReviewSending = postReviewState === PostReviewState.Sending;
 
   const onFormSubmit = (evt: FormEvent) => {
     evt.preventDefault();
@@ -22,19 +25,22 @@ function OfferReviewForm(): JSX.Element {
       comment: review,
       rating: rating,
     };
-    setIsRequestSending(true);
-    dispatch(PostReviewAction(data)).then(() => {
+
+    dispatch(PostReviewAction(data));
+  };
+
+  useEffect(() => {
+    if (postReviewState === PostReviewState.Send) {
       setRating(0);
       setReview('');
-      setIsRequestSending(false);
-    });
-  };
+    }
+  }, [postReviewState]);
 
   const isSubmitButtonDisabled =
     !rating ||
     review.length < Setting.review.minLength ||
     review.length > Setting.review.maxLength ||
-    isRequestSending;
+    isPostReviewSending;
   return (
     <form
       className="reviews__form form"
@@ -51,7 +57,7 @@ function OfferReviewForm(): JSX.Element {
           return (
             <Rating
               rating={ratingItem}
-              isDisabled={isRequestSending}
+              isDisabled={isPostReviewSending}
               key={keyValue}
               selectedRating={rating}
               onChangeRating={(evt) => {
@@ -67,7 +73,7 @@ function OfferReviewForm(): JSX.Element {
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={review}
-        disabled={isRequestSending}
+        disabled={isPostReviewSending}
         onInput={(evt: React.ChangeEvent<HTMLTextAreaElement>) => {
           setReview(evt.target.value);
         }}

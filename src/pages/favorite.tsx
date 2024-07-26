@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import FavoriteEmpty from '../components/favorite-empty';
 import PlaceCard from '../components/place-card';
 import { useAppSelector } from '../hooks/store';
+import { getFavoriteOffers } from '../store/offer-process/selectors';
 import { OfferEntity } from '../types';
 
 type OfferByGroup = {
@@ -9,7 +10,7 @@ type OfferByGroup = {
 };
 
 function Favorite(): JSX.Element {
-  const favoriteOffers = useAppSelector((state) => state.favoriteOffers);
+  const favoriteOffers = useAppSelector(getFavoriteOffers);
   const favoriteOffersByGroup = Object.groupBy(
     favoriteOffers,
     (offer: OfferEntity) => offer.city.name
