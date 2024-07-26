@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { useState } from 'react';
 import { SortList } from '../const';
 import { useAppDispatch, useAppSelector } from '../hooks/store';
@@ -22,8 +23,6 @@ function OfferSort(): JSX.Element {
     setIsSortListDropdown(!isSortListDropdown);
   };
 
-  const additionClassName = isSortListDropdown ? 'places__options--opened' : '';
-
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
@@ -34,7 +33,9 @@ function OfferSort(): JSX.Element {
         </svg>
       </span>
       <ul
-        className={`places__options places__options--custom ${additionClassName}`}
+        className={classNames('places__options', 'places__options--custom', {
+          'places__options--opened': isSortListDropdown,
+        })}
         onClick={(evt) => onSortChange(evt)}
       >
         {Object.values(SortList).map((sort, index) => {
