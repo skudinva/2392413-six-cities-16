@@ -20,6 +20,7 @@ function Main(): JSX.Element {
   const currentCity = useAppSelector(getCurrentCity);
   const currentSort = useAppSelector(getCurrentSort);
   const cityOffers = useAppSelector(getCurrentCityOffers);
+
   const offers = useAppSelector(getOffers);
   const [currentOffer, setCurrentOffer] = useState<OfferEntity | null>(null);
   const sortFunction = applySorting[currentSort];

@@ -26,7 +26,7 @@ export const getReviews = (state: State): ReviewEntity[] =>
 export const getPostReviewState = (state: State): PostReviewState =>
   state[NameSpace.Data].postReviewState;
 
-export const getCurrentCityOffers = (state: State) => {
+export const getCurrentCityOffers = (state: State): OfferEntity[] => {
   const city = state[NameSpace.Data].currentCity;
   const offers = state[NameSpace.Data].offers;
   return offers.filter((offer) => city.name && offer.city.name === city.name);
