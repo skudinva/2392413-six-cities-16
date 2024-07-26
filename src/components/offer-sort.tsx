@@ -36,7 +36,7 @@ function OfferSort(): JSX.Element {
         className={classNames('places__options', 'places__options--custom', {
           'places__options--opened': isSortListDropdown,
         })}
-        onClick={(evt) => onSortChange(evt)}
+        onClick={onSortChange}
       >
         {Object.values(SortList).map((sort, index) => {
           const keyValue = `${index}-${sort}`;
