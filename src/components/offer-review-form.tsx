@@ -29,6 +29,14 @@ function OfferReviewForm(): JSX.Element {
     dispatch(PostReviewAction(data));
   };
 
+  const onRatingChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    setRating(+evt.target.value);
+  };
+
+  const onReviewTextChange = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setReview(evt.target.value);
+  };
+
   useEffect(() => {
     if (postReviewState === PostReviewState.Send) {
       setRating(0);
@@ -60,9 +68,7 @@ function OfferReviewForm(): JSX.Element {
               isDisabled={isPostReviewSending}
               key={keyValue}
               selectedRating={rating}
-              onChangeRating={(evt) => {
-                setRating(+evt.target.value);
-              }}
+              onRatingChange={onRatingChange}
             />
           );
         })}
@@ -74,9 +80,7 @@ function OfferReviewForm(): JSX.Element {
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={review}
         disabled={isPostReviewSending}
-        onInput={(evt: React.ChangeEvent<HTMLTextAreaElement>) => {
-          setReview(evt.target.value);
-        }}
+        onInput={onReviewTextChange}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
