@@ -88,7 +88,7 @@ export type UserProcess = {
 export type OfferProcess = {
   offers: OfferEntity[];
   offer: OfferDetailEntity | null;
-  nearbyOffer: OfferEntity[];
+  nearbyOffers: OfferEntity[];
   reviews: ReviewEntity[] | [];
   postReviewState: PostReviewState;
   currentCity: CityEntity;

@@ -20,7 +20,7 @@ import {
 const initialState: OfferProcess = {
   offers: [],
   offer: null,
-  nearbyOffer: [],
+  nearbyOffers: [],
   reviews: [],
   postReviewState: PostReviewState.Send,
   currentCity: Cities[0],
@@ -82,7 +82,7 @@ export const offerProcess = createSlice({
       })
       //////////
       .addCase(fetchNearbyOfferAction.fulfilled, (state, action) => {
-        state.nearbyOffer = action.payload;
+        state.nearbyOffers = action.payload;
       })
       //////////
       .addCase(fetchFavoriteOffersAction.pending, (state) => {
@@ -111,7 +111,7 @@ export const offerProcess = createSlice({
       })
       .addCase(clearFavoritesOffers, (state) => {
         state.offers.map((offer) => (offer.isFavorite = false));
-        state.nearbyOffer.map((offer) => (offer.isFavorite = false));
+        state.nearbyOffers.map((offer) => (offer.isFavorite = false));
         if (state.offer) {
           state.offer.isFavorite = false;
         }
