@@ -1,17 +1,15 @@
 import { Link, Navigate } from 'react-router-dom';
 import LoginForm from '../components/login-form';
-import { AppRoute, AuthorizationStatus, Cities } from '../const';
+import { AppRoute, Cities } from '../const';
 import { useAppDispatch, useAppSelector } from '../hooks/store';
 import { setCurrentCity } from '../store/action';
+import { getIsAuthUser } from '../store/user-process/selectors';
 import { getRandomArrayElement } from '../utils';
 
 function Login(): JSX.Element {
   const dispatch = useAppDispatch();
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus
-  );
-
-  if (authorizationStatus === AuthorizationStatus.Auth) {
+  const isAuthUser = useAppSelector(getIsAuthUser);
+  if (isAuthUser) {
     return <Navigate to={AppRoute.Main} />;
   }
   const city = getRandomArrayElement(Cities);

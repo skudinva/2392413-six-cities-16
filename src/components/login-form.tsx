@@ -1,6 +1,10 @@
 import { FormEvent, useRef } from 'react';
 import { useAppDispatch } from '../hooks/store';
 import { loginAction } from '../store/api-actions';
+const isPasswordValid = (password: string) =>
+  password.length && /\d/g.test(password) && /[a-zA-Zа-яА-Я]/g.test(password);
+
+const isEmailValid = (email: string) => email.length;
 
 function LoginForm(): JSX.Element {
   const emailRef = useRef<HTMLInputElement | null>(null);
@@ -10,7 +14,12 @@ function LoginForm(): JSX.Element {
   const onFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (emailRef.current !== null && passwordRef.current !== null) {
+    if (
+      emailRef.current !== null &&
+      passwordRef.current !== null &&
+      isPasswordValid(passwordRef.current.value) &&
+      isEmailValid(emailRef.current.value)
+    ) {
       dispatch(
         loginAction({
           email: emailRef.current.value,

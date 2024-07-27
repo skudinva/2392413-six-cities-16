@@ -3,7 +3,7 @@ import PlaceCard from './place-card';
 
 type PlaceCardListProps = {
   offers: OfferEntity[];
-  onActiveOfferChange: React.Dispatch<React.SetStateAction<OfferEntity | null>>;
+  onActiveOfferChange: (offer: OfferEntity | null) => void;
 };
 
 function PlaceCardList(props: PlaceCardListProps): JSX.Element {

@@ -134,7 +134,13 @@ export const URL_MARKER_DEFAULT = '/img/pin.svg';
 export const URL_MARKER_CURRENT = '/img/pin-active.svg';
 
 export const Setting = {
-  review: { minLength: 50, maxLength: 300 },
+  review: {
+    minCommentLength: 50,
+    maxCommentLength: 300,
+    maxOutputComments: 10,
+  },
+  maxOutputNearbyOffers: 3,
+  maxOutputOfferDetailImages: 6,
 };
 
 export enum APIRoute {
@@ -143,4 +149,14 @@ export enum APIRoute {
   Logout = '/logout',
   Comments = '/comments',
   Favorite = '/favorite',
+}
+export enum NameSpace {
+  Data = 'DATA',
+  User = 'USER',
+}
+
+export enum PostReviewState {
+  Sending = 'Sending',
+  Send = 'Send',
+  Error = 'Error',
 }

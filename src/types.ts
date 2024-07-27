@@ -1,3 +1,5 @@
+import { StatusCodes } from 'http-status-codes';
+import { AuthorizationStatus, PostReviewState, SortType } from './const';
 import { store } from './store';
 declare global {
   interface ObjectConstructor {
@@ -53,6 +55,10 @@ export type OfferDetailEntity = Omit<OfferEntity, 'previewImage'> & {
   maxAdults: number;
 };
 
+export type OfferByGroup = {
+  [city: string]: OfferEntity[];
+};
+
 export type UserEntity = {
   name: string;
   avatarUrl: string;
@@ -67,9 +73,31 @@ export type ReviewEntity = {
   rating: number;
 };
 
+export type PostReview = Omit<ReviewEntity, 'date' | 'user'>;
+
 export type AuthInfo = UserEntity & {
   email: string;
   token: string;
+};
+
+export type UserProcess = {
+  authorizationStatus: AuthorizationStatus;
+  userProfile: AuthInfo | null;
+};
+
+export type OfferProcess = {
+  offers: OfferEntity[];
+  offer: OfferDetailEntity | null;
+  nearbyOffers: OfferEntity[];
+  reviews: ReviewEntity[] | [];
+  postReviewState: PostReviewState;
+  currentCity: CityEntity;
+  favoriteOffers: OfferEntity[];
+  currentSort: SortType;
+  isOffersLoading: boolean;
+  isOfferLoading: boolean;
+  isFavoriteOffersLoading: boolean;
+  responseStatusCode: StatusCodes;
 };
 
 export type State = ReturnType<typeof store.getState>;

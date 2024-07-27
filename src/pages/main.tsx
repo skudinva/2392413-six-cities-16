@@ -7,24 +7,24 @@ import OfferSort from '../components/offer-sort';
 import PlaceCardList from '../components/place-card-list';
 import { CityName } from '../const';
 import { useAppSelector } from '../hooks/store';
+import {
+  getCurrentCity,
+  getOffersCount,
+  getOrderedCityOffers,
+} from '../store/offer-process/selectors';
 import { OfferEntity } from '../types';
-import { applySorting, getCityOffers } from '../utils';
 
 function Main(): JSX.Element {
-  const currentCity = useAppSelector((state) => state.currentCity);
-  const currentSort = useAppSelector((state) => state.currentSort);
-  const offers = useAppSelector((state) => state.offers);
+  const currentCity = useAppSelector(getCurrentCity);
+  const cityOffers = useAppSelector(getOrderedCityOffers);
+  const cityOffersCount = cityOffers.length;
+  const offersCount = useAppSelector(getOffersCount);
   const [currentOffer, setCurrentOffer] = useState<OfferEntity | null>(null);
-  const cityOffers = getCityOffers(offers, currentCity);
-  const sortFunction = applySorting[currentSort];
-  if (sortFunction) {
-    cityOffers.sort(sortFunction);
-  }
 
   return (
     <main
       className={classNames('page__main', 'page__main--index', {
-        'page__main--index-empty': !offers.length,
+        'page__main--index-empty': !offersCount,
       })}
     >
       <h1 className="visually-hidden">Cities</h1>
@@ -34,14 +34,14 @@ function Main(): JSX.Element {
         </section>
       </div>
       <div className="cities">
-        {cityOffers.length ? (
+        {cityOffersCount ? (
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">
                 {currentCity &&
-                  `${cityOffers.length} ${
-                    cityOffers.length > 1 ? 'places' : 'place'
+                  `${cityOffersCount} ${
+                    cityOffersCount > 1 ? 'places' : 'place'
                   } to stay in ${currentCity.name}`}
               </b>
               <OfferSort />

@@ -6,9 +6,7 @@ import RatingStars from './rating-stars';
 
 type PlaceCardProps = {
   offer: OfferEntity;
-  onActiveOfferChange?: React.Dispatch<
-    React.SetStateAction<OfferEntity | null>
-  >;
+  onActiveOfferChange?: (offer: OfferEntity | null) => void;
   baseClass: string;
 };
 function PlaceCard(props: PlaceCardProps): JSX.Element {

@@ -1,11 +1,13 @@
 import classNames from 'classnames';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { Setting } from '../const';
 import { useAppDispatch, useAppSelector } from '../hooks/store';
 import {
   fetchNearbyOfferAction,
   fetchOfferDetailAction,
 } from '../store/api-actions';
+import { getNearbyOffers, getOffer } from '../store/offer-process/selectors';
 import FavoriteButton from './favorite-button';
 import Loader from './loader/loader';
 import Map from './map';
@@ -24,8 +26,11 @@ function Offer(): JSX.Element {
     dispatch(fetchNearbyOfferAction({ id }));
   }, [dispatch, id]);
 
-  const nearbyOffers = useAppSelector((state) => state.nearbyOffer.slice(0, 3));
-  const offer = useAppSelector((state) => state.offer);
+  const nearbyOffers = useAppSelector(getNearbyOffers).slice(
+    0,
+    Setting.maxOutputNearbyOffers
+  );
+  const offer = useAppSelector(getOffer);
 
   if (!id) {
     return <Page404 />;
@@ -35,14 +40,20 @@ function Offer(): JSX.Element {
     <section className="offer">
       <div className="offer__gallery-container container">
         <div className="offer__gallery">
-          {offer.images.slice(0, 6).map((image, index) => {
-            const keyValue = `${index}-image`;
-            return (
-              <div className="offer__image-wrapper" key={keyValue}>
-                <img className="offer__image" src={image} alt="Photo studio" />
-              </div>
-            );
-          })}
+          {offer.images
+            .slice(0, Setting.maxOutputOfferDetailImages)
+            .map((image, index) => {
+              const keyValue = `${index}-image`;
+              return (
+                <div className="offer__image-wrapper" key={keyValue}>
+                  <img
+                    className="offer__image"
+                    src={image}
+                    alt="Photo studio"
+                  />
+                </div>
+              );
+            })}
         </div>
       </div>
       <div className="offer__container container">

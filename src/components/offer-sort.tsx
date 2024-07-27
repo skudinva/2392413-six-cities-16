@@ -1,12 +1,14 @@
+import classNames from 'classnames';
 import { useState } from 'react';
 import { SortList } from '../const';
 import { useAppDispatch, useAppSelector } from '../hooks/store';
 import { setCurrentSort } from '../store/action';
+import { getCurrentSort } from '../store/offer-process/selectors';
 
 function OfferSort(): JSX.Element {
   const [isSortListDropdown, setIsSortListDropdown] = useState(false);
   const dispatch = useAppDispatch();
-  const currentSort = useAppSelector((state) => state.currentSort);
+  const currentSort = useAppSelector(getCurrentSort);
 
   const onSortChange = (
     evt: React.MouseEvent<HTMLUListElement, MouseEvent>
@@ -21,8 +23,6 @@ function OfferSort(): JSX.Element {
     setIsSortListDropdown(!isSortListDropdown);
   };
 
-  const additionClassName = isSortListDropdown ? 'places__options--opened' : '';
-
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
@@ -33,8 +33,10 @@ function OfferSort(): JSX.Element {
         </svg>
       </span>
       <ul
-        className={`places__options places__options--custom ${additionClassName}`}
-        onClick={(evt) => onSortChange(evt)}
+        className={classNames('places__options', 'places__options--custom', {
+          'places__options--opened': isSortListDropdown,
+        })}
+        onClick={onSortChange}
       >
         {Object.values(SortList).map((sort, index) => {
           const keyValue = `${index}-${sort}`;
