@@ -14,4 +14,5 @@ function Page404(): JSX.Element {
     </section>
   );
 }
+
 export default Page404;
