@@ -68,5 +68,17 @@ describe('Async actions', () => {
 
       expect(fetchOfferActionFulfilled.payload).toEqual(mockOffers);
     });
+
+    it('should dispatch "fetchOffersAction.pending" and "checkAuthAction.rejected" when server response 400', async () => {
+      mockAxiosAdapter.onGet(APIRoute.Offers).reply(400, []);
+
+      await store.dispatch(fetchOffersAction());
+      const actions = extractActionsTypes(store.getActions());
+
+      expect(actions).toEqual([
+        fetchOffersAction.pending.type,
+        fetchOffersAction.rejected.type,
+      ]);
+    });
   });
 });
