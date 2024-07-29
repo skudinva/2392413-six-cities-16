@@ -15,7 +15,7 @@ describe('Component: OfferReviewForm', () => {
     const { withStoreComponent } = withStore(<OfferReviewForm />, state);
     const preparedComponent = withHistory(withStoreComponent);
     render(preparedComponent);
-    const button = screen.getByTestId('reviewButtonElement');
+    const button = screen.getByRole('button');
 
     await userEvent.click(screen.getByTestId(ratingElement));
     await userEvent.type(
