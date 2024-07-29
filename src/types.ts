@@ -49,9 +49,9 @@ export type OfferEntity = {
 export type OfferDetailEntity = Omit<OfferEntity, 'previewImage'> & {
   description: string;
   bedrooms: number;
-  goods: [string];
+  goods: string[];
   host: UserEntity;
-  images: [string];
+  images: string[];
   maxAdults: number;
 };
 
