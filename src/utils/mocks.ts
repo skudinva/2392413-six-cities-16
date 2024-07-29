@@ -7,9 +7,9 @@ import {
   NameSpace,
   PostReviewState,
   SortType,
-} from './const';
-import { createAPI } from './services/api';
-import { OfferDetailEntity, OfferProcess, State, UserProcess } from './types';
+} from '../const';
+import { createAPI } from '../services/api';
+import { OfferDetailEntity, OfferProcess, State, UserProcess } from '../types';
 
 export type AppThunkDispatch = ThunkDispatch<
   State,

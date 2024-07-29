@@ -3,9 +3,13 @@ import { Action } from '@reduxjs/toolkit';
 import MockAdapter from 'axios-mock-adapter';
 import thunk from 'redux-thunk';
 import { APIRoute } from '../const';
-import { AppThunkDispatch, extractActionsTypes, makeFakeState } from '../mocks';
 import { createAPI } from '../services/api';
 import { State } from '../types';
+import {
+  AppThunkDispatch,
+  extractActionsTypes,
+  makeFakeState,
+} from '../utils/mocks';
 import { checkLoginAction, fetchOffersAction } from './api-actions';
 
 describe('Async actions', () => {

@@ -1,6 +1,6 @@
 import { Cities, NameSpace, SortType } from '../../const';
-import { makeFakeState } from '../../mocks';
 import { State } from '../../types';
+import { makeFakeState } from '../../utils/mocks';
 import {
   getCurrentCityOffers,
   getFavoriteOffers,

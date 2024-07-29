@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { CityName } from '../const';
-import { withHistory, withStore } from '../mock-component';
-import { makeFakeState } from '../mocks';
+import { withHistory, withStore } from '../utils/mock-component';
+import { makeFakeState } from '../utils/mocks';
 import CityList from './city-list';
 
 describe('Component: CityList', () => {

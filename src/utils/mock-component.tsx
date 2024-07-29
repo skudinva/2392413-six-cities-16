@@ -5,10 +5,10 @@ import { createMemoryHistory, MemoryHistory } from 'history';
 import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import HistoryRouter from './components/history-route';
+import HistoryRouter from '../components/history-route';
+import { createAPI } from '../services/api';
+import { State } from '../types';
 import { AppThunkDispatch } from './mocks';
-import { createAPI } from './services/api';
-import { State } from './types';
 
 export function withHistory(component: JSX.Element, history?: MemoryHistory) {
   const memoryHistory = history ?? createMemoryHistory();

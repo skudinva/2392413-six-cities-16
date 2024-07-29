@@ -8,7 +8,7 @@ import {
   ReviewEntity,
   State,
 } from '../../types';
-import { applySorting } from '../../utils';
+import { applySorting } from '../../utils/utils';
 
 export const getOffers = (state: State): OfferEntity[] =>
   state[NameSpace.Data].offers;

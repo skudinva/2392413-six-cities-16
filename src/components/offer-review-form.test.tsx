@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { withHistory, withStore } from '../mock-component';
-import { makeFakeState } from '../mocks';
+import { withHistory, withStore } from '../utils/mock-component';
+import { makeFakeState } from '../utils/mocks';
 import OfferReviewForm from './offer-review-form';
 
 describe('Component: OfferReviewForm', () => {

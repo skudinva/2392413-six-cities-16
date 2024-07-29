@@ -1,8 +1,8 @@
 import { StatusCodes } from 'http-status-codes';
 import { Cities, NameSpace, SortType } from '../../const';
-import { makeFakeState, mockOffer } from '../../mocks';
 import { OfferProcess } from '../../types';
 import { setCurrentCity, setCurrentSort } from '../action';
+import { makeFakeState, mockOffer } from './../../utils/mocks';
 import { fetchOfferDetailAction, fetchOffersAction } from './../api-actions';
 import { offerProcess } from './offer-process';
 

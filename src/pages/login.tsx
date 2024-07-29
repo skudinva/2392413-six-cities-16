@@ -4,7 +4,7 @@ import { AppRoute, Cities } from '../const';
 import { useAppDispatch, useAppSelector } from '../hooks/store';
 import { setCurrentCity } from '../store/action';
 import { getIsAuthUser } from '../store/user-process/selectors';
-import { getRandomArrayElement } from '../utils';
+import { getRandomArrayElement } from '../utils/utils';
 
 function Login(): JSX.Element {
   const dispatch = useAppDispatch();
