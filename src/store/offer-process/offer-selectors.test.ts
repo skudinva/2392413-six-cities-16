@@ -1,5 +1,5 @@
 import { Cities, NameSpace, SortType } from '../../const';
-import { makeFakeOffers } from '../../mocks';
+import { makeFakeState } from '../../mocks';
 import { State } from '../../types';
 import {
   getCurrentCityOffers,
@@ -12,7 +12,7 @@ import {
   getOrderedCityOffers,
 } from './selectors';
 
-const state: State = makeFakeOffers();
+const state: State = makeFakeState();
 
 describe('Offers selectors', () => {
   it('should return offers data', () => {

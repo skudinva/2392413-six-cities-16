@@ -1,13 +1,13 @@
 import { StatusCodes } from 'http-status-codes';
 import { Cities, NameSpace, SortType } from '../../const';
-import { makeFakeOffers, mockOffer } from '../../mocks';
+import { makeFakeState, mockOffer } from '../../mocks';
 import { OfferProcess } from '../../types';
 import { setCurrentCity, setCurrentSort } from '../action';
-import { fetchOfferAction, fetchOfferDetailAction } from './../api-actions';
+import { fetchOfferDetailAction, fetchOffersAction } from './../api-actions';
 import { offerProcess } from './offer-process';
 
 describe('Offers slice', () => {
-  const state: OfferProcess = makeFakeOffers()[NameSpace.Data];
+  const state: OfferProcess = makeFakeState()[NameSpace.Data];
 
   it('should set selected city is state', () => {
     const newCity = Cities[1];
@@ -22,17 +22,17 @@ describe('Offers slice', () => {
   });
 
   it('should set true in state.isOffersLoading', () => {
-    const result = offerProcess.reducer(state, fetchOfferAction.pending);
+    const result = offerProcess.reducer(state, fetchOffersAction.pending);
     expect(result.isOffersLoading).toBe(true);
   });
 
   it('should set false in state.isOffersLoading', () => {
-    const result = offerProcess.reducer(state, fetchOfferAction.rejected);
+    const result = offerProcess.reducer(state, fetchOffersAction.rejected);
     expect(result.isOffersLoading).toBe(false);
   });
 
   it('should set false in state.isOffersLoading', () => {
-    const result = offerProcess.reducer(state, fetchOfferAction.fulfilled);
+    const result = offerProcess.reducer(state, fetchOffersAction.fulfilled);
     expect(result.isOffersLoading).toBe(false);
   });
 

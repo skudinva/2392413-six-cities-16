@@ -1,5 +1,5 @@
 import { AuthorizationStatus, NameSpace } from '../../const';
-import { makeFakeOffers } from '../../mocks';
+import { makeFakeState } from '../../mocks';
 import { AuthInfo, State } from '../../types';
 import {
   getAuthCheckedStatus,
@@ -8,7 +8,7 @@ import {
   getUserProfile,
 } from './selectors';
 
-const state: State = makeFakeOffers();
+const state: State = makeFakeState();
 
 describe('Users selectors', () => {
   it('should return authorizationStatus from state', () => {

@@ -17,6 +17,9 @@ export type AppThunkDispatch = ThunkDispatch<
   Action
 >;
 
+export const extractActionsTypes = (actions: Action<string>[]) =>
+  actions.map(({ type }) => type);
+
 export const makeFakeStore = (initialState?: Partial<State>): State => ({
   [NameSpace.Data]: <OfferProcess>{
     offers: [],
@@ -88,7 +91,7 @@ export const mockOffer: OfferDetailEntity = {
   maxAdults: 1,
 };
 
-export const makeFakeOffers = () => {
+export const makeFakeState = () => {
   const state = {
     [NameSpace.Data]: <OfferProcess>{
       offers: [],
