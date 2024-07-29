@@ -81,6 +81,7 @@ function OfferReviewForm(): JSX.Element {
         value={review}
         disabled={isPostReviewSending}
         onInput={onReviewTextChange}
+        data-testid="reviewElement"
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
@@ -92,6 +93,7 @@ function OfferReviewForm(): JSX.Element {
           className="reviews__submit form__submit button"
           type="submit"
           disabled={isSubmitButtonDisabled}
+          data-testid="reviewButtonElement"
         >
           Submit
         </button>
