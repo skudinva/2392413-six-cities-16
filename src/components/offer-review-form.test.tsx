@@ -7,19 +7,27 @@ import OfferReviewForm from './offer-review-form';
 describe('Component: OfferReviewForm', () => {
   it('should render & correctly button disable|enable ', async () => {
     const state = makeFakeState();
+    const ratingElement = 'rating5Element';
+    const reviewElement = 'reviewElement';
+    const incorrectReviewValue = '12345';
+    const correctReviewValue = Array.from({ length: 60 }).join('1');
+
     const { withStoreComponent } = withStore(<OfferReviewForm />, state);
     const preparedComponent = withHistory(withStoreComponent);
     render(preparedComponent);
     const button = screen.getByTestId('reviewButtonElement');
 
-    await userEvent.click(screen.getByTestId('rating5Element'));
-    await userEvent.type(screen.getByTestId('reviewElement'), '12345');
+    await userEvent.click(screen.getByTestId(ratingElement));
+    await userEvent.type(
+      screen.getByTestId(reviewElement),
+      incorrectReviewValue
+    );
+    expect(screen.getByDisplayValue(incorrectReviewValue)).toBeInTheDocument();
     expect(button).toBeDisabled();
 
-    await userEvent.type(
-      screen.getByTestId('reviewElement'),
-      Array.from({ length: 60 }).join('1')
-    );
+    await userEvent.clear(screen.getByTestId(reviewElement));
+    await userEvent.type(screen.getByTestId(reviewElement), correctReviewValue);
+    expect(screen.getByDisplayValue(correctReviewValue)).toBeInTheDocument();
     expect(button).toBeEnabled();
   });
 });
