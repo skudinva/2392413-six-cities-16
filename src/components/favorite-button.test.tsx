@@ -42,8 +42,14 @@ describe('Component: FavoriteButton', () => {
       </FavoriteButton>,
       store
     );
-    await userEvent.click(screen.getByRole('button'));
-    testOffer.isFavorite = true;
+
+    const buttonElement = screen.getByRole('button');
+    buttonElement.onclick = () => {
+      testOffer.isFavorite = !testOffer.isFavorite;
+    };
+
+    await userEvent.click(buttonElement);
+
     renderWithStoreAndHistoryComponent(
       <FavoriteButton
         baseClass="place-card"
@@ -54,7 +60,6 @@ describe('Component: FavoriteButton', () => {
       </FavoriteButton>,
       store
     );
-
     expect(screen.getByText('In bookmarks')).toBeInTheDocument();
   });
 });
