@@ -49,7 +49,8 @@ export function withStore(
 
 export function withStoreAndHistory(
   component: JSX.Element,
-  initialState: Partial<State> = {}
+  initialState: Partial<State> = {},
+  history?: MemoryHistory
 ): ComponentWithMockStore {
   const componentWithMockStore: ComponentWithMockStore = withStore(
     component,
@@ -57,7 +58,8 @@ export function withStoreAndHistory(
   );
 
   const componentWithMockStoreHistory = withHistory(
-    componentWithMockStore.withStoreComponent
+    componentWithMockStore.withStoreComponent,
+    history
   );
 
   return {
@@ -69,8 +71,13 @@ export function withStoreAndHistory(
 
 export function renderWithStoreAndHistoryComponent(
   component: JSX.Element,
-  initialState: Partial<State> = {}
+  initialState: Partial<State> = {},
+  history?: MemoryHistory
 ): void {
-  const { withStoreComponent } = withStoreAndHistory(component, initialState);
+  const { withStoreComponent } = withStoreAndHistory(
+    component,
+    initialState,
+    history
+  );
   render(withStoreComponent);
 }

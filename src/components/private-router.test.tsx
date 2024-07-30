@@ -1,8 +1,8 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { MemoryHistory, createMemoryHistory } from 'history';
 import { Route, Routes } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../const';
-import { withHistory, withStore } from '../utils/mock-component';
+import { renderWithStoreAndHistoryComponent } from '../utils/mock-component';
 import { makeFakeState } from '../utils/mocks';
 import PrivateRoute from './private-route';
 
@@ -22,7 +22,8 @@ describe('Component: PrivateRoute', () => {
     const expectedText = 'public route';
     const notExpectedText = 'private route';
     state.USER.authorizationStatus = AuthorizationStatus.NoAuth;
-    const preparedComponent = withHistory(
+
+    renderWithStoreAndHistoryComponent(
       <Routes>
         <Route path={AppRoute.Login} element={<span>{expectedText}</span>} />
         <Route
@@ -34,12 +35,9 @@ describe('Component: PrivateRoute', () => {
           }
         />
       </Routes>,
+      state,
       mockHistory
     );
-
-    const { withStoreComponent } = withStore(preparedComponent, state);
-
-    render(withStoreComponent);
 
     expect(screen.getByText(expectedText)).toBeInTheDocument();
     expect(screen.queryByText(notExpectedText)).not.toBeInTheDocument();
@@ -49,7 +47,8 @@ describe('Component: PrivateRoute', () => {
     const expectedText = 'private route';
     const notExpectedText = 'public route';
     state.USER.authorizationStatus = AuthorizationStatus.Auth;
-    const preparedComponent = withHistory(
+
+    renderWithStoreAndHistoryComponent(
       <Routes>
         <Route path={AppRoute.Login} element={<span>{notExpectedText}</span>} />
         <Route
@@ -61,12 +60,9 @@ describe('Component: PrivateRoute', () => {
           }
         />
       </Routes>,
+      state,
       mockHistory
     );
-
-    const { withStoreComponent } = withStore(preparedComponent, state);
-
-    render(withStoreComponent);
 
     expect(screen.getByText(expectedText)).toBeInTheDocument();
     expect(screen.queryByText(notExpectedText)).not.toBeInTheDocument();
