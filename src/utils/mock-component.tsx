@@ -1,6 +1,6 @@
 import { configureMockStore, MockStore } from '@jedmao/redux-mock-store';
 import { Action } from '@reduxjs/toolkit';
-import { render } from '@testing-library/react';
+import { render, RenderResult } from '@testing-library/react';
 import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory, MemoryHistory } from 'history';
 import { HelmetProvider } from 'react-helmet-async';
@@ -73,11 +73,12 @@ export function renderWithStoreAndHistoryComponent(
   component: JSX.Element,
   initialState: Partial<State> = {},
   history?: MemoryHistory
-): void {
-  const { withStoreComponent } = withStoreAndHistory(
+): ComponentWithMockStore & RenderResult {
+  const componentWithMockStore = withStoreAndHistory(
     component,
     initialState,
     history
   );
-  render(withStoreComponent);
+  const renderResult = render(componentWithMockStore.withStoreComponent);
+  return { ...componentWithMockStore, ...renderResult };
 }
