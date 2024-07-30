@@ -36,8 +36,11 @@ export const getOrderedCityOffers = (state: State): OfferEntity[] => {
 export const getFavoriteOffers = (state: State): OfferEntity[] =>
   state[NameSpace.Data].favoriteOffers;
 
-export const getFavoriteOffersByGroup = (state: State): OfferByGroup => {
+export const getFavoriteOffersByGroup = (state: State): OfferByGroup | null => {
   const offers = state[NameSpace.Data].favoriteOffers;
+  if (!offers.length) {
+    return null;
+  }
   return Object.groupBy(offers, (offer: OfferEntity) => offer.city.name);
 };
 

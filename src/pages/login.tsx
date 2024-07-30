@@ -14,7 +14,10 @@ function Login(): JSX.Element {
   }
   const city = getRandomArrayElement(Cities);
   return (
-    <main className="page__main page__main--login">
+    <main
+      className="page__main page__main--login"
+      data-testid="loginPageElement"
+    >
       <div className="page__login-container container">
         <LoginForm />
         <section className="locations locations--login locations--current">

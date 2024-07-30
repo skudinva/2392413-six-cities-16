@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
+import { HelmetProvider } from 'react-helmet-async';
 import { Route, Routes } from 'react-router-dom';
-import browserHistory from '../browser-history';
 import { AppRoute, AuthorizationStatus } from '../const';
 import { useAppSelector } from '../hooks/store';
 import Favorite from '../pages/favorite';
@@ -12,7 +12,6 @@ import {
   getResponseStatusCode,
 } from '../store/offer-process/selectors';
 import { getAuthorizationStatus } from '../store/user-process/selectors';
-import HistoryRouter from './history-route';
 import Loader from './loader/loader';
 import Offer from './offer';
 import Page404 from './page404';
@@ -32,7 +31,7 @@ function App(): JSX.Element {
   }
 
   return (
-    <HistoryRouter history={browserHistory}>
+    <HelmetProvider>
       <Routes>
         <Route path={AppRoute.Main} element={<MainLayout />}>
           <Route index element={<Main />} />
@@ -49,7 +48,7 @@ function App(): JSX.Element {
         </Route>
         <Route path={AppRoute.Unknown} element={<Page404 />} />
       </Routes>
-    </HistoryRouter>
+    </HelmetProvider>
   );
 }
 export default App;
