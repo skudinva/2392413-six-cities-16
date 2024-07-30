@@ -1,6 +1,6 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { withHistory, withStore } from '../utils/mock-component';
+import { renderWithStoreAndHistoryComponent } from '../utils/mock-component';
 import { makeFakeState } from '../utils/mocks';
 import OfferReviewForm from './offer-review-form';
 
@@ -12,11 +12,8 @@ describe('Component: OfferReviewForm', () => {
   const state = makeFakeState();
 
   it('should render & button disable ', async () => {
-    const { withStoreComponent } = withStore(<OfferReviewForm />, state);
-    const preparedComponent = withHistory(withStoreComponent);
-    render(preparedComponent);
+    renderWithStoreAndHistoryComponent(<OfferReviewForm />, state);
     const button = screen.getByRole('button');
-
     await userEvent.click(screen.getByTestId(ratingElement));
     await userEvent.type(
       screen.getByTestId(reviewElement),
@@ -27,11 +24,8 @@ describe('Component: OfferReviewForm', () => {
   });
 
   it('should render & button enable ', async () => {
-    const { withStoreComponent } = withStore(<OfferReviewForm />, state);
-    const preparedComponent = withHistory(withStoreComponent);
-    render(preparedComponent);
+    renderWithStoreAndHistoryComponent(<OfferReviewForm />, state);
     const button = screen.getByRole('button');
-
     await userEvent.click(screen.getByTestId(ratingElement));
     await userEvent.type(screen.getByTestId(reviewElement), correctReviewValue);
     expect(screen.getByDisplayValue(correctReviewValue)).toBeInTheDocument();
