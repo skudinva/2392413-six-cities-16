@@ -18,23 +18,30 @@ describe('Component: PrivateRoute', () => {
     mockHistory.push(AppRoute.Favorites);
   });
 
+  const getComponent = (
+    publicText: string,
+    privateText: string
+  ): JSX.Element => (
+    <Routes>
+      <Route path={AppRoute.Login} element={<span>{publicText}</span>} />
+      <Route
+        path={AppRoute.Favorites}
+        element={
+          <PrivateRoute>
+            <span>{privateText}</span>
+          </PrivateRoute>
+        }
+      />
+    </Routes>
+  );
+
   it('should render component for public route, when user not authorized', () => {
     const expectedText = 'public route';
     const notExpectedText = 'private route';
     state.USER.authorizationStatus = AuthorizationStatus.NoAuth;
 
     renderWithStoreAndHistoryComponent(
-      <Routes>
-        <Route path={AppRoute.Login} element={<span>{expectedText}</span>} />
-        <Route
-          path={AppRoute.Favorites}
-          element={
-            <PrivateRoute>
-              <span>{notExpectedText}</span>
-            </PrivateRoute>
-          }
-        />
-      </Routes>,
+      getComponent(expectedText, notExpectedText),
       state,
       mockHistory
     );
@@ -49,17 +56,7 @@ describe('Component: PrivateRoute', () => {
     state.USER.authorizationStatus = AuthorizationStatus.Auth;
 
     renderWithStoreAndHistoryComponent(
-      <Routes>
-        <Route path={AppRoute.Login} element={<span>{notExpectedText}</span>} />
-        <Route
-          path={AppRoute.Favorites}
-          element={
-            <PrivateRoute>
-              <span>{expectedText}</span>
-            </PrivateRoute>
-          }
-        />
-      </Routes>,
+      getComponent(notExpectedText, expectedText),
       state,
       mockHistory
     );
