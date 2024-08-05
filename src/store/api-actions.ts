@@ -17,11 +17,11 @@ type AsyncThunkPropWithAxios = {
   extra: AxiosInstance;
 };
 
-export const fetchOfferAction = createAsyncThunk<
+export const fetchOffersAction = createAsyncThunk<
   OfferEntity[],
   undefined,
   AsyncThunkPropWithAxios
->('fetchOfferAction', async (_arg, { extra: api }) => {
+>('fetchOffersAction', async (_arg, { extra: api }) => {
   const { data } = await api.get<OfferEntity[]>(APIRoute.Offers);
   return data;
 });

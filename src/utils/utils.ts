@@ -1,5 +1,5 @@
-import { SortType } from './const';
-import { OfferEntity } from './types';
+import { SortType } from '../const';
+import { OfferEntity } from '../types';
 
 export const getRatingPercent = (rating: number): number =>
   Math.round(rating) * 20;

@@ -5,8 +5,8 @@ import { OfferEntity, OfferProcess } from '../../types';
 import {
   fetchFavoriteOffersAction,
   fetchNearbyOfferAction,
-  fetchOfferAction,
   fetchOfferDetailAction,
+  fetchOffersAction,
   fetchReviewAction,
   postFavoriteOfferAction,
   PostReviewAction,
@@ -56,13 +56,13 @@ export const offerProcess = createSlice({
         state.currentSort = action.payload;
       })
       //////////
-      .addCase(fetchOfferAction.pending, (state) => {
+      .addCase(fetchOffersAction.pending, (state) => {
         state.isOffersLoading = true;
       })
-      .addCase(fetchOfferAction.rejected, (state) => {
+      .addCase(fetchOffersAction.rejected, (state) => {
         state.isOffersLoading = false;
       })
-      .addCase(fetchOfferAction.fulfilled, (state, action) => {
+      .addCase(fetchOffersAction.fulfilled, (state, action) => {
         state.offers = action.payload;
         state.isOffersLoading = false;
       })

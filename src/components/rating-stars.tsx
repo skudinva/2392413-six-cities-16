@@ -1,4 +1,4 @@
-import { getRatingPercent } from '../utils';
+import { getRatingPercent } from '../utils/utils';
 type RatingStarsProps = {
   rating: number;
   baseClass: string;

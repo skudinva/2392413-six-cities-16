@@ -4,7 +4,7 @@ import { AppRoute, Cities } from '../const';
 import { useAppDispatch, useAppSelector } from '../hooks/store';
 import { setCurrentCity } from '../store/action';
 import { getIsAuthUser } from '../store/user-process/selectors';
-import { getRandomArrayElement } from '../utils';
+import { getRandomArrayElement } from '../utils/utils';
 
 function Login(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -14,7 +14,10 @@ function Login(): JSX.Element {
   }
   const city = getRandomArrayElement(Cities);
   return (
-    <main className="page__main page__main--login">
+    <main
+      className="page__main page__main--login"
+      data-testid="loginPageElement"
+    >
       <div className="page__login-container container">
         <LoginForm />
         <section className="locations locations--login locations--current">

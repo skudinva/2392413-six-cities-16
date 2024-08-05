@@ -8,7 +8,7 @@ import {
   ReviewEntity,
   State,
 } from '../../types';
-import { applySorting } from '../../utils';
+import { applySorting } from '../../utils/utils';
 
 export const getOffers = (state: State): OfferEntity[] =>
   state[NameSpace.Data].offers;
@@ -36,8 +36,11 @@ export const getOrderedCityOffers = (state: State): OfferEntity[] => {
 export const getFavoriteOffers = (state: State): OfferEntity[] =>
   state[NameSpace.Data].favoriteOffers;
 
-export const getFavoriteOffersByGroup = (state: State): OfferByGroup => {
+export const getFavoriteOffersByGroup = (state: State): OfferByGroup | null => {
   const offers = state[NameSpace.Data].favoriteOffers;
+  if (!offers.length) {
+    return null;
+  }
   return Object.groupBy(offers, (offer: OfferEntity) => offer.city.name);
 };
 
