@@ -1,5 +1,4 @@
-import { screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { fireEvent, screen } from '@testing-library/react';
 import { AuthorizationStatus } from '../const';
 import { OfferEntity, State } from '../types';
 import { renderWithStoreAndHistoryComponent } from '../utils/mock-component';
@@ -31,7 +30,7 @@ describe('Component: FavoriteButton', () => {
     expect(screen.getByRole('button')).toBeInTheDocument();
   });
 
-  it('on click should render correctly', async () => {
+  it('on click should render correctly', () => {
     renderWithStoreAndHistoryComponent(
       <FavoriteButton
         baseClass="place-card"
@@ -43,12 +42,15 @@ describe('Component: FavoriteButton', () => {
       store
     );
 
-    const buttonElement = screen.getByRole('button');
-    buttonElement.onclick = () => {
+    const handleClick = vi.fn(() => {
       testOffer.isFavorite = !testOffer.isFavorite;
-    };
+    });
 
-    await userEvent.click(buttonElement);
+    const buttonElement = screen.getByRole('button');
+    buttonElement.onclick = handleClick;
+
+    fireEvent.click(buttonElement);
+    expect(handleClick).toHaveBeenCalledTimes(1);
 
     renderWithStoreAndHistoryComponent(
       <FavoriteButton
