@@ -47,6 +47,8 @@ describe('Component: FavoriteButton', () => {
     });
 
     const buttonElement = screen.getByRole('button');
+    expect(buttonElement.onclick).not.toBeNull();
+
     buttonElement.onclick = handleClick;
 
     fireEvent.click(buttonElement);
