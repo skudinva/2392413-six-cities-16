@@ -9,14 +9,14 @@ import { CityName } from '../const';
 import { useAppSelector } from '../hooks/store';
 import {
   getCurrentCity,
+  getCurrentCityOffers,
   getOffersCount,
-  getOrderedCityOffers,
 } from '../store/offer-process/selectors';
 import { OfferEntity } from '../types';
 
 function Main(): JSX.Element {
   const currentCity = useAppSelector(getCurrentCity);
-  const cityOffers = useAppSelector(getOrderedCityOffers);
+  const cityOffers = useAppSelector(getCurrentCityOffers);
   const cityOffersCount = cityOffers.length;
   const offersCount = useAppSelector(getOffersCount);
   const [currentOffer, setCurrentOffer] = useState<OfferEntity | null>(null);
@@ -46,10 +46,7 @@ function Main(): JSX.Element {
                   } to stay in ${currentCity.name}`}
               </b>
               <OfferSort />
-              <PlaceCardList
-                offers={cityOffers}
-                onActiveOfferChange={setCurrentOffer}
-              />
+              <PlaceCardList onActiveOfferChange={setCurrentOffer} />
             </section>
             <div className="cities__right-section">
               <Map
