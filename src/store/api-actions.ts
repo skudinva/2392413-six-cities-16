@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 import { APIRoute } from '../const';
+import { setToken } from '../services/token';
 import {
   AppDispatch,
   AuthInfo,
@@ -10,6 +11,7 @@ import {
   ReviewEntity,
   State,
 } from '../types';
+import { clearFavoritesOffers } from './action';
 
 type AsyncThunkPropWithAxios = {
   state: State;
@@ -108,13 +110,17 @@ export const loginAction = createAsyncThunk<
   AuthInfo,
   LoginAuth,
   AsyncThunkPropWithAxios
->('loginAction', async ({ email, password }, { extra: api }) => {
+>('loginAction', async ({ email, password }, { dispatch, extra: api }) => {
   const requestBody: LoginAuth = {
     email: email,
     password: password,
   };
 
   const { data } = await api.post<AuthInfo>(APIRoute.Login, requestBody);
+  setToken(data.token);
+  dispatch(fetchOffersAction());
+  dispatch(fetchFavoriteOffersAction());
+
   return data;
 });
 
@@ -122,6 +128,7 @@ export const logoutAction = createAsyncThunk<
   void,
   undefined,
   AsyncThunkPropWithAxios
->('logoutAction', async (_arg, { extra: api }) => {
+>('logoutAction', async (_arg, { dispatch, extra: api }) => {
   await api.delete(APIRoute.Logout);
+  dispatch(clearFavoritesOffers());
 });
