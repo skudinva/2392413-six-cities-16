@@ -23,6 +23,7 @@ export const fetchOffersAction = createAsyncThunk<
   AsyncThunkPropWithAxios
 >('fetchOffersAction', async (_arg, { extra: api }) => {
   const { data } = await api.get<OfferEntity[]>(APIRoute.Offers);
+
   return data;
 });
 
@@ -53,6 +54,7 @@ export const fetchFavoriteOffersAction = createAsyncThunk<
   AsyncThunkPropWithAxios
 >('fetchFavoriteOffersAction', async (_arg, { extra: api }) => {
   const { data } = await api.get<OfferEntity[]>(APIRoute.Favorite);
+
   return data;
 });
 

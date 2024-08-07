@@ -4,6 +4,7 @@ import { Link, Outlet, useLocation } from 'react-router-dom';
 import SignUser from '../components/sign-user';
 import { AppRoute } from '../const';
 import { useAppDispatch, useAppSelector } from '../hooks/store';
+import { clearFavoritesOffers, synchronizeFavorites } from '../store/action';
 import { fetchFavoriteOffersAction } from '../store/api-actions';
 import { getFavoriteOffersCount } from '../store/offer-process/selectors';
 import { getIsAuthUser } from '../store/user-process/selectors';
@@ -11,9 +12,14 @@ import { getIsAuthUser } from '../store/user-process/selectors';
 function MainLayout(): JSX.Element {
   const dispatch = useAppDispatch();
   const isAuthUser = useAppSelector(getIsAuthUser);
+
   useEffect(() => {
     if (isAuthUser) {
-      dispatch(fetchFavoriteOffersAction());
+      dispatch(fetchFavoriteOffersAction()).then(() => {
+        dispatch(synchronizeFavorites());
+      });
+    } else {
+      dispatch(clearFavoritesOffers());
     }
   }, [dispatch, isAuthUser]);
 
