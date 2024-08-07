@@ -18,5 +18,3 @@ export const setCurrentSort = createAction<PrepareAction<SortType>>(
 export const redirectToRoute = createAction<AppRoute>('redirectToRoute');
 
 export const setResponseStatus = createAction<StatusCodes>('setResponseStatus');
-
-export const synchronizeFavorites = createAction('synchronizeFavorites');
