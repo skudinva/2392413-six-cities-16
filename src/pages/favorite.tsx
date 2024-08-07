@@ -1,13 +1,19 @@
 import classNames from 'classnames';
+import { useEffect } from 'react';
 import FavoriteEmpty from '../components/favorite-empty';
 import PlaceCard from '../components/place-card';
-import { useAppSelector } from '../hooks/store';
+import { useAppDispatch, useAppSelector } from '../hooks/store';
+import { fetchFavoriteOffersAction } from '../store/api-actions';
 import {
   getFavoriteOffersByGroup,
   getFavoriteOffersCount,
 } from '../store/offer-process/selectors';
 
 function Favorite(): JSX.Element {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fetchFavoriteOffersAction());
+  }, [dispatch]);
   const favoriteOffersCount = useAppSelector(getFavoriteOffersCount);
   const favoriteOffersByGroup = useAppSelector(getFavoriteOffersByGroup);
 

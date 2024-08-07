@@ -1,14 +1,15 @@
+import { useAppSelector } from '../hooks/store';
+import { getOrderedCityOffers } from '../store/offer-process/selectors';
 import { OfferEntity } from '../types';
 import PlaceCard from './place-card';
 
 type PlaceCardListProps = {
-  offers: OfferEntity[];
   onActiveOfferChange: (offer: OfferEntity | null) => void;
 };
 
 function PlaceCardList(props: PlaceCardListProps): JSX.Element {
-  const { offers, onActiveOfferChange } = props;
-
+  const { onActiveOfferChange } = props;
+  const offers = useAppSelector(getOrderedCityOffers);
   return (
     <div className="cities__places-list places__list tabs__content">
       {offers.map((offer: OfferEntity) => (
