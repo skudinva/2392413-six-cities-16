@@ -11,7 +11,6 @@ import { getIsAuthUser } from '../store/user-process/selectors';
 function MainLayout(): JSX.Element {
   const dispatch = useAppDispatch();
   const isAuthUser = useAppSelector(getIsAuthUser);
-
   useEffect(() => {
     if (isAuthUser) {
       dispatch(fetchFavoriteOffersAction());
