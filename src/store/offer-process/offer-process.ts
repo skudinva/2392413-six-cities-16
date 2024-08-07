@@ -15,6 +15,7 @@ import {
   clearFavoritesOffers,
   setCurrentCity,
   setCurrentSort,
+  synchronizeFavorites,
 } from './../action';
 
 const initialState: OfferProcess = {
@@ -94,6 +95,16 @@ export const offerProcess = createSlice({
       .addCase(fetchFavoriteOffersAction.fulfilled, (state, action) => {
         state.favoriteOffers = action.payload;
         state.isFavoriteOffersLoading = false;
+      })
+      .addCase(synchronizeFavorites, (state) => {
+        const favorites: string[] = [];
+        state.favoriteOffers.forEach((element) => {
+          favorites.push(element.id);
+        });
+
+        state.offers.forEach((offer) => {
+          offer.isFavorite = favorites.indexOf(offer.id) !== -1;
+        });
       })
       .addCase(postFavoriteOfferAction.fulfilled, (state, action) => {
         const offer = action.payload;
