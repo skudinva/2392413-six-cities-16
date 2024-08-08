@@ -11,7 +11,7 @@ function LoginForm(): JSX.Element {
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const dispatch = useAppDispatch();
 
-  const onFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
     if (
@@ -36,7 +36,7 @@ function LoginForm(): JSX.Element {
         className="login__form form"
         action="#"
         method="post"
-        onSubmit={onFormSubmit}
+        onSubmit={handleFormSubmit}
       >
         <div className="login__input-wrapper form__input-wrapper">
           <label className="visually-hidden">E-mail</label>

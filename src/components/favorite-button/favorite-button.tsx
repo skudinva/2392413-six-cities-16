@@ -18,7 +18,7 @@ function FavoriteButton(props: FavoriteButtonProps): JSX.Element {
   const isAuthUser = useAppSelector(getIsAuthUser);
   const navigate = useNavigate();
 
-  const onFavoriteButtonClick = (evt: React.MouseEvent<HTMLElement>) => {
+  const handleFavoriteButtonClick = (evt: React.MouseEvent<HTMLElement>) => {
     evt.preventDefault();
     if (!isAuthUser) {
       navigate(AppRoute.Login);
@@ -40,7 +40,7 @@ function FavoriteButton(props: FavoriteButtonProps): JSX.Element {
         [`${baseClass}__bookmark-button--active`]: isFavorite,
       })}
       type="button"
-      onClick={onFavoriteButtonClick}
+      onClick={handleFavoriteButtonClick}
     >
       {children}
       <span className="visually-hidden">

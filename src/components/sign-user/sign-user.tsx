@@ -10,14 +10,16 @@ import {
 
 function SignOut(): JSX.Element {
   const dispatch = useAppDispatch();
-  const onLogout = (evt: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+  const handleLogoutClick = (
+    evt: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) => {
     evt.preventDefault();
     dispatch(logoutAction());
   };
 
   return (
     <li className="header__nav-item">
-      <Link className="header__nav-link" to="" onClick={onLogout}>
+      <Link className="header__nav-link" to="" onClick={handleLogoutClick}>
         <span className="header__signout">Sign out</span>
       </Link>
     </li>

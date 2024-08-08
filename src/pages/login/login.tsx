@@ -13,6 +13,14 @@ function Login(): JSX.Element {
     return <Navigate to={AppRoute.Main} />;
   }
   const city = getRandomArrayElement(Cities);
+
+  const handleCityClick = (
+    evt: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) => {
+    evt.preventDefault();
+    dispatch(setCurrentCity(city));
+  };
+
   return (
     <main
       className="page__main page__main--login"
@@ -25,9 +33,7 @@ function Login(): JSX.Element {
             <Link
               className="locations__item-link"
               to={AppRoute.Main}
-              onClick={() => {
-                dispatch(setCurrentCity(city));
-              }}
+              onClick={handleCityClick}
             >
               <span>{city.name}</span>
             </Link>

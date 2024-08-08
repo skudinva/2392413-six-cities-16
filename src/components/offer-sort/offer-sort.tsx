@@ -10,7 +10,7 @@ function OfferSort(): JSX.Element {
   const dispatch = useAppDispatch();
   const currentSort = useAppSelector(getCurrentSort);
 
-  const onSortChange = (
+  const handleSortChange = (
     evt: React.MouseEvent<HTMLUListElement, MouseEvent>
   ): void => {
     const targetElement = evt.target as HTMLFormElement;
@@ -19,14 +19,18 @@ function OfferSort(): JSX.Element {
     setIsSortListDropdown(false);
   };
 
-  const onSortClick = () => {
+  const handleSortClick = () => {
     setIsSortListDropdown(!isSortListDropdown);
   };
 
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
-      <span className="places__sorting-type" tabIndex={0} onClick={onSortClick}>
+      <span
+        className="places__sorting-type"
+        tabIndex={0}
+        onClick={handleSortClick}
+      >
         &nbsp;{currentSort}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>
@@ -36,7 +40,7 @@ function OfferSort(): JSX.Element {
         className={classNames('places__options', 'places__options--custom', {
           'places__options--opened': isSortListDropdown,
         })}
-        onClick={onSortChange}
+        onClick={handleSortChange}
       >
         {Object.values(SortList).map((sort, index) => {
           const keyValue = `${index}-${sort}`;

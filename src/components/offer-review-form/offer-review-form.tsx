@@ -15,7 +15,7 @@ function OfferReviewForm(): JSX.Element {
   const dispatch = useAppDispatch();
   const isPostReviewSending = postReviewState === PostReviewState.Sending;
 
-  const onFormSubmit = (evt: FormEvent) => {
+  const handleFormSubmit = (evt: FormEvent) => {
     evt.preventDefault();
     if (!id) {
       return;
@@ -29,11 +29,13 @@ function OfferReviewForm(): JSX.Element {
     dispatch(PostReviewAction(data));
   };
 
-  const onRatingChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
+  const handleRatingChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     setRating(+evt.target.value);
   };
 
-  const onReviewTextChange = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleReviewTextChange = (
+    evt: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     setReview(evt.target.value);
   };
 
@@ -55,7 +57,7 @@ function OfferReviewForm(): JSX.Element {
       className="reviews__form form"
       action="#"
       method="post"
-      onSubmit={onFormSubmit}
+      onSubmit={handleFormSubmit}
     >
       <label className="reviews__label form__label" htmlFor="review">
         Your review
@@ -69,7 +71,7 @@ function OfferReviewForm(): JSX.Element {
               isDisabled={isPostReviewSending}
               key={keyValue}
               selectedRating={rating}
-              onRatingChange={onRatingChange}
+              onRatingChange={handleRatingChange}
             />
           );
         })}
@@ -81,7 +83,7 @@ function OfferReviewForm(): JSX.Element {
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={review}
         disabled={isPostReviewSending}
-        onInput={onReviewTextChange}
+        onInput={handleReviewTextChange}
         data-testid="reviewElement"
       />
       <div className="reviews__button-wrapper">

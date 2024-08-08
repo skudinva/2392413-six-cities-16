@@ -14,7 +14,9 @@ function CityList(props: CityListProps): JSX.Element {
   const currentCity = useAppSelector(getCurrentCity);
   const dispatch = useAppDispatch();
 
-  const onCityClick = (evt: React.MouseEvent<HTMLUListElement, MouseEvent>) => {
+  const handleCityClick = (
+    evt: React.MouseEvent<HTMLUListElement, MouseEvent>
+  ) => {
     const targetElement = evt.target as HTMLFormElement;
     if (!targetElement.children.length) {
       const selectCityName = targetElement.innerText;
@@ -27,7 +29,7 @@ function CityList(props: CityListProps): JSX.Element {
     }
   };
   return (
-    <ul className="locations__list tabs__list" onClick={onCityClick}>
+    <ul className="locations__list tabs__list" onClick={handleCityClick}>
       {Object.values(cities).map((city, index) => {
         const keyValue = `${index}-${city}`;
         const isCurrentCity = city.toString() === currentCity.name;
