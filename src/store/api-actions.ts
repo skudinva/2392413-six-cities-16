@@ -101,7 +101,7 @@ export const checkLoginAction = createAsyncThunk<
   return data;
 });
 
-type LoginAuth = {
+export type LoginAuth = {
   email: string;
   password: string;
 };
