@@ -14,10 +14,7 @@ function Login(): JSX.Element {
   }
   const city = getRandomArrayElement(Cities);
 
-  const handleCityClick = (
-    evt: React.MouseEvent<HTMLAnchorElement, MouseEvent>
-  ) => {
-    evt.preventDefault();
+  const handleCityClick = () => {
     dispatch(setCurrentCity(city));
   };
 
