@@ -12,6 +12,7 @@ import {
   getResponseStatusCode,
 } from '../../store/offer-process/selectors';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { ScrollScreenToTop } from '../../utils/utils';
 import Loader from '../loader/loader';
 import Offer from '../offer/offer';
 import Page404 from '../page404/page404';
@@ -32,6 +33,7 @@ function App(): JSX.Element {
 
   return (
     <HelmetProvider>
+      <ScrollScreenToTop />
       <Routes>
         <Route path={AppRoute.Main} element={<MainLayout />}>
           <Route index element={<Main />} />

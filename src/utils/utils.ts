@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { SortType } from '../const';
 import { OfferEntity } from '../types/types';
 
@@ -36,3 +38,13 @@ export const getRandomArrayElement = <T>(elements: T[]): T =>
 
 export const capitalizeFirsLetter = (someText: string): string =>
   someText[0].toUpperCase() + someText.substring(1);
+
+export const ScrollScreenToTop = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+};
