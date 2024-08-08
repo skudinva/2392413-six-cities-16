@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { OfferEntity } from '../../types/types';
+import { capitalizeFirsLetter } from '../../utils/utils';
 import FavoriteButton from '../favorite-button/favorite-button';
 import RatingStars from '../rating-stars/rating-stars';
 
@@ -56,7 +57,7 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
             {offer.title}
           </Link>
         </h2>
-        <p className="place-card__type">{offer.type}</p>
+        <p className="place-card__type">{capitalizeFirsLetter(offer.type)}</p>
       </div>
     </article>
   );

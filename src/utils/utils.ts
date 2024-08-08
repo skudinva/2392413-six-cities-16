@@ -33,3 +33,6 @@ export const getRandomInteger = function (
 
 export const getRandomArrayElement = <T>(elements: T[]): T =>
   elements[getRandomInteger(0, elements.length - 1)];
+
+export const capitalizeFirsLetter = (someText: string): string =>
+  someText[0].toUpperCase() + someText.substring(1);

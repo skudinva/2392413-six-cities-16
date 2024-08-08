@@ -8,6 +8,7 @@ import {
   fetchOfferDetailAction,
 } from '../../store/api-actions';
 import { getNearbyOffers, getOffer } from '../../store/offer-process/selectors';
+import { capitalizeFirsLetter } from '../../utils/utils';
 import FavoriteButton from '../favorite-button/favorite-button';
 import Loader from '../loader/loader';
 import Map from '../map/map';
@@ -84,7 +85,7 @@ function Offer(): JSX.Element {
           </div>
           <ul className="offer__features">
             <li className="offer__feature offer__feature--entire">
-              {offer.type}
+              {capitalizeFirsLetter(offer.type)}
             </li>
             <li className="offer__feature offer__feature--bedrooms">
               {offer.bedrooms} Bedrooms
