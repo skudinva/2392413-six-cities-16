@@ -1,15 +1,21 @@
 import { StatusCodes } from 'http-status-codes';
 import { Action } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
+import { createAPI } from '../services/api';
+import {
+  OfferDetailEntity,
+  OfferProcess,
+  State,
+  UserProcess,
+} from '../types/types';
+
 import {
   AuthorizationStatus,
   Cities,
   NameSpace,
   PostReviewState,
   SortType,
-} from '../const';
-import { createAPI } from '../services/api';
-import { OfferDetailEntity, OfferProcess, State, UserProcess } from '../types';
+} from './../const';
 
 export type AppThunkDispatch = ThunkDispatch<
   State,

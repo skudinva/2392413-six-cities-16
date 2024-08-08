@@ -10,7 +10,7 @@ import {
   PostReview,
   ReviewEntity,
   State,
-} from '../types';
+} from '../types/types';
 import { clearFavoritesOffers } from './action';
 
 type AsyncThunkPropWithAxios = {

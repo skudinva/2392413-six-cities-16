@@ -1,6 +1,6 @@
 import { createAction, PrepareAction } from '@reduxjs/toolkit';
 import { AppRoute, SortType } from '../const';
-import { CityEntity } from '../types';
+import { CityEntity } from '../types/types';
 
 export const setCurrentCity = createAction<PrepareAction<CityEntity>>(
   'setCurrentCity',
